@@ -3,7 +3,10 @@ import axios from 'axios';
 import { SafeAreaView, StyleSheet, View, Alert, TextInput, Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Radio, Layout, Icon, Input, Button, Modal, Card, Spinner, CheckBox, RadioGroup } from '@ui-kitten/components';
+
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faExclamationCircle, faCalendar } from '@fortawesome/free-solid-svg-icons';
+
 import { Props } from './SignIn.types';
 import { fields, SEDI } from './SignIn.utils';
 
@@ -11,7 +14,7 @@ import { fields, SEDI } from './SignIn.utils';
 // import CustomToolBar from '../components/customToolbar.component';
 // import EmailForm from '../components/emailForm.component';
 
-export const SigninScreen: React.FC<Props> = ({ navigation }) => {
+export const SignInComponent: React.FC<Props> = ({ navigation }) => {
     const childRef = useRef<any>();
     const values = useRef<string[]>([]);
     const [fieldsToRender, setFieldsToRender] = useState<JSX.Element[]>([]);
@@ -64,17 +67,8 @@ export const SigninScreen: React.FC<Props> = ({ navigation }) => {
         },
     });
 
-    const InfoIcon = (props: any) => (
-        <Icon {...props} name='info-outline' />
-    );
-
-    const AlertIcon = (props: any) => (
-        <Icon {...props} name='alert-circle-outline' />
-    );
-
-    const CalendarIcon = (props: any) => (
-        <Icon {...props} name='calendar' />
-    );
+    const AlertIcon = () => <FontAwesomeIcon icon={faExclamationCircle} />;
+    const CalendarIcon = () => <FontAwesomeIcon icon={faCalendar} />;
 
     useEffect(() => {
         const tempFields: JSX.Element[] = [];
@@ -95,7 +89,7 @@ export const SigninScreen: React.FC<Props> = ({ navigation }) => {
                                             values.current = newArray;
                                         }}
                                     />
-                                    {/* <CalendarIcon /> */}
+                                    <CalendarIcon />
                                     {/* <Button size='small' style={{ marginLeft: wp('0.9%') }} accessoryLeft={InfoIcon} onPress={() => {
                                         Alert.alert('Perchè chiediamo la data di nascita', 'Questo campo è opzionale, viene chiesto solo per evitare casi di omonimia che ti possono creare problemi per la gestione della compravendita.');
                                     }} /> */}
