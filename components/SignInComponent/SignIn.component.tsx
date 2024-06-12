@@ -1,20 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { SafeAreaView, StyleSheet, View, Alert, TextInput, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Alert, TextInput, Text, Button, TouchableOpacity } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faExclamationCircle, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle, faCalendar, faInfo } from '@fortawesome/free-solid-svg-icons';
 
 import { Props } from './SignIn.types';
 import { fields, SEDI } from './SignIn.utils';
+
+import InfoButton from '../CustomButtonComponent/CustomButton.component';
+import EmailComponent from '../EmailComponent/Email.component';
 
 // import { PRIVACY } from '../utils/constants';
 // import CustomToolBar from '../components/customToolbar.component';
 // import EmailForm from '../components/emailForm.component';
 
-export const SignInComponent: React.FC<Props> = ({ navigation }) => {
+const SignInComponent: React.FC<Props> = ({ navigation }) => {
     const childRef = useRef<any>();
     const values = useRef<string[]>([]);
     const [fieldsToRender, setFieldsToRender] = useState<JSX.Element[]>([]);
@@ -28,9 +31,6 @@ export const SignInComponent: React.FC<Props> = ({ navigation }) => {
     const [showSpinner, setShowSpinner] = useState<boolean>(false);
 
     const styles = StyleSheet.create({
-        container: {
-            padding: 5
-        },
         title: {
             fontSize: hp('2.6%'),
             textAlign: 'center',
@@ -51,10 +51,6 @@ export const SignInComponent: React.FC<Props> = ({ navigation }) => {
             justifyContent: 'center',
             alignItems: 'center'
         },
-        inputText: {
-            width: '80%',
-            maxWidth: '80%'
-        },
         backdrop: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
         },
@@ -65,10 +61,45 @@ export const SignInComponent: React.FC<Props> = ({ navigation }) => {
             fontSize: hp('1.8%'),
             color: '#4975be'
         },
+        button: {
+            backgroundColor: '#007bff', // Colore di sfondo del bottone
+            borderRadius: 20, // Bordo arrotondato del bottone
+            padding: 10, // Spaziatura interna del bottone
+            pointerEvents: "none"
+        },
+        container: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            maxWidth: wp('80%'),
+            marginBottom: 10, // Aggiunta margin inferiore per separare i campi
+        },
+        inputText: {
+            flex: 1,
+            borderBottomWidth: 1,
+            borderColor: 'gray',
+            marginRight: 5, // Aggiunto margine destro per separare l'icona dal campo di input
+            paddingVertical: 5,
+        },
+        icon: {
+            marginHorizontal: 5, // Aggiunto margine orizzontale per separare le icone
+        },
+        caption: {
+            fontSize: 12,
+            fontStyle: 'italic',
+            color: 'gray',
+        },
     });
 
     const AlertIcon = () => <FontAwesomeIcon icon={faExclamationCircle} />;
     const CalendarIcon = () => <FontAwesomeIcon icon={faCalendar} />;
+
+    const infoAlert = () =>
+        Alert.alert(
+            'Perché chiediamo la data di nascita?',
+            'Questo campo è opzionale, viene chiesto solo per evitare casi di omonimia che ti possono creare problemi per la gestione della compravendita.',
+            [{ text: 'Ok', style: 'cancel', },],
+        );
 
     useEffect(() => {
         const tempFields: JSX.Element[] = [];
@@ -76,66 +107,37 @@ export const SignInComponent: React.FC<Props> = ({ navigation }) => {
             if (element.type !== undefined) {
                 switch (element.type) {
                     case 'date':
-                        if (element.caption !== "") {
-                            tempFields.push(
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', maxWidth: wp('80%') }} key={index}>
-                                    <TextInput
-                                        style={styles.inputText}
-                                        value={values.current[index]}
-                                        placeholder={element.placeholder}
-                                        onChangeText={(nextValue) => {
-                                            const newArray = [...values.current];
-                                            newArray[index] = nextValue;
-                                            values.current = newArray;
-                                        }}
-                                    />
-                                    <CalendarIcon />
-                                    {/* <Button size='small' style={{ marginLeft: wp('0.9%') }} accessoryLeft={InfoIcon} onPress={() => {
-                                        Alert.alert('Perchè chiediamo la data di nascita', 'Questo campo è opzionale, viene chiesto solo per evitare casi di omonimia che ti possono creare problemi per la gestione della compravendita.');
-                                    }} /> */}
-                                </View>
-                            );
-                        } else {
-                            // tempFields.push(
-                            //     <TextInput
-                            //         style={styles.inputText}
-                            //         value={values.current[index]}
-                            //         label={element.label}
-                            //         accessoryRight={CalendarIcon}
-                            //         size='large'
-                            //         placeholder={element.placeholder}
-                            //         onChangeText={(nextValue) => {
-                            //             const newArray = [...values.current];
-                            //             newArray[index] = nextValue;
-                            //             values.current = newArray;
-                            //         }}
-                            //         key={index}
-                            //     />
-                            // );
-                        }
+                        tempFields.push(
+                            <View style={styles.container} key={index}>
+                                {element.caption && <Text style={styles.caption}>{element.caption}</Text>}
+                                <TextInput
+                                    style={styles.inputText}
+                                    placeholder={element.placeholder}
+                                    onChangeText={(nextValue) => {
+                                        const newArray = [...values.current];
+                                        newArray[index] = nextValue;
+                                        values.current = newArray;
+                                    }}
+                                />
+                                <TouchableOpacity onPress={infoAlert}>
+                                    <FontAwesomeIcon icon={faCalendar} style={styles.icon} />
+                                </TouchableOpacity>
+                                <InfoButton onPress={infoAlert} />
+                            </View>
+                        );
                         break;
                     case 'email':
                         tempFields.push(
-                            // <EmailForm
-                            //     ref={childRef}
-                            //     placeholder={element.placeholder}
-                            //     label={element.label}
-                            //     size='large'
-                            //     autoCapitalize='none'
-                            //     autoCorrect={false}
-                            //     width='100%'
-                            //     maxWidth='100%'
-                            //     justifyContentParent='center'
-                            //     alignItemsParent='center'
-                            //     marginTopParent={hp('1%')}
-                            //     widthParent={wp('80%')}
-                            //     onChangeText={(nextValue: string) => {
-                            //         const newArray = [...values.current];
-                            //         newArray[index] = nextValue.trim();
-                            //         values.current = newArray;
-                            //     }}
-                            //     key={index}
-                            // />
+                            <EmailComponent
+                                placeholder={element.placeholder}
+                                label={element.label}
+                                onChangeText={(nextValue: string) => {
+                                    const newArray = [...values.current];
+                                    newArray[index] = nextValue.trim();
+                                    values.current = newArray;
+                                }}
+                                key={index}
+                            />
                         );
                         break;
                     default:
@@ -313,7 +315,8 @@ export const SignInComponent: React.FC<Props> = ({ navigation }) => {
                         </Modal>
                     </View> */}
             </KeyboardAwareScrollView>
-            Sign In Component
         </SafeAreaView>
     )
 };
+
+export default SignInComponent;

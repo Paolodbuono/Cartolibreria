@@ -1,6 +1,6 @@
 import { Text, View } from "react-native";
 
-import { SignInComponent } from "@/components/SignInComponent/SignIn.component";
+import SignInComponent from "@/components/SignInComponent/SignIn.component";
 
 export default function Index() {
 
