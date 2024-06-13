@@ -1,5 +1,5 @@
-import { Link, Stack } from 'expo-router';
-import { Image, Text, View, StyleSheet } from 'react-native';
+import { Link, Stack, useRouter } from 'expo-router';
+import { Image, Text, View, StyleSheet, Button } from 'react-native';
 
 function LogoTitle() {
   return (
@@ -8,6 +8,8 @@ function LogoTitle() {
 }
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
       <Stack.Screen
@@ -23,7 +25,8 @@ export default function Home() {
         }}
       />
       <Text>Home Screen</Text>
-      <Link href={{ pathname: 'SignInView' }}>Registrati!</Link>
+      <Button title="Registrati!" onPress={() => router.push("SignInView")} />
+      <Button title="Accedi!" onPress={() => router.push("LogInView")} />
     </View>
   );
 }
