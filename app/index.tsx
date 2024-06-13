@@ -1,14 +1,41 @@
-import { Text, View } from "react-native";
+import { Link, Stack } from 'expo-router';
+import { Image, Text, View, StyleSheet } from 'react-native';
 
-import SignInComponent from "@/components/SignInComponent/SignIn.component";
-
-export default function Index() {
-
-  const navigate = { navigation: () => "" };
-
+function LogoTitle() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <SignInComponent navigation={navigate} />
+    <Image style={styles.image} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} />
+  );
+}
+
+export default function Home() {
+  return (
+    <View style={styles.container}>
+      <Stack.Screen
+        options={{
+          title: 'My home',
+          headerStyle: { backgroundColor: '#f4511e' },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+
+          headerTitle: props => <LogoTitle />,
+        }}
+      />
+      <Text>Home Screen</Text>
+      <Link href={{ pathname: 'signIn', params: { name: 'Bacon' } }}>Registrati!</Link>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 50,
+    height: 50,
+  },
+});

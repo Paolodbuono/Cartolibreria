@@ -21,12 +21,11 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#007bff', // Colore di sfondo del bottone
         borderRadius: 20, // Bordo arrotondato del bottone
-        padding: 10, // Spaziatura interna del bottone
+        padding: 3, // Spaziatura interna del bottone
         pointerEvents: "none"
     },
     icon: {
         color: 'white', // Colore dell'icona
-        fontSize: 20, // Dimensione dell'icona
     },
 });
 
