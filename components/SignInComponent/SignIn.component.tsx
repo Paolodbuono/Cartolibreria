@@ -1,21 +1,22 @@
 import React, { useMemo, useRef, useState } from 'react';
 import axios from 'axios';
-import { registerRootComponent } from 'expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { SafeAreaView, StyleSheet, View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
 
-import { Props } from './SignIn.types';
 import { fields, PRIVACY, SEDI } from './SignIn.utils';
 
 import FormFields from './FormField.component';
 import Checkbox from 'expo-checkbox';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import InfoButton from '../CustomButtonComponent/CustomButton.component';
-import Home from '@/app';
 
-const SignInComponent: React.FC<Props> = ({ navigation }) => {
+
+const SignInComponent: React.FC<{}> = () => {
     const formValues = useRef<string[]>([]);
+    const router = useRouter();
+
     const [checked, setChecked] = useState<boolean>(false);
     const [modalText, setModalText] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,7 +36,6 @@ const SignInComponent: React.FC<Props> = ({ navigation }) => {
 
         return password && password2 && password === password2;
     };
-
 
     const isValidEmail = () => {
         let toReturn = false;
@@ -180,7 +180,7 @@ const SignInComponent: React.FC<Props> = ({ navigation }) => {
     const handleOnClickResponseModal = () => {
         if (modalResponseText) setModalResponseVisible(false);
         else {
-            // registerRootComponent(Home)
+            router.back(); // redirectToHome
         }
     }
     return (

@@ -23,7 +23,7 @@ export default function Home() {
         }}
       />
       <Text>Home Screen</Text>
-      <Link href={{ pathname: 'signIn', params: { name: 'Bacon' } }}>Registrati!</Link>
+      <Link href={{ pathname: 'SignInView' }}>Registrati!</Link>
     </View>
   );
 }
