@@ -1,4 +1,4 @@
-import { Link, Stack, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { Image, Text, View, StyleSheet, Button } from 'react-native';
 
 function LogoTitle() {
@@ -14,14 +14,7 @@ export default function Home() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: 'My home',
-          headerStyle: { backgroundColor: '#f4511e' },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-
-          headerTitle: props => <LogoTitle />,
+          headerTitle: props => <View><LogoTitle /> BENVENUTO</View>,
         }}
       />
       <Text>Home Screen</Text>

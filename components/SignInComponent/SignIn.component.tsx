@@ -9,7 +9,7 @@ import { fields, PRIVACY, SEDI } from './SignIn.utils';
 
 import FormFields from './FormField.component';
 import Checkbox from 'expo-checkbox';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import InfoButton from '../CustomButtonComponent/CustomButton.component';
 
 
