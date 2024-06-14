@@ -10,7 +10,7 @@ import { fields, PRIVACY, SEDI } from './SignIn.utils';
 import FormFields from './FormField.component';
 import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
-import InfoButton from '../CustomButtonComponent/CustomButton.component';
+import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -220,7 +220,7 @@ const SignInComponent: React.FC<{}> = () => {
                                 color={checked ? '#4630EB' : undefined}
                             />
                             <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }}>Accetta il trattamento dei dati  </Text>
-                            <InfoButton onPress={trattamentoDeiDatiAlert} />
+                            <CustomButtonComponent onPress={trattamentoDeiDatiAlert} icon="info" />
                         </View>
 
                         <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>

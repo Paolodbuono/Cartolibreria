@@ -4,7 +4,7 @@ import { faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-import InfoButton from '../CustomButtonComponent/CustomButton.component';
+import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 
 import { fields } from './SignIn.utils';
 
@@ -47,8 +47,7 @@ const FormFields: React.FC<Props> = ({ formValues }) => {
                     />
                     {element.type === "date" && (
                         <>
-
-                            <InfoButton onPress={infoAlert} />
+                            <CustomButtonComponent onPress={infoAlert} icon="info" />
                         </>
                     )}
                 </View>
