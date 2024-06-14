@@ -1,11 +1,6 @@
+import React from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { Image, Text, View, StyleSheet, Button } from 'react-native';
-
-function LogoTitle() {
-  return (
-    <Image style={styles.image} source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }} />
-  );
-}
+import { Text, View, StyleSheet, Button } from 'react-native';
 
 export default function Home() {
   const router = useRouter();
@@ -14,7 +9,6 @@ export default function Home() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          headerTitle: props => <View><LogoTitle /> BENVENUTO</View>,
         }}
       />
       <Text>Home Screen</Text>

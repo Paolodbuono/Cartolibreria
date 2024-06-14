@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";

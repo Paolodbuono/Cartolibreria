@@ -1,5 +1,6 @@
+import React from "react";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 
 export default function LogInView() {
@@ -13,7 +14,7 @@ export default function LogInView() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Stack.Screen options={{ headerTitle: "Accedi" }} />
-      LogInView
+      <Text>Login View</Text>
     </View>
   );
 }
