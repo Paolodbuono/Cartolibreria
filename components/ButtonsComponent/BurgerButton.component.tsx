@@ -6,7 +6,7 @@ interface BurgerButtonProps {
 }
 
 const BurgerButtonComponent: React.FC<BurgerButtonProps> = ({ onPress }) => {
-    const urlImg = "../../assets/images/hamburger.png";
+    const urlImg = "../../assets/images/hamburger.svg";
 
     return (
         <TouchableOpacity onPress={onPress}>
@@ -16,4 +16,4 @@ const BurgerButtonComponent: React.FC<BurgerButtonProps> = ({ onPress }) => {
 
 export default BurgerButtonComponent;
 
-const styles = StyleSheet.create({ image: { width: 35, height: 35 } });
+const styles = StyleSheet.create({ image: { width: 54, height: 38, marginRight: 20 } });

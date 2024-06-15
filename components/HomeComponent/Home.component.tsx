@@ -8,7 +8,7 @@ const HomeComponent: React.FC<{}> = () => {
     return (
         <View style={styles.container}>
             <Stack.Screen options={{}} />
-            <Text>Home Screen</Text>
+            <Text>Ciao Nome e Cognome</Text>
             <Button title="Registrati!" onPress={() => router.push("SignInView")} />
             <Button title="Accedi!" onPress={() => router.push("LogInView")} />
         </View>
