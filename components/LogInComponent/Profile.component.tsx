@@ -4,16 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ScrollView, Button, Text, ActivityIndicator as Spinner } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
+import { UserType } from '@/types/UserType';
 
-export interface ProfileType {
-    nome: string
-    email: string
-    indirizzo: string
-    citta: string
-    cellulare: string
-}
-
-export const ProfileComponent: React.FC<{ userLogged: ProfileType }> = ({ userLogged }) => {
+export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
 
     const [showSpinner, setShowSpinner] = useState<boolean>(true);

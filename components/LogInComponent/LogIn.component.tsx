@@ -10,7 +10,8 @@ import { useRouter } from 'expo-router';
 import { styles } from './LogIn.styles';
 
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
-import { ProfileComponent, ProfileType } from './Profile.component';
+import { ProfileComponent } from './Profile.component';
+import { UserType, emptyUser } from '@/types/UserType';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
@@ -24,7 +25,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const [isLogged, setIsLogged] = useState(false);
     const [showSpinner, setShowSpinner] = useState(true);
-    const [userLogged, setUserLogged] = useState({ nome: "", email: "", indirizzo: "", citta: "", cellulare: "" });
+    const [userLogged, setUserLogged] = useState<UserType>(emptyUser);
     const [showSpinnerDuringLogin, setShowSpinnerDuringLogin] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
 
@@ -43,7 +44,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
             try {
                 const value = await AsyncStorage.getItem('userData');
                 if (value !== null) {
-                    const parsedValue: ProfileType = JSON.parse(value);
+                    const parsedValue: UserType = JSON.parse(value);
                     setNameLogin(parsedValue.nome);
                     setUserLogged(parsedValue);
                     setIsLogged(true);
