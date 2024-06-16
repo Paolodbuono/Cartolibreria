@@ -161,16 +161,24 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                         autoCorrect={false}
                         placeholder="Login"
                     />
-                    <View style={styles.passwordContainer}>
-                        <TextInput
-                            style={styles.input}
-                            value={password}
-                            onChangeText={setPassword}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            secureTextEntry={secureTextEntry}
-                            placeholder="Password"
-                        />
+                </View>
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={{ ...styles.input, flex: 1 }}
+                        value={password}
+                        onChangeText={setPassword}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        secureTextEntry={secureTextEntry}
+                        placeholder="Password"
+                    />
+                    <View style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        borderRadius: 50,
+                        marginLeft: 10,
+                        marginBottom: 5
+                    }}>
                         <CustomButtonComponent onPress={() => setSecureTextEntry(!secureTextEntry)} icon={secureTextEntry ? "eye" : "closedEye"} />
                     </View>
                 </View>
@@ -183,19 +191,21 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                         containerStyle={{ display: "flex", flexDirection: "row" }}
                     />
                 </View>
-                <TouchableOpacity style={styles.buttonContainer} onPress={onLoginPress}>
+                <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
                     <Text style={styles.textButton}>Log In</Text>
                 </TouchableOpacity>
+
+
                 <View style={styles.bottomLinks}>
-                    <TouchableOpacity onPress={() => router.push('PaswordRecoveryView')}>
+                    <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
                         <Text style={styles.textButton}>Hai dimenticato la password?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => router.push('SignInView')}>
+                    <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}>
                         <Text style={styles.textButton}>Non sei cliente?</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </View >
     );
 
     return (

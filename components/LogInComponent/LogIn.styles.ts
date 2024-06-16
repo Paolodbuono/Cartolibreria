@@ -21,7 +21,9 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
     inputContainer: {
-        width: wp('80%'),
+        width: wp('100%'),
+        paddingRight: wp('5%'),
+        paddingLeft: wp('5%'),
         marginBottom: 20,
     },
     input: {
@@ -32,14 +34,13 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
     },
     passwordContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        width: wp('90%'),
+        marginLeft: wp('5%'),
+        marginRight: wp('5%'),
+        marginBottom: 20,
     },
     radioContainer: {
         alignItems: 'center',
@@ -50,19 +51,39 @@ export const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
     },
-    buttonContainer: {
+    loginButton: {
         backgroundColor: '#007bff',
         borderRadius: 5,
         padding: 10,
+        width: wp('90%'),
+        marginRight: wp('5%'),
+        marginLeft: wp('5%'),
+        alignItems: 'center',
+    },
+    secondaryButton: {
+        backgroundColor: '#f4511e',
+        borderRadius: 5,
+        margin: 10,
+        padding: 10,
         width: wp('80%'),
+        marginRight: wp('5%'),
+        marginLeft: wp('5%'),
         alignItems: 'center',
     },
     textButton: {
         color: '#fff',
         fontSize: 16,
     },
+    linkButton: {
+        color: '#007bff',
+        fontSize: 16,
+    },
     bottomLinks: {
-        marginTop: 20,
+        margin: 20,
+        width: wp('90%'),
+        borderTopWidth: 1,
+        borderColor: "#8dc6ff"
+
     },
     modalContainer: {
         flex: 1,
