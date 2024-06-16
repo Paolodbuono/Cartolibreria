@@ -14,7 +14,7 @@ const CustomButtonComponent: React.FC<CustomButtonProps> = ({ onPress, icon }) =
     return (
         <TouchableOpacity onPress={onPress}>
             <View style={btnStyle}>
-                <FontAwesomeIcon icon={type} style={fontStyle} />
+                <FontAwesomeIcon icon={type} style={fontStyle} size={20} />
             </View>
         </TouchableOpacity>
     );
