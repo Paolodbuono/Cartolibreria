@@ -5,9 +5,3 @@ export interface Field {
     type?: 'date' | 'email';
     formName: string;
 }
-
-export interface Props {
-    navigation: {
-        navigate: (screen: string) => void;
-    };
-}
