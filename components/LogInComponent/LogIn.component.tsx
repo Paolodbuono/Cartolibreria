@@ -102,6 +102,68 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const renderNotLoggedScreen = () => (
         <View style={styles.container}>
+            {showSpinnerDuringLogin && <View style={{
+                height: hp("100%"),
+                width: wp("100%"),
+                display: "flex",
+                position: "absolute",
+                alignItems: "center",
+                justifyContent: "center",
+            }}>
+                <Spinner size="large" />
+            </View>}
+            <Text style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</Text>
+            <Text style={styles.subTitle}>Se sei già cliente accedi</Text>
+            <View style={styles.inputContainer}>
+                <TextInput
+                    style={styles.input}
+                    value={username}
+                    onChangeText={setUsername}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholder="Login"
+                />
+            </View>
+            <View style={styles.passwordContainer}>
+                <TextInput
+                    style={{ ...styles.input, flex: 1 }}
+                    value={password}
+                    onChangeText={setPassword}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    secureTextEntry={secureTextEntry}
+                    placeholder="Password"
+                />
+                <View style={{
+                    borderWidth: 1,
+                    borderColor: '#ccc',
+                    borderRadius: 50,
+                    marginLeft: 10,
+                    marginBottom: 5
+                }}>
+                    <CustomButtonComponent onPress={() => setSecureTextEntry(!secureTextEntry)} icon={secureTextEntry ? "eye" : "closedEye"} />
+                </View>
+            </View>
+            <View style={styles.radioContainer}>
+                <Text style={styles.text}>Seleziona sede</Text>
+                <RadioGroup
+                    radioButtons={radioButtonsData}
+                    onPress={setSelectedSede}
+                    selectedId={selectedSede}
+                    containerStyle={{ display: "flex", flexDirection: "row" }}
+                />
+            </View>
+            <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
+                <Text style={styles.textButton}>Log In</Text>
+            </TouchableOpacity>
+            <View style={styles.bottomLinks}>
+                <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
+                    <Text style={styles.textButton}>Hai dimenticato la password?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}>
+                    <Text style={styles.textButton}>Non sei cliente?</Text>
+                </TouchableOpacity>
+            </View>
             <Modal
                 visible={modalSuccessLoginVisible}
                 transparent
@@ -139,72 +201,6 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                     </View>
                 </View>
             </Modal>
-            <View>
-                {showSpinnerDuringLogin && <View style={{
-                    height: hp("100%"),
-                    width: wp("100%"),
-                    display: "flex",
-                    position: "absolute",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}>
-                    <Spinner size="large" />
-                </View>}
-                <Text style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</Text>
-                <Text style={styles.subTitle}>Se sei già cliente accedi</Text>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.input}
-                        value={username}
-                        onChangeText={setUsername}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        placeholder="Login"
-                    />
-                </View>
-                <View style={styles.passwordContainer}>
-                    <TextInput
-                        style={{ ...styles.input, flex: 1 }}
-                        value={password}
-                        onChangeText={setPassword}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        secureTextEntry={secureTextEntry}
-                        placeholder="Password"
-                    />
-                    <View style={{
-                        borderWidth: 1,
-                        borderColor: '#ccc',
-                        borderRadius: 50,
-                        marginLeft: 10,
-                        marginBottom: 5
-                    }}>
-                        <CustomButtonComponent onPress={() => setSecureTextEntry(!secureTextEntry)} icon={secureTextEntry ? "eye" : "closedEye"} />
-                    </View>
-                </View>
-                <View style={styles.radioContainer}>
-                    <Text style={styles.text}>Seleziona sede</Text>
-                    <RadioGroup
-                        radioButtons={radioButtonsData}
-                        onPress={setSelectedSede}
-                        selectedId={selectedSede}
-                        containerStyle={{ display: "flex", flexDirection: "row" }}
-                    />
-                </View>
-                <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
-                    <Text style={styles.textButton}>Log In</Text>
-                </TouchableOpacity>
-
-
-                <View style={styles.bottomLinks}>
-                    <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
-                        <Text style={styles.textButton}>Hai dimenticato la password?</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}>
-                        <Text style={styles.textButton}>Non sei cliente?</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
         </View >
     );
 
