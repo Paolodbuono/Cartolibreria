@@ -14,7 +14,6 @@ export default function LogInView() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Stack.Screen options={{ headerTitle: "Accedi" }} />
-      <Text>Login View</Text>
       <LogInComponent />
     </View>
   );

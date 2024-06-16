@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import axios from 'axios';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner } from 'react-native';
 
@@ -7,13 +10,12 @@ import { useRouter } from 'expo-router';
 import { styles } from './LogIn.styles';
 
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { ProfileComponent, ProfileType } from './Profile.component';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const router = useRouter();
 
-    const [selectedIndex, setSelectedIndex] = useState(0);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [nameLogin, setNameLogin] = useState('');
@@ -22,13 +24,13 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const [isLogged, setIsLogged] = useState(false);
     const [showSpinner, setShowSpinner] = useState(true);
-    const [userLogged, setUserLogged] = useState();
+    const [userLogged, setUserLogged] = useState({ nome: "", email: "", indirizzo: "", citta: "", cellulare: "" });
     const [showSpinnerDuringLogin, setShowSpinnerDuringLogin] = useState(false);
-    const [secureTextEntry, setSecureTextEntry] = useState(false);
+    const [secureTextEntry, setSecureTextEntry] = useState(true);
 
     const SEDI = ['poggiomarino', 'pompei'];
 
-    const [selectedSede, setSelectedSede] = useState<string | undefined>();
+    const [selectedSede, setSelectedSede] = useState<string>("0");
 
 
     const radioButtonsData: RadioButtonProps[] = useMemo(() => ([
@@ -41,14 +43,14 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
             try {
                 const value = await AsyncStorage.getItem('userData');
                 if (value !== null) {
-                    setShowSpinner(false);
-                    setNameLogin(JSON.parse(value).nome);
-                    setUserLogged(JSON.parse(value));
+                    const parsedValue: ProfileType = JSON.parse(value);
+                    setNameLogin(parsedValue.nome);
+                    setUserLogged(parsedValue);
                     setIsLogged(true);
                 } else {
-                    setShowSpinner(false);
                     setIsLogged(false);
                 }
+                setShowSpinner(false);
             } catch (e) {
                 console.log('Error fetching data from AsyncStorage:', e);
             }
@@ -57,50 +59,45 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
         getData();
     }, []);
 
-    const toggleSecureEntry = () => {
-        setSecureTextEntry(!secureTextEntry);
-    };
 
-    const login = () => {
+    const onLoginPress = async () => {
+        const selectedIndexSede = +(selectedSede ?? 0)
         setShowSpinnerDuringLogin(true);
-        fetch(`https://www.libreriabonagura.it/micro/login.asp?libreria=${SEDI[selectedIndex]}&name=${username}&password=${password}`)
-            .then((res) => res.json())
-            .then((loginResponse) => {
-                if (loginResponse && loginResponse.data && loginResponse.data[0]) {
-                    try {
-                        const jsonValue = JSON.stringify(loginResponse.data[0]);
-                        const arraySaveStorege = [
-                            AsyncStorage.setItem('userData', jsonValue),
-                            AsyncStorage.setItem('sedeSelezionata', SEDI[selectedIndex])
-                        ];
 
-                        Promise.all(arraySaveStorege)
-                            .then(() => {
-                                setNameLogin(loginResponse.data[0].nome);
-                                setShowSpinnerDuringLogin(false);
-                                setModalSuccessLoginVisible(true);
-                            })
-                            .catch((e) => {
-                                console.log('Error saving data:', e);
-                                setShowSpinnerDuringLogin(false);
-                                setModalErrorLoginVisible(true);
-                            });
-                    } catch (e) {
-                        console.log('Error handling login response:', e);
+        const res = await axios.get(`https://www.libreriabonagura.it/micro/login.asp?libreria=${SEDI[selectedIndexSede]}&name=${username}&password=${password}`);
+
+        try {
+            const loginResponse = res.data;
+            if (loginResponse && loginResponse.data && loginResponse.data[0]) {
+                const jsonValue = JSON.stringify(loginResponse.data[0]);
+                const arraySaveStorage = [
+                    AsyncStorage.setItem('userData', jsonValue),
+                    AsyncStorage.setItem('sedeSelezionata', SEDI[selectedIndexSede])
+                ];
+
+                Promise.all(arraySaveStorage)
+                    .then(() => {
+                        setNameLogin(loginResponse.data[0].nome);
+                        setShowSpinnerDuringLogin(false);
+                        setModalSuccessLoginVisible(true);
+                    })
+                    .catch((e) => {
+                        console.log('Error saving data:', e);
                         setShowSpinnerDuringLogin(false);
                         setModalErrorLoginVisible(true);
-                    }
-                } else {
-                    console.log('Invalid login response:', loginResponse);
-                    setShowSpinnerDuringLogin(false);
-                    setModalErrorLoginVisible(true);
-                }
-            })
-            .catch((error) => {
-                console.error('Login error:', error);
+                    });
+
+            } else {
+                console.log('Invalid login response:', loginResponse);
                 setShowSpinnerDuringLogin(false);
                 setModalErrorLoginVisible(true);
-            });
+            }
+        } catch (e) {
+            console.log('Error handling login response:', e);
+            setShowSpinnerDuringLogin(false);
+            setModalErrorLoginVisible(true);
+        }
+
     };
 
     const renderNotLoggedScreen = () => (
@@ -174,7 +171,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                             secureTextEntry={secureTextEntry}
                             placeholder="Password"
                         />
-                        <CustomButtonComponent onPress={toggleSecureEntry} icon={secureTextEntry ? "eye" : "closedEye"} />
+                        <CustomButtonComponent onPress={() => setSecureTextEntry(!secureTextEntry)} icon={secureTextEntry ? "eye" : "closedEye"} />
                     </View>
                 </View>
                 <View style={styles.radioContainer}>
@@ -186,7 +183,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                         containerStyle={{ display: "flex", flexDirection: "row" }}
                     />
                 </View>
-                <TouchableOpacity style={styles.buttonContainer} onPress={login}>
+                <TouchableOpacity style={styles.buttonContainer} onPress={onLoginPress}>
                     <Text style={styles.textButton}>Log In</Text>
                 </TouchableOpacity>
                 <View style={styles.bottomLinks}>
@@ -201,7 +198,15 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
         </View>
     );
 
-    return renderNotLoggedScreen();
+    return (
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+            {showSpinner && <Spinner />}
+            {!showSpinner && <>
+                {!isLogged && renderNotLoggedScreen()}
+                {isLogged && <ProfileComponent userLogged={userLogged} />}
+            </>}
+        </SafeAreaView>
+    );
 }
 
 export default LogInComponent;
