@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Button, Modal, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import LogoButtonComponent from '@/components/ButtonsComponent/LogoButton.component';
 import BurgerButtonComponent from '@/components/ButtonsComponent/BurgerButton.component';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ComponentItem = {
   name: string;
@@ -18,20 +19,31 @@ const componentsList: ComponentItem[] = [
 export default function Layout() {
   const router = useRouter();
 
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const openModal = () => {
-    setModalVisible(true);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
+  const [sideBarOpen, isSideBarOpen] = useState(false);
+  const [routesList, setRoutesList] = useState(componentsList);
 
   const navigateToComponent = (componentName: string) => {
     router.push(componentName)
-    closeModal();
+    isSideBarOpen(false);
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('userData');
+        if (value !== null) {
+          const _routesList = routesList.filter(el => el.name !== "Registrati" && el.name !== "Accedi");
+          setRoutesList(_routesList)
+        } else {
+          setRoutesList(componentsList);
+        }
+      } catch (e) {
+        console.log('Error fetching data from AsyncStorage:', e);
+      }
+    };
+
+    getData();
+  }, [])
 
   return (
     <View style={{ flex: 1 }}>
@@ -40,18 +52,18 @@ export default function Layout() {
           headerTintColor: '#f4511e',
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitle: () => <LogoButtonComponent />,
-          headerRight: () => <BurgerButtonComponent onPress={openModal} />,
+          headerRight: () => <BurgerButtonComponent onPress={() => isSideBarOpen(true)} />,
         }}
       >
         <Stack.Screen name="LogInView" options={{}} />
         <Stack.Screen name="SignInView" options={{}} />
         {/* Aggiungi qui altri Stack.Screen per i tuoi componenti */}
       </Stack>
-      <Modal visible={modalVisible} animationType="slide" transparent={true}>
+      <Modal visible={sideBarOpen} animationType="slide" transparent={true}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <FlatList
-              data={componentsList}
+              data={routesList}
               keyExtractor={(item) => item.name}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
@@ -59,7 +71,7 @@ export default function Layout() {
                 </TouchableOpacity>
               )}
             />
-            <Button onPress={closeModal} title="Close Menu" />
+            <Button onPress={() => isSideBarOpen(false)} title="Close Menu" />
           </View>
         </View>
       </Modal>

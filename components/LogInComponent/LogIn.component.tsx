@@ -122,7 +122,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                     onChangeText={setUsername}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder="Login"
+                    placeholder="Email"
                 />
             </View>
             <View style={styles.passwordContainer}>

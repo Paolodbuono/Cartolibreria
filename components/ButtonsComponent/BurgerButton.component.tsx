@@ -5,15 +5,17 @@ interface BurgerButtonProps {
     onPress: (event: GestureResponderEvent) => void;
 }
 
+const urlImg = "../../assets/images/hamburger.png";
+
 const BurgerButtonComponent: React.FC<BurgerButtonProps> = ({ onPress }) => {
-    const urlImg = "../../assets/images/hamburger.png";
 
     return (
         <TouchableOpacity onPress={onPress}>
             <Image style={styles.image} source={require(urlImg)} />
-        </TouchableOpacity>);
+        </TouchableOpacity>
+    );
 }
 
 export default BurgerButtonComponent;
 
-const styles = StyleSheet.create({ image: { width: 54, height: 38} });
+const styles = StyleSheet.create({ image: { width: 54, height: 38 } });

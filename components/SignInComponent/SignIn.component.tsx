@@ -180,7 +180,7 @@ const SignInComponent: React.FC<{}> = () => {
     const handleOnClickResponseModal = () => {
         if (modalResponseText) setModalResponseVisible(false);
         else {
-            router.back(); // redirectToHome
+            router.replace("HomeView"); // redirectToHome
         }
     }
     return (
