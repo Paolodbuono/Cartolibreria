@@ -16,11 +16,11 @@ const componentsList: ComponentItem[] = [
   { name: 'Search', root: "temp" },
   { name: 'Adozioni', root: "temp" },
   { name: 'Prenota appuntamento', root: "temp" },
-  { name: 'Chi Siamo', root: "temp" },
-  { name: 'Avvisi Importanti', root: "temp" },
+  { name: 'Chi Siamo', root: "WhoAreWeView" },
+  { name: 'Avvisi Importanti', root: "NoticeView" },
   { name: 'Perchè sceglierci', root: "temp" },
   { name: 'I miei ordini', root: "temp" },
-  { name: 'Area riervata', root: "LogInView" },
+  { name: 'Area riservata', root: "LogInView" },
   // Aggiungi qui altri componenti della tua app
 ];
 
