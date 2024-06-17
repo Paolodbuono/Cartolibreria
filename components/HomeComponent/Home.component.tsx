@@ -45,7 +45,7 @@ const HomeComponent: React.FC<{}> = () => {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{}} />
+            <Stack.Screen options={{ headerBackVisible: false }} />
             <Image style={styles.imgBanner} source={require(bannerPath)} />
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
