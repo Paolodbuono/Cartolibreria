@@ -12,6 +12,7 @@ import { styles } from './LogIn.styles';
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 import { ProfileComponent } from './Profile.component';
 import { UserType, emptyUser } from '@/types/UserType';
+import { gs } from '@/style/globalStyles';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
@@ -26,7 +27,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
     const [isLogged, setIsLogged] = useState(false);
     const [showSpinner, setShowSpinner] = useState(true);
     const [userLogged, setUserLogged] = useState<UserType>(emptyUser);
-    const [showSpinnerDuringLogin, setShowSpinnerDuringLogin] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
 
     const SEDI = ['poggiomarino', 'pompei'];
@@ -63,7 +64,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const onLoginPress = async () => {
         const selectedIndexSede = +(selectedSede ?? 0)
-        setShowSpinnerDuringLogin(true);
+        setIsLoading(true);
 
         const res = await axios.get(`https://www.libreriabonagura.it/micro/login.asp?libreria=${SEDI[selectedIndexSede]}&name=${username}&password=${password}`);
 
@@ -79,23 +80,23 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                 Promise.all(arraySaveStorage)
                     .then(() => {
                         setNameLogin(loginResponse.data[0].nome);
-                        setShowSpinnerDuringLogin(false);
+                        setIsLoading(false);
                         setModalSuccessLoginVisible(true);
                     })
                     .catch((e) => {
                         console.log('Error saving data:', e);
-                        setShowSpinnerDuringLogin(false);
+                        setIsLoading(false);
                         setModalErrorLoginVisible(true);
                     });
 
             } else {
                 console.log('Invalid login response:', loginResponse);
-                setShowSpinnerDuringLogin(false);
+                setIsLoading(false);
                 setModalErrorLoginVisible(true);
             }
         } catch (e) {
             console.log('Error handling login response:', e);
-            setShowSpinnerDuringLogin(false);
+            setIsLoading(false);
             setModalErrorLoginVisible(true);
         }
 
@@ -103,16 +104,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const renderNotLoggedScreen = () => (
         <View style={styles.container}>
-            {showSpinnerDuringLogin && <View style={{
-                height: hp("100%"),
-                width: wp("100%"),
-                display: "flex",
-                position: "absolute",
-                alignItems: "center",
-                justifyContent: "center",
-            }}>
-                <Spinner size="large" />
-            </View>}
+            {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             <Text style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</Text>
             <Text style={styles.subTitle}>Se sei già cliente accedi</Text>
             <View style={styles.inputContainer}>
@@ -207,7 +199,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-            {showSpinner && <Spinner />}
+            {showSpinner && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!showSpinner && <>
                 {!isLogged && renderNotLoggedScreen()}
                 {isLogged && <ProfileComponent userLogged={userLogged} />}

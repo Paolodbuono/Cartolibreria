@@ -13,6 +13,14 @@ type ComponentItem = {
 const componentsList: ComponentItem[] = [
   { name: 'Registrati', root: "SignInView" },
   { name: 'Accedi', root: "LogInView" },
+  { name: 'Search', root: "temp" },
+  { name: 'Adozioni', root: "temp" },
+  { name: 'Prenota appuntamento', root: "temp" },
+  { name: 'Chi Siamo', root: "temp" },
+  { name: 'Avvisi Importanti', root: "temp" },
+  { name: 'Perchè sceglierci', root: "temp" },
+  { name: 'I miei ordini', root: "temp" },
+  { name: 'Area riervata', root: "LogInView" },
   // Aggiungi qui altri componenti della tua app
 ];
 
@@ -27,23 +35,21 @@ export default function Layout() {
     isSideBarOpen(false);
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem('userData');
-        if (value !== null) {
-          const _routesList = routesList.filter(el => el.name !== "Registrati" && el.name !== "Accedi");
-          setRoutesList(_routesList)
-        } else {
-          setRoutesList(componentsList);
-        }
-      } catch (e) {
-        console.log('Error fetching data from AsyncStorage:', e);
+  const getRoutes = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      if (value !== null) { // Vuol dire che è loggato
+        const _routesList = routesList.filter(el => el.name !== "Registrati" && el.name !== "Accedi");
+        setRoutesList(_routesList)
+      } else {
+        setRoutesList(componentsList);
       }
-    };
+    } catch (e) {
+      console.log('Error fetching data from AsyncStorage:', e);
+    }
 
-    getData();
-  }, [])
+    isSideBarOpen(true);
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -52,7 +58,7 @@ export default function Layout() {
           headerTintColor: '#f4511e',
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitle: () => <LogoButtonComponent />,
-          headerRight: () => <BurgerButtonComponent onPress={() => isSideBarOpen(true)} />,
+          headerRight: () => <BurgerButtonComponent onPress={getRoutes} />,
         }}
       >
         <Stack.Screen name="LogInView" options={{}} />

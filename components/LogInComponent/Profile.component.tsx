@@ -5,29 +5,30 @@ import { View, ScrollView, Button, Text, ActivityIndicator as Spinner } from 're
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
 import { UserType } from '@/types/UserType';
+import { gs } from '@/style/globalStyles';
 
 export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
 
-    const [showSpinner, setShowSpinner] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [sedeSelezionata, setSedeSelezionata] = useState<string>('');
 
     const getSedeFromStorage = async () => {
         const res = await AsyncStorage.getItem('sedeSelezionata');
         setSedeSelezionata(res ?? "");
-        setShowSpinner(false);
+        setIsLoading(false);
     }
 
     useEffect(() => { getSedeFromStorage() }, []);
 
     const logOut = () => {
-        setShowSpinner(true)
+        setIsLoading(true)
         const arrayAsyncStorege = [];
         arrayAsyncStorege.push(AsyncStorage.removeItem('userData'))
         arrayAsyncStorege.push(AsyncStorage.removeItem('sedeSelezionata'))
         Promise.all(arrayAsyncStorege)
             .then(() => {
-                setShowSpinner(false);
+                setIsLoading(false);
                 router.replace("HomeView");
             })
             .catch((e) => {
@@ -37,8 +38,8 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
 
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }}>
-            {showSpinner && <Spinner />}
-            {!showSpinner &&
+            {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
+            {!isLoading &&
                 <>
                     <Text style={{ fontSize: hp('2.5%'), padding: 10 }}>
                         Bentornato {userLogged.nome}

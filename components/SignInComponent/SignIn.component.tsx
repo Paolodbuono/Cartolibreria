@@ -11,6 +11,7 @@ import FormFields from './FormField.component';
 import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
+import { gs } from '@/style/globalStyles';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -186,18 +187,7 @@ const SignInComponent: React.FC<{}> = () => {
     return (
         <SafeAreaView>
             <KeyboardAwareScrollView>
-                {isLoading &&
-                    <View style={{
-                        height: hp("100%"),
-                        width: wp("100%"),
-                        display: "flex",
-                        position: "absolute",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}>
-                        <Spinner size="large" />
-                    </View>
-                }
+                {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <View style={styles.containerForm}>
                         <Text style={styles.title}>Modulo di registrazione</Text>

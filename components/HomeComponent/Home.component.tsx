@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { Text, View, StyleSheet, Button, Image, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Button, Image, TouchableOpacity, ActivityIndicator as Spinner } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserType, emptyUser } from '@/types/UserType';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { gs } from '@/style/globalStyles';
 
 // Paths
 const bannerPath = "../../assets/images/_headerBonaguraLogo@2.png";
@@ -18,6 +19,7 @@ const HomeComponent: React.FC<{}> = () => {
 
     const [stateUser, setStateUser] = useState<UserType>(emptyUser);
     const [isUserLogged, setIsUserLogged] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const getData = async () => {
@@ -30,6 +32,7 @@ const HomeComponent: React.FC<{}> = () => {
                 } else {
                     setIsUserLogged(false)
                 }
+                setIsLoading(false);
             } catch (e) {
                 console.log('Error fetching data from AsyncStorage:', e);
             }
@@ -45,43 +48,45 @@ const HomeComponent: React.FC<{}> = () => {
             <Stack.Screen options={{}} />
             <Image style={styles.imgBanner} source={require(bannerPath)} />
             <View style={styles.content}>
-                {isUserLogged && <>
-                    <Text style={styles.welcome}>Ciao {stateUser.nome}</Text>
-                    <View style={styles.buttonRow}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <Image style={styles.button} source={require(ordersPath)} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                Area Riservata
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <Image style={styles.button} source={require(adozioniPath)} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                Area Riservata
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonRow}>
-                        <TouchableOpacity onPress={() => { }}>
-                            <Image style={styles.button} source={require(appuntamentoPath)} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                Area Riservata
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => router.push("LogInView")}>
-                            <Image style={styles.button} source={require(personalAreaPath)} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                Area Riservata
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
+                {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
+                {!isLoading && <>
+                    {isUserLogged && <>
+                        <Text style={styles.welcome}>Ciao {stateUser.nome}</Text>
+                        <View style={styles.buttonRow}>
+                            <TouchableOpacity onPress={() => { }}>
+                                <Image style={styles.button} source={require(ordersPath)} />
+                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                    I miei ordini
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { }}>
+                                <Image style={styles.button} source={require(adozioniPath)} />
+                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                    Adozioni
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.buttonRow}>
+                            <TouchableOpacity onPress={() => { }}>
+                                <Image style={styles.button} source={require(appuntamentoPath)} />
+                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                    Appuntamento
+                                </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => router.push("LogInView")}>
+                                <Image style={styles.button} source={require(personalAreaPath)} />
+                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                    Area Riservata
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>}
+                    {!isUserLogged && <>
+                        <Text>Effettua l'accesso!</Text>
+                        <Button title="Registrati!" onPress={() => router.push("SignInView")} />
+                        <Button title="Accedi!" onPress={() => router.push("LogInView")} />
+                    </>}
                 </>}
-                {!isUserLogged && <>
-                    <Text>Effettua l'accesso!</Text>
-                    <Button title="Registrati!" onPress={() => router.push("SignInView")} />
-                    <Button title="Accedi!" onPress={() => router.push("LogInView")} />
-                </>}
-
             </View>
             <Image style={styles.imgFooter} source={require(footerPath)} />
         </View>
