@@ -11,7 +11,6 @@ type ComponentItem = {
 };
 
 const componentsList: ComponentItem[] = [
-  { name: 'Registrati', root: "SignInView" },
   { name: 'Accedi', root: "LogInView" },
   { name: 'Search', root: "temp" },
   { name: 'Adozioni', root: "temp" },
@@ -39,7 +38,7 @@ export default function Layout() {
     try {
       const value = await AsyncStorage.getItem('userData');
       if (value !== null) { // Vuol dire che è loggato
-        const _routesList = routesList.filter(el => el.name !== "Registrati" && el.name !== "Accedi");
+        const _routesList = routesList.filter(el => el.name !== "Accedi");
         setRoutesList(_routesList)
       } else {
         setRoutesList(componentsList);

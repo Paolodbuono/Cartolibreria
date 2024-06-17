@@ -50,46 +50,39 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    {isUserLogged && <>
-                        <Text style={styles.welcome}>Ciao {stateUser.nome}</Text>
-                        <View style={styles.buttonRow}>
-                            <TouchableOpacity onPress={() => { }}>
-                                <Image style={styles.button} source={require(ordersPath)} />
-                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                    I miei ordini
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { }}>
-                                <Image style={styles.button} source={require(adozioniPath)} />
-                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                    Adozioni
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.buttonRow}>
-                            <TouchableOpacity onPress={() => { }}>
-                                <Image style={styles.button} source={require(appuntamentoPath)} />
-                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                    Appuntamento
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => router.push("LogInView")}>
-                                <Image style={styles.button} source={require(personalAreaPath)} />
-                                <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                    Area Riservata
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                    </>}
-                    {!isUserLogged && <>
-                        <Text>Effettua l'accesso!</Text>
-                        <Button title="Registrati!" onPress={() => router.push("SignInView")} />
-                        <Button title="Accedi!" onPress={() => router.push("LogInView")} />
-                    </>}
+                    <Text style={styles.welcome}>Benvenuto {stateUser.nome}!</Text>
+                    <View style={styles.buttonRow}>
+                        <TouchableOpacity onPress={() => { }}>
+                            <Image style={styles.button} source={require(ordersPath)} />
+                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                I miei ordini
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { }}>
+                            <Image style={styles.button} source={require(adozioniPath)} />
+                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                Adozioni
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonRow}>
+                        <TouchableOpacity onPress={() => { }}>
+                            <Image style={styles.button} source={require(appuntamentoPath)} />
+                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                Appuntamento
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => router.push("LogInView")}>
+                            <Image style={styles.button} source={require(personalAreaPath)} />
+                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                                {isUserLogged ? "Area Riservata" : "Login"}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </>}
             </View>
             <Image style={styles.imgFooter} source={require(footerPath)} />
-        </View>
+        </View >
     );
 }
 
@@ -102,15 +95,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: 20,
+        gap: 60,
         marginTop: 10
     },
     buttonRow: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        gap: 20,
-
+        gap: 60,
     },
     button: {
         margin: "auto",
