@@ -11,6 +11,7 @@ type ComponentItem = {
 };
 
 const componentsList: ComponentItem[] = [
+  { name: 'Home', root: "HomeView" },
   { name: 'Accedi', root: "LogInView" },
   { name: 'Search', root: "temp" },
   { name: 'Adozioni', root: "temp" },

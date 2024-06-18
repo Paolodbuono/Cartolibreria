@@ -66,7 +66,7 @@ const HomeComponent: React.FC<{}> = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={styles.buttonRow}>
-                        <TouchableOpacity onPress={() => { }}>
+                        <TouchableOpacity onPress={() => { router.push("AppuntamentoView") }}>
                             <Image style={styles.button} source={require(appuntamentoPath)} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 Appuntamento
