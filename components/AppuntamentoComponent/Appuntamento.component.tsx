@@ -6,11 +6,12 @@ import moment from 'moment';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { styles } from './Appuntamento.styles';
-import { SEDI, i18n } from './Appuntamento.constants';
+import { SEDI } from './Appuntamento.constants';
 import { gs } from '@/style/globalStyles';
 import EmailForm from './EmailFormComponent/EmailForm.component';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { Picker } from '@react-native-picker/picker';
+import { useRouter } from 'expo-router';
 
 interface PrenotazioneScreenProps {
     navigation: any;
@@ -29,14 +30,16 @@ interface PrenotazioneData {
 
 const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
 
+    const router = useRouter();
+
     const [sedeIndex, setSedeIndex] = useState<string>("0");
     const [isLoading, setIsLoading] = useState(true);
     const [prenotazionePresente, setPrenotazionePresente] = useState(false);
     const [datiPrenotazionePresente, setDatiPrenotazionePresente] = useState<PrenotazioneData | null>(null);
     const [isLogged, setIsLogged] = useState<boolean>(false);
     const [giornoPrenotazione, setGiornoPrenotazione] = useState<Date>(moment().toDate());
-    const [selectedIndex, setSelectedIndex] = useState(0);
-    const [selectedIndexMinuti, setSelectedIndexMinuti] = useState(0);
+    const [selectedOrario, setSelectedOrario] = useState(0);
+    const [selectedMinuti, setSelectedMinuti] = useState(0);
     const [orariMattino, setOrariMattino] = useState<{ key: number; label: string }[]>([]);
     const [orariMattinoValue, setOrariMattinoValue] = useState<string[]>([]);
     const [minutiMattino, setMinutiMattino] = useState<{ key: number; label: string }[]>([]);
@@ -55,20 +58,7 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
     ]), []);
 
     LocaleConfig.locales['it'] = {
-        monthNames: [
-            'Gennaio',
-            'Febbraio',
-            'Marzo',
-            'Aprile',
-            'Maggio',
-            'Giugno',
-            'Luglio',
-            'Agosto',
-            'Settembre',
-            'Ottobre',
-            'Novembre',
-            'Dicembre'
-        ],
+        monthNames: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
         monthNamesShort: ['Gen.', 'Feb.', 'Mar.', 'Apr.', 'Mag.', 'Giu.', 'Lug.', 'Ago.', 'Set.', 'Ott.', 'Nov.', 'Dic.'],
         dayNames: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
         dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mer.', 'Gio.', 'Ven.', 'Sab.'],
@@ -103,7 +93,7 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
 
                     if (moment().isBefore(moment(parsedPrenotazione.dataPrenotazioneRaw).add(3, 'minutes'))) {
                         console.log('Prenotazione Valida ---->');
-                        console.log('Dati prenotazione presente --->', JSON.parse(parsedPrenotazione));
+                        console.log('Dati prenotazione presente --->', parsedPrenotazione);
                         setDatiPrenotazionePresente(parsedPrenotazione);
                         setPrenotazionePresente(true);
                     } else {
@@ -150,164 +140,119 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
     }, []);
 
     const toggleModalCheckDate = () => setModalCheckDateVisibile(!modalCheckDateVisibile);
-
-    const handleToggleModalInserInfo = () => {
-        setModalInserInfoVisibile(!modalInserInfoVisibile);
-    };
+    const handleToggleModalInserInfo = () => { setModalInserInfoVisibile(!modalInserInfoVisibile); };
 
     const handleRemovePrenotazione = async () => {
-        Alert.alert(
-            "Cancella prenotazione",
-            "Sei sicuro di voler cancellare la tua prenotazione?",
-            [
-                {
-                    text: "Annulla",
-                    style: "cancel"
-                },
-                {
-                    text: "Conferma",
-                    onPress: async () => {
-                        await AsyncStorage.removeItem('prenotazione');
-                        setPrenotazionePresente(false);
-                    }
+        Alert.alert("Cancella prenotazione", "Sei sicuro di voler cancellare la tua prenotazione?", [
+            {
+                text: "Annulla",
+                style: "cancel"
+            },
+            {
+                text: "Conferma",
+                onPress: async () => {
+                    await AsyncStorage.removeItem('prenotazione');
+                    setPrenotazionePresente(false);
                 }
-            ]
+            }
+        ]
         );
     };
 
-    const handleCheckDatePrenotazione = async () => {
-        console.log("moment(giornoPrenotazione).format('DD/MM/YYYY')", moment(giornoPrenotazione).format('DD/MM/YYYY'))
-        console.log("SEDI[sedeIndex]", SEDI[+sedeIndex])
-        try {
-            const response = await axios.post(`https://69g0zt49u0.execute-api.eu-central-1.amazonaws.com/verificaDataPrenotazione`, {
-                dataPrenotazione: moment(giornoPrenotazione).format('DD/MM/YYYY'),
-                sede: SEDI[+sedeIndex],
-            });
-            console.log("response", response);
-            if (response.data.success) {
-                setResCheckDate(response.data);
-                toggleModalCheckDate();
-                handleToggleModalInserInfo();
+    const checkDate = () => {
+        const formdata = new FormData();
+        const currentDate = moment().format("YYYY-MM-DD");
+        const bookingDate = moment(giornoPrenotazione).format("YYYY-MM-DD");
+        const currentHour = moment().hour();
+        const currentMinute = moment().minute();
+        const bookingHour = selectedOrario;
+        const bookingMinute = selectedMinuti;
+
+        const submitForm = (ora: string) => {
+            formdata.append("data", bookingDate);
+            formdata.append("ora", ora);
+
+            axios.post(`https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=${SEDI[+sedeIndex]}&opt=1`, formdata, {
+                headers: { "Token": "1me0si3nahr" }
+            }).then(response => response.data)
+                .then(result => {
+                    console.log("Risultato check Date", result.esito);
+                    setResCheckDate(result.esito);
+                    setModalCheckDateVisibile(true);
+                }).catch(error => console.log('error', error));
+        };
+
+        if (currentDate === bookingDate) {
+            console.log('Giorni prenotazione coincidono');
+
+            if (currentHour < bookingHour || (currentHour === bookingHour && currentMinute <= bookingMinute)) {
+                const ora = currentHour < bookingHour ?
+                    `${bookingHour}:${bookingMinute}:00` :
+                    `${bookingHour}:${bookingMinute}:00`;
+
+                console.log(currentHour < bookingHour ? 'Ora prenotazione successiva ad ora attuale' : 'Ora prenotazione uguale ad ora attuale e minuti attuali minori di minuti selezionati');
+                submitForm(ora);
+            } else {
+                Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
             }
-        } catch (error) {
-            console.log('Error checking date', error);
+        } else if (currentDate < bookingDate) {
+            submitForm(`${bookingHour}:${bookingMinute}:00`);
+        } else {
+            Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
         }
     };
 
-    const checkDate = () => {
-        console.log("Continuare da qua... 18/06/14:49")
-        const formdata = new FormData();
-        console.log('Check orario scaduto ------->', moment().hour(), orariMattinoValue[selectedIndex - 1], moment().minute(), minutiMattinoValue[selectedIndexMinuti - 1], (moment().hour() === parseInt(orariMattinoValue[selectedIndex - 1]) && moment().minute() <= parseInt(minutiMattinoValue[selectedIndexMinuti - 1])))
-        console.log('Check orario scaduto ------->', moment().format("YYYY-MM-DD"), moment(giornoPrenotazione).format("YYYY-MM-DD"), moment().format("YYYY-MM-DD") === moment(giornoPrenotazione).format("YYYY-MM-DD"));
-
-        if (moment().format("YYYY-MM-DD") === moment(giornoPrenotazione).format("YYYY-MM-DD")) {
-            console.log('Giorni prenotazione coincidono')
-            if ((moment().hour() < parseInt(orariMattinoValue[selectedIndex - 1]))) {
-                console.log('Ora prenotazione successiva ad ora attuale')
-                formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
-                formdata.append("ora", orariMattinoValue[selectedIndex - 1] + ':' + minutiMattinoValue[selectedIndexMinuti - 1] + ':00');
-
-                axios.post("https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=" + SEDI[+sedeIndex] + "&opt=1", formdata, {
-                    headers: {
-                        "Token": "1me0si3nahr"
-                    }
-                })
-                    .then(response => response.data)
-                    .then(result => {
-                        console.log("Risultato check Date", result.esito)
-                        setResCheckDate(result.esito);
-                        setModalCheckDateVisibile(true)
-                    })
-                    .catch(error => console.log('error', error));
-            } else if (moment().hour() === parseInt(orariMattinoValue[selectedIndex - 1]) && moment().minute() <= parseInt(minutiMattinoValue[selectedIndexMinuti - 1])) {
-                // console.log('Ora prenotazione uguale ad ora attuale e minuti attuali minori di minuti selezionati')
-                formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
-                formdata.append("ora", orariMattinoValue[selectedIndex - 1] + ':' + minutiMattinoValue[selectedIndexMinuti - 1] + ':00');
-
-                axios.post("https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=" + SEDI[+sedeIndex] + "&opt=1", formdata, {
-                    headers: {
-                        "Token": "1me0si3nahr"
-                    }
-                })
-                    .then(response => response.data)
-                    .then(result => {
-                        console.log("Risultato check Date", result.esito)
-                        setResCheckDate(result.esito);
-                        setModalCheckDateVisibile(true)
-                    })
-                    .catch(error => console.log('error', error));
-            }
-            else {
-                console.log('Ora prenotazione passata', moment().hour(), parseInt(orariMattinoValue[selectedIndex - 1]), moment().minute(), parseInt(minutiMattinoValue[selectedIndexMinuti - 1]))
-                Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato")
-
-            }
-        }
-        else if (moment().format("YYYY-MM-DD") < moment(giornoPrenotazione).format("YYYY-MM-DD")) {
-            formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
-            formdata.append("ora", orariMattinoValue[selectedIndex - 1] + ':' + minutiMattinoValue[selectedIndexMinuti - 1] + ':00');
-
-            axios.post("https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=" + SEDI[+sedeIndex] + "&opt=1", formdata, {
-                headers: {
-                    "Token": "1me0si3nahr"
-                }
-            })
-                .then(response => response.data)
-                .then(result => {
-                    console.log("Risultato check Date", result.esito)
-                    setResCheckDate(result.esito);
-                    setModalCheckDateVisibile(true)
-                })
-                .catch(error => console.log('error', error));
-        } else {
-            // console.log('Giorno prenotazione passato')
-            Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato")
-
-        }
-    }
 
 
     const handlePrenota = async () => {
-        if (!nome || !cognome || !email || !numeroCell) {
-            Alert.alert('Errore', 'Compila tutti i campi');
-            return;
-        }
+        if (!nome || !cognome || !email || !numeroCell) return Alert.alert('Errore', 'Compila tutti i campi');
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Alert.alert('Errore', 'Inserisci un e-mail valida per prenotarti');
 
-        const dataPrenotazione = moment(giornoPrenotazione).set({ hour: Number(orariMattinoValue[selectedIndex]), minute: Number(minutiMattinoValue[selectedIndexMinuti]) }).format();
-        const dataPrenotazioneReadable = moment(giornoPrenotazione).set({ hour: Number(orariMattinoValue[selectedIndex]), minute: Number(minutiMattinoValue[selectedIndexMinuti]) }).format('DD/MM/YYYY HH:mm');
+        const formdata = new FormData();
+        formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
+        formdata.append("ora", selectedOrario + ':' + selectedMinuti + ':00');
+        formdata.append("nome", nome);
+        formdata.append("cognome", cognome);
+        formdata.append("email", email);
+        formdata.append("telefono", numeroCell);
+        setIsLoading(true);
+        axios.post("https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=" + SEDI[+sedeIndex] + "&opt=2", formdata, { headers: { "Token": "1me0si3nahr" } })
+            .then(response => response.data).then(result => {
+                console.log('Risposta Insert Date ---->', result)
+                if (result.esito.toLocaleLowerCase() !== 'ko') {
+                    setIsLoading(false);
+                    const dataPrenotazioneConOrario = moment(giornoPrenotazione);
+                    dataPrenotazioneConOrario.set({ hour: selectedOrario, minute: selectedMinuti, second: 0, millisecond: 0 })
+                    const jsonPrenotazione = {
+                        id: result.id,
+                        nome,
+                        cognome,
+                        email,
+                        cellulare: numeroCell,
+                        sede: SEDI[+sedeIndex],
+                        dataPrenotazioneRaw: moment(dataPrenotazioneConOrario),
+                        dataPrenotazione: dataPrenotazioneConOrario.format('DD-MM-YYYY'),
+                        orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm')
+                    }
 
-        try {
-            const response = await axios.post(`https://69g0zt49u0.execute-api.eu-central-1.amazonaws.com/prenota`, {
-                nome,
-                cognome,
-                email,
-                numeroCell,
-                dataPrenotazione,
-                sede: SEDI[+sedeIndex],
+                    console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
+                    AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+
+                    Alert.alert('Prenotazione effettuata', 'Prenotazione avvenuta con successo indica i tuoi dati quando verrai in negozio. Il tuo codice prenotazione è: ' + result.id,
+                        [{ text: 'OK', onPress: async () => { router.replace("HomeView"); } },],
+                        { cancelable: false }
+                    );
+                    setModalInserInfoVisibile(false);
+                } else {
+                    setIsLoading(false);
+                    Alert.alert('Errore', 'Problema con la prenotazione riprova!');
+                }
+            })
+            .catch(error => {
+                console.log('error prenotazione', error)
+                Alert.alert('Errore', 'Problema con la prenotazione riprova!');
             });
-            if (response.data.success) {
-                const prenotazioneData: PrenotazioneData = {
-                    nome,
-                    cognome,
-                    email,
-                    numeroCell,
-                    dataPrenotazioneRaw: dataPrenotazione,
-                    dataPrenotazione: dataPrenotazioneReadable,
-                    sede: SEDI[+sedeIndex],
-                    numPrenotazione: response.data.numPrenotazione,
-                };
-                await AsyncStorage.setItem('prenotazione', JSON.stringify(prenotazioneData));
-                setDatiPrenotazionePresente(prenotazioneData);
-                setPrenotazionePresente(true);
-                handleToggleModalInserInfo();
-                Alert.alert('Prenotazione effettuata', `La tua prenotazione è stata effettuata per il giorno ${dataPrenotazioneReadable}`);
-            }
-        } catch (error) {
-            console.log('Error creating booking', error);
-        }
     };
-
-    // returns
 
     if (isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
 
@@ -363,7 +308,7 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
                     <View style={styles.timeContainer}>
                         <View style={styles.hours}>
                             <Text>Ora</Text>
-                            <Picker style={{ width: '100%' }} selectedValue={selectedIndex} onValueChange={(itemValue, itemIndex) => setSelectedIndex(itemValue)}>
+                            <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
                                 {orariMattino.map((orario) => (
                                     <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />
                                 ))}
@@ -372,7 +317,7 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
 
                         <View style={styles.minutes}>
                             <Text>Minuto</Text>
-                            <Picker style={{ width: '100%' }} selectedValue={selectedIndexMinuti} onValueChange={(itemValue, itemIndex) => setSelectedIndexMinuti(itemValue)}>
+                            <Picker style={{ width: '100%' }} selectedValue={selectedMinuti} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)}>
                                 {minutiMattino.map((orario) => (
                                     <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />
                                 ))}
@@ -389,22 +334,28 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
                 animationType="slide"
             >
                 <View style={styles.modalContainer}>
-                    <Text style={styles.title}>Orari disponibili</Text>
-                    {resCheckDate?.orari?.length > 0 ? (
-                        resCheckDate.orari.map((orario: string, index: number) => (
-                            <Text key={index} style={styles.text}>{orario}</Text>
-                        ))
-                    ) : (
-                        <Text style={styles.text}>Nessun orario disponibile</Text>
-                    )}
-                    <Button title="Chiudi" onPress={toggleModalCheckDate} />
+                    {resCheckDate.toLocaleLowerCase() == 'ok' && <>
+                        <View >
+                            <Text>L'orario selezionato è disponibile </Text>
+                            <Text>Vuoi confermare la prenotazione per: {moment(giornoPrenotazione).format("DD-MM-YYYY") + " ore " + selectedOrario + ':' + (selectedMinuti < 10 ? "0" + selectedMinuti : selectedMinuti)}</Text>
+                            <Button title="Conferma" onPress={() => {
+                                setModalCheckDateVisibile(false)
+                                setModalInserInfoVisibile(true)
+                            }} />
+                            <Button title="Annulla" onPress={toggleModalCheckDate} />
+                        </View>
+                    </>}
+                    {resCheckDate.toLocaleLowerCase() !== 'ok' && <>
+                        <View >
+                            <Text>Orario selezionato non disponibile! </Text>
+                            <Text>Anche se non trovi un orario utile recati ugualmente presso uno dei nostri punti vendita. </Text>
+                            <Text>Grazie ai molti addetti alle vendite l'attesa sarà comunque breve!</Text>
+                            <Button title="Chiudi" onPress={toggleModalCheckDate} />
+                        </View>
+                    </>}
                 </View>
             </Modal>
-            <Modal
-                visible={modalInserInfoVisibile}
-                transparent={true}
-                animationType="slide"
-            >
+            <Modal visible={modalInserInfoVisibile} transparent={true} animationType="slide">
                 <View style={styles.container}>
                     <EmailForm
                         nome={nome}
@@ -415,14 +366,6 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
                         setEmail={setEmail}
                         numeroCell={numeroCell}
                         setNumroCell={setNumroCell}
-                        orariMattino={orariMattino}
-                        orariMattinoValue={orariMattinoValue}
-                        selectedIndex={selectedIndex}
-                        setSelectedIndex={setSelectedIndex}
-                        minutiMattino={minutiMattino}
-                        minutiMattinoValue={minutiMattinoValue}
-                        selectedIndexMinuti={selectedIndexMinuti}
-                        setSelectedIndexMinuti={setSelectedIndexMinuti}
                         handlePrenota={handlePrenota}
                     />
                     <Button title="Chiudi" onPress={handleToggleModalInserInfo} />
