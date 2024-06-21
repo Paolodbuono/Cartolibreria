@@ -3,7 +3,6 @@ import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner } from 'react-native';
 
 import { useRouter } from 'expo-router';
@@ -13,6 +12,7 @@ import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 import { ProfileComponent } from './Profile.component';
 import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
+import { radioButtonSede } from '@/utils/global.utils';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
@@ -34,11 +34,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     const [selectedSede, setSelectedSede] = useState<string>("0");
 
-
-    const radioButtonsData: RadioButtonProps[] = useMemo(() => ([
-        { id: '1', label: 'Poggiomarino', value: 'Poggiomarino' },
-        { id: '2', label: 'Pompei', value: 'Pompei' }
-    ]), []);
+    const radioButtonsData: RadioButtonProps[] = useMemo(() => (radioButtonSede), []);
 
     useEffect(() => {
         const getData = async () => {

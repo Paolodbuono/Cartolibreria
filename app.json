@@ -13,12 +13,25 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.myapp",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "config": {
+        "useNextNetworkLayer": true,
+        "package": "com.myapp"
+      }
+    },
+    "web": {
+      "config": {
+        "useNextNetworkLayer": true
       }
     },
     "plugins": [

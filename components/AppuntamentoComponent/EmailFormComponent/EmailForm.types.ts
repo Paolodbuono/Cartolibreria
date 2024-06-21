@@ -10,6 +10,8 @@ export interface EmailFormProps {
   numeroCell: string;
   setNumroCell: (numeroCell: string) => void;
   handlePrenota: () => void;
+  handleToggleModalInserInfo: () => void;
+  prenotazioneDate: string;
 }
 
 export interface EmailFormHandle {

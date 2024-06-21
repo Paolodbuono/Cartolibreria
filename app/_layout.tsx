@@ -15,7 +15,7 @@ const componentsList: ComponentItem[] = [
   { name: 'Accedi', root: "LogInView" },
   { name: 'Search', root: "temp" },
   { name: 'Adozioni', root: "temp" },
-  { name: 'Prenota appuntamento', root: "temp" },
+  { name: 'Prenota appuntamento', root: "AppuntamentoView" },
   { name: 'Chi Siamo', root: "WhoAreWeView" },
   { name: 'Avvisi Importanti', root: "NoticeView" },
   { name: 'Perchè sceglierci', root: "temp" },

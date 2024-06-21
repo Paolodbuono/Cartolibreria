@@ -12,6 +12,7 @@ import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 import { gs } from '@/style/globalStyles';
+import { radioButtonSede } from '@/utils/global.utils';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -26,10 +27,7 @@ const SignInComponent: React.FC<{}> = () => {
     const [modalResponseText, setModalResponseText] = useState<string>("");
     const [modalResponseVisible, setModalResponseVisible] = useState<boolean>(false);
 
-    const radioButtonsData: RadioButtonProps[] = useMemo(() => ([
-        { id: '1', label: 'Poggiomarino', value: 'Poggiomarino' },
-        { id: '2', label: 'Pompei', value: 'Pompei' }
-    ]), []);
+    const radioButtonsData: RadioButtonProps[] = useMemo(() => (radioButtonSede), []);
 
     const isEqualPasswords = () => {
         const password = formValues.current[fields.findIndex(field => field.formName === 'password')];

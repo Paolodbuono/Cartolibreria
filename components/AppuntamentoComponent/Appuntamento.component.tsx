@@ -1,71 +1,48 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { View, Alert, Modal, Text, Button, ActivityIndicator as Spinner } from 'react-native';
-import { Calendar, LocaleConfig } from 'react-native-calendars';
-
 import moment from 'moment';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { styles } from './Appuntamento.styles';
-import { SEDI } from './Appuntamento.constants';
-import { gs } from '@/style/globalStyles';
-import EmailForm from './EmailFormComponent/EmailForm.component';
-import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { Picker } from '@react-native-picker/picker';
+import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
+import { View, Alert, Modal, Text, Button, ActivityIndicator as Spinner, TouchableOpacity } from 'react-native';
 
-interface PrenotazioneScreenProps {
-    navigation: any;
-}
+import { gs } from '@/style/globalStyles';
+import { styles } from './Appuntamento.styles';
+import { SEDI, calendarsLocales } from './Appuntamento.constants';
+import EmailForm from './EmailFormComponent/EmailForm.component';
+import { PrenotazioneData } from './Appuntamento.types';
+import { radioButtonSede } from '@/utils/global.utils';
 
-interface PrenotazioneData {
-    nome: string;
-    cognome: string;
-    email: string;
-    numeroCell: string;
-    dataPrenotazioneRaw: string;
-    dataPrenotazione: string;
-    sede: string;
-    numPrenotazione: string;
-}
-
-const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
+const AppuntamentoComponent: React.FC<{}> = () => {
 
     const router = useRouter();
 
-    const [sedeIndex, setSedeIndex] = useState<string>("0");
-    const [isLoading, setIsLoading] = useState(true);
-    const [prenotazionePresente, setPrenotazionePresente] = useState(false);
-    const [datiPrenotazionePresente, setDatiPrenotazionePresente] = useState<PrenotazioneData | null>(null);
-    const [isLogged, setIsLogged] = useState<boolean>(false);
+    const [sedeIndex, setSedeIndex] = useState<string>("1");
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [prenotazionePresente, setPrenotazionePresente] = useState<boolean>(false);
+    const [datiPrenotazionePresente, setDatiPrenotazionePresente] = useState<PrenotazioneData>();
     const [giornoPrenotazione, setGiornoPrenotazione] = useState<Date>(moment().toDate());
-    const [selectedOrario, setSelectedOrario] = useState(0);
-    const [selectedMinuti, setSelectedMinuti] = useState(0);
+    const [selectedOrario, setSelectedOrario] = useState<number>(9);
+    const [selectedMinuti, setSelectedMinuti] = useState<number>(0);
     const [orariMattino, setOrariMattino] = useState<{ key: number; label: string }[]>([]);
-    const [orariMattinoValue, setOrariMattinoValue] = useState<string[]>([]);
     const [minutiMattino, setMinutiMattino] = useState<{ key: number; label: string }[]>([]);
-    const [minutiMattinoValue, setMinutiMattinoValue] = useState<string[]>([]);
-    const [modalCheckDateVisibile, setModalCheckDateVisibile] = useState(false);
-    const [modalInserInfoVisibile, setModalInserInfoVisibile] = useState(false);
+    const [modalCheckDateVisibile, setModalCheckDateVisibile] = useState<boolean>(false);
+    const [modalInserInfoVisibile, setModalInserInfoVisibile] = useState<boolean>(false);
+    const [prenotazioneDate, setPrenotazioneDate] = useState<string>("");
     const [resCheckDate, setResCheckDate] = useState<any>('');
-    const [nome, setNome] = useState('');
-    const [cognome, setCognome] = useState('');
-    const [email, setEmail] = useState('');
-    const [numeroCell, setNumroCell] = useState('');
+    const [nome, setNome] = useState<string>('');
+    const [cognome, setCognome] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
+    const [numeroCell, setNumroCell] = useState<string>('');
 
-    const radioButtonsData: RadioButtonProps[] = useMemo(() => ([
-        { id: '1', label: 'Poggiomarino', value: 'Poggiomarino' },
-        { id: '2', label: 'Pompei', value: 'Pompei' }
-    ]), []);
+    const [fontsLoaded] = useFonts({ 'Arial': require('@/assets/fonts/Arial.ttf') });
 
-    LocaleConfig.locales['it'] = {
-        monthNames: ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
-        monthNamesShort: ['Gen.', 'Feb.', 'Mar.', 'Apr.', 'Mag.', 'Giu.', 'Lug.', 'Ago.', 'Set.', 'Ott.', 'Nov.', 'Dic.'],
-        dayNames: ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'],
-        dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mer.', 'Gio.', 'Ven.', 'Sab.'],
-    };
+    const radioButtonsData: RadioButtonProps[] = useMemo(() => (radioButtonSede), []);
 
+    LocaleConfig.locales['it'] = calendarsLocales;
     LocaleConfig.defaultLocale = 'it';
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -80,7 +57,6 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
                     console.log('L\'utente ha effettuato la login (Appuntamento.Component)', userData);
                     const parsedUser = JSON.parse(userData);
 
-                    setIsLogged(true);
                     setEmail(parsedUser.email);
                     setNumroCell(parsedUser.cellulare);
                     setNome(parsedUser.nome.split(" ")[0]);
@@ -125,9 +101,7 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
                 }
 
                 setMinutiMattino(tempFieldsMinuti);
-                setMinutiMattinoValue(tempMinutiMattinoValue);
                 setOrariMattino(tempFields);
-                setOrariMattinoValue(tempOrariMattinoValue);
 
                 setIsLoading(false); // Fermiamo il Loading
             } catch (error) {
@@ -168,18 +142,36 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
         const bookingHour = selectedOrario;
         const bookingMinute = selectedMinuti;
 
-        const submitForm = (ora: string) => {
+        const submitForm = async (ora: string) => {
+            const url = `https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=${SEDI[+sedeIndex]}&opt=1`;
+            const headers = {
+                'Token': '1me0si3nahr'
+            };
+
             formdata.append("data", bookingDate);
             formdata.append("ora", ora);
 
-            axios.post(`https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=${SEDI[+sedeIndex]}&opt=1`, formdata, {
-                headers: { "Token": "1me0si3nahr" }
-            }).then(response => response.data)
-                .then(result => {
-                    console.log("Risultato check Date", result.esito);
-                    setResCheckDate(result.esito);
-                    setModalCheckDateVisibile(true);
-                }).catch(error => console.log('error', error));
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: headers,
+                    body: formdata
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+
+                const result = await response.json();
+                console.log("Risultato check Date", result.esito);
+                setResCheckDate(result.esito);
+                setModalCheckDateVisibile(true);
+                setPrenotazioneDate(" " + moment(giornoPrenotazione).format("DD-MM-YYYY") + " ore " + selectedOrario + ':' + (selectedMinuti < 10 ? "0" + selectedMinuti : selectedMinuti))
+            } catch (error: any) {
+                console.error('Fetch error:', error);
+                // Aggiungi la gestione degli errori qui, ad esempio:
+                console.log('Error:', error.message);
+            }
         };
 
         if (currentDate === bookingDate) {
@@ -210,166 +202,204 @@ const AppuntamentoComponent: React.FC<PrenotazioneScreenProps> = () => {
 
         const formdata = new FormData();
         formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
-        formdata.append("ora", selectedOrario + ':' + selectedMinuti + ':00');
+        formdata.append("ora", `${selectedOrario}:${selectedMinuti}:00`);
         formdata.append("nome", nome);
         formdata.append("cognome", cognome);
         formdata.append("email", email);
         formdata.append("telefono", numeroCell);
+
         setIsLoading(true);
-        axios.post("https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=" + SEDI[+sedeIndex] + "&opt=2", formdata, { headers: { "Token": "1me0si3nahr" } })
-            .then(response => response.data).then(result => {
-                console.log('Risposta Insert Date ---->', result)
-                if (result.esito.toLocaleLowerCase() !== 'ko') {
-                    setIsLoading(false);
-                    const dataPrenotazioneConOrario = moment(giornoPrenotazione);
-                    dataPrenotazioneConOrario.set({ hour: selectedOrario, minute: selectedMinuti, second: 0, millisecond: 0 })
-                    const jsonPrenotazione = {
-                        id: result.id,
-                        nome,
-                        cognome,
-                        email,
-                        cellulare: numeroCell,
-                        sede: SEDI[+sedeIndex],
-                        dataPrenotazioneRaw: moment(dataPrenotazioneConOrario),
-                        dataPrenotazione: dataPrenotazioneConOrario.format('DD-MM-YYYY'),
-                        orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm')
-                    }
 
-                    console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
-                    AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+        try {
+            const url = `https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=${SEDI[+sedeIndex]}&opt=2`;
+            const headers: HeadersInit = { 'Token': '1me0si3nahr' };
 
-                    Alert.alert('Prenotazione effettuata', 'Prenotazione avvenuta con successo indica i tuoi dati quando verrai in negozio. Il tuo codice prenotazione è: ' + result.id,
-                        [{ text: 'OK', onPress: async () => { router.replace("HomeView"); } },],
-                        { cancelable: false }
-                    );
-                    setModalInserInfoVisibile(false);
-                } else {
-                    setIsLoading(false);
-                    Alert.alert('Errore', 'Problema con la prenotazione riprova!');
-                }
-            })
-            .catch(error => {
-                console.log('error prenotazione', error)
-                Alert.alert('Errore', 'Problema con la prenotazione riprova!');
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: headers,
+                body: formdata
             });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            const result = await response.json();
+            console.log('Risposta Insert Date ---->', result);
+
+            if (result.esito.toLocaleLowerCase() !== 'ko') {
+                setIsLoading(false);
+
+                const dataPrenotazioneConOrario = moment(giornoPrenotazione)
+                    .set({ hour: selectedOrario, minute: selectedMinuti, second: 0, millisecond: 0 });
+
+                const jsonPrenotazione = {
+                    id: result.id,
+                    nome,
+                    cognome,
+                    email,
+                    cellulare: numeroCell,
+                    sede: SEDI[+sedeIndex],
+                    dataPrenotazioneRaw: moment(dataPrenotazioneConOrario),
+                    dataPrenotazione: dataPrenotazioneConOrario.format('DD-MM-YYYY'),
+                    orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm')
+                };
+
+                console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
+                await AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+
+                Alert.alert(
+                    'Prenotazione effettuata',
+                    `Prenotazione avvenuta con successo. Indica i tuoi dati quando verrai in negozio. Il tuo codice prenotazione è: ${result.id}`,
+                    [{ text: 'OK', onPress: async () => { router.replace('HomeView'); } }],
+                    { cancelable: false }
+                );
+
+                setModalInserInfoVisibile(false);
+            } else {
+                setIsLoading(false);
+                Alert.alert('Errore', 'Problema con la prenotazione, riprova!');
+            }
+        } catch (error) {
+            console.log('error prenotazione', error);
+            Alert.alert('Errore', 'Problema con la prenotazione, riprova!');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
+
+    if (!fontsLoaded) return <View style={gs.spinner} children={<Spinner size="large" />} />;
     if (isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
 
     if (prenotazionePresente) return (<>
-        <View style={styles.containerRiepilogoPrenotazione}>
+        <View >
             <Text style={styles.textRiepilogoPrenotazione}>Prenotazione effettuata per il giorno</Text>
             <Text style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.dataPrenotazione}</Text>
+            <Text style={styles.codicePrenotazione}>Sede prenotazione: {datiPrenotazionePresente?.sede}</Text>
+            <Text style={styles.codicePrenotazione}>Nome Cognome: {datiPrenotazionePresente?.nome} {datiPrenotazionePresente?.cognome}</Text>
+            <Text style={styles.codicePrenotazione}>Email: {datiPrenotazionePresente?.email}</Text>
+            <Text style={styles.codicePrenotazione}>Cellulare: {datiPrenotazionePresente?.numeroCell}</Text>
+            <Text style={styles.codicePrenotazione}>Orario Prenotazione: {datiPrenotazionePresente?.orarioPrenotazione}</Text>
             <View style={styles.containeButtonCancella}>
                 <Button title="Cancella Prenotazione" onPress={handleRemovePrenotazione} />
             </View>
-        </View>
+        </View >
     </>)
 
     return (
         <>
-            <View style={styles.container}>
-                <View style={styles.container}>
-                    <Text style={styles.title}>Prenota un'appuntamento... e salta la fila!</Text>
-                </View>
+            <Text style={styles.title}>Prenota un'appuntamento... e salta la fila!</Text>
+            <Text style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</Text>
 
-                <View style={styles.containerSediForm}>
-                    <Text style={styles.textRiepilogoPrenotazione}>Seleziona sede dove vuoi prenotarti</Text>
-                    <View style={styles.containerCalendar}>
-                        <RadioGroup
-                            radioButtons={radioButtonsData}
-                            onPress={setSedeIndex}
-                            selectedId={sedeIndex}
-                            containerStyle={{ display: "flex", flexDirection: "row" }}
-                        />
+            <RadioGroup
+                radioButtons={radioButtonsData}
+                onPress={setSedeIndex}
+                selectedId={sedeIndex}
+                containerStyle={{ display: "flex", flexDirection: "row" }}
+            />
+            <Calendar
+                onDayPress={(day) => setGiornoPrenotazione(moment(day.dateString).toDate())}
+                markedDates={{ [moment(giornoPrenotazione).format('YYYY-MM-DD')]: { selected: true, selectedColor: 'blue' } }}
+                theme={{
+                    textDayFontFamily: 'Arial',
+                    textMonthFontFamily: 'Arial',
+                    textDayHeaderFontFamily: 'Arial',
+                    textDayFontWeight: '300',
+                    textMonthFontWeight: '300',
+                    textDayHeaderFontWeight: '300',
+                    textDayFontSize: 16,
+                    textMonthFontSize: 16,
+                    textDayHeaderFontSize: 16,
+                }}
+                firstDay={1}
+                monthFormat={'MMM yyyy'}
+                onPressArrowLeft={(subtractMonth) => subtractMonth()}
+                onPressArrowRight={(addMonth) => addMonth()}
+                accessibilityLanguage='it'
+                style={styles.calendar}
+            />
+
+            <View style={styles.timeContainer}>
+                <View>
+                    <Text style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Ora</Text>
+                    <View style={styles.timeCell}>
+                        <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
+                            {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                        </Picker>
                     </View>
                 </View>
-                <View style={styles.containerCalendar}>
-                    <Calendar
-                        onDayPress={(day) => setGiornoPrenotazione(moment(day.dateString).toDate())}
-                        markedDates={{ [moment(giornoPrenotazione).format('YYYY-MM-DD')]: { selected: true, selectedColor: 'blue' } }}
-                        theme={{
-                            textDayFontFamily: 'Arial',
-                            textMonthFontFamily: 'Arial',
-                            textDayHeaderFontFamily: 'Arial',
-                            textDayFontWeight: '300',
-                            textMonthFontWeight: '300',
-                            textDayHeaderFontWeight: '300',
-                            textDayFontSize: 16,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 16,
-                        }}
-                        firstDay={1}
-                        monthFormat={'MMM yyyy'}
-                        onPressArrowLeft={(subtractMonth) => subtractMonth()}
-                        onPressArrowRight={(addMonth) => addMonth()}
-                        accessibilityLanguage='it'
-                    />
-                    <View style={styles.timeContainer}>
-                        <View style={styles.hours}>
-                            <Text>Ora</Text>
-                            <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
-                                {orariMattino.map((orario) => (
-                                    <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />
-                                ))}
-                            </Picker>
-                        </View>
-
-                        <View style={styles.minutes}>
-                            <Text>Minuto</Text>
-                            <Picker style={{ width: '100%' }} selectedValue={selectedMinuti} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)}>
-                                {minutiMattino.map((orario) => (
-                                    <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />
-                                ))}
-                            </Picker>
-                        </View>
+                <View>
+                    <Text style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Minuto</Text>
+                    <View style={styles.timeCell}>
+                        <Picker style={{ width: '100%' }} selectedValue={selectedMinuti} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
+                            {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                        </Picker>
                     </View>
-
-                    <Button title="Cerca disponibilità orario" onPress={checkDate} />
                 </View>
+
             </View>
-            <Modal
-                visible={modalCheckDateVisibile}
-                transparent={true}
-                animationType="slide"
-            >
+
+            <Button title="Cerca disponibilità orario" onPress={checkDate} />
+
+            <Modal visible={modalCheckDateVisibile} transparent={true} animationType="slide">
                 <View style={styles.modalContainer}>
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
-                        <View >
-                            <Text>L'orario selezionato è disponibile </Text>
-                            <Text>Vuoi confermare la prenotazione per: {moment(giornoPrenotazione).format("DD-MM-YYYY") + " ore " + selectedOrario + ':' + (selectedMinuti < 10 ? "0" + selectedMinuti : selectedMinuti)}</Text>
-                            <Button title="Conferma" onPress={() => {
-                                setModalCheckDateVisibile(false)
-                                setModalInserInfoVisibile(true)
-                            }} />
-                            <Button title="Annulla" onPress={toggleModalCheckDate} />
+                        <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "90%" }}>
+                            <View style={{ display: "flex" }}>
+                                <Text style={{ ...styles.title, fontSize: 24, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</Text>
+                                <Text style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>
+                                    Vuoi confermare la prenotazione per il
+                                    <Text style={{ fontWeight: '800' }}>{prenotazioneDate}</Text>
+                                    ?
+                                </Text>
+                            </View>
+
+                            <View style={{ marginTop: 20, width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
+                                <TouchableOpacity
+                                    style={{ flex: 1, backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10 }}
+                                    onPress={toggleModalCheckDate}
+                                >
+                                    <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Annulla</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={{ flex: 1, backgroundColor: 'blue', paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
+                                    onPress={() => {
+                                        setModalCheckDateVisibile(false);
+                                        setModalInserInfoVisibile(true);
+                                    }}
+                                >
+                                    <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Conferma</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </>}
                     {resCheckDate.toLocaleLowerCase() !== 'ok' && <>
-                        <View >
-                            <Text>Orario selezionato non disponibile! </Text>
-                            <Text>Anche se non trovi un orario utile recati ugualmente presso uno dei nostri punti vendita. </Text>
-                            <Text>Grazie ai molti addetti alle vendite l'attesa sarà comunque breve!</Text>
-                            <Button title="Chiudi" onPress={toggleModalCheckDate} />
+                        <View style={styles.container}>
+                            <Text style={styles.title}>Orario selezionato non disponibile!</Text>
+                            <Text style={styles.subTitle}>
+                                Anche se non trovi un orario utile, recati ugualmente presso uno dei nostri punti vendita.
+                                Grazie ai molti addetti alle vendite, l'attesa sarà comunque breve!
+                            </Text>
+                            <TouchableOpacity style={styles.button} onPress={toggleModalCheckDate}>
+                                <Text style={styles.buttonText}>Chiudi</Text>
+                            </TouchableOpacity>
                         </View>
                     </>}
                 </View>
             </Modal>
-            <Modal visible={modalInserInfoVisibile} transparent={true} animationType="slide">
-                <View style={styles.container}>
-                    <EmailForm
-                        nome={nome}
-                        setNome={setNome}
-                        cognome={cognome}
-                        setCognome={setCognome}
-                        email={email}
-                        setEmail={setEmail}
-                        numeroCell={numeroCell}
-                        setNumroCell={setNumroCell}
-                        handlePrenota={handlePrenota}
-                    />
-                    <Button title="Chiudi" onPress={handleToggleModalInserInfo} />
-                </View>
+            <Modal visible={modalInserInfoVisibile} animationType="slide">
+                <EmailForm
+                    nome={nome}
+                    setNome={setNome}
+                    cognome={cognome}
+                    setCognome={setCognome}
+                    email={email}
+                    setEmail={setEmail}
+                    numeroCell={numeroCell}
+                    setNumroCell={setNumroCell}
+                    handlePrenota={handlePrenota}
+                    handleToggleModalInserInfo={handleToggleModalInserInfo}
+                    prenotazioneDate={prenotazioneDate}
+                />
             </Modal>
         </>
     );

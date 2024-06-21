@@ -1,29 +1,40 @@
 import { StyleSheet } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
+  title: { fontSize: hp('2.6%'), textAlign: 'center', fontWeight: '800', color: '#EB5F19', marginBottom: 20 },
+  subTitle: { fontSize: hp('2.4%'), textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
   container: {
+    flex: 1,
+    justifyContent: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: '#fff', // Colore di sfondo del form
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    elevation: 3,
+  },
+  inputContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   input: {
     height: 40,
-    borderColor: '#ccc',
+    borderColor: 'gray',
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
     marginBottom: 10,
+    paddingHorizontal: 10,
   },
-  subTitle: {
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
+  button: {
+    flex: 1,
+    backgroundColor: 'blue',
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginLeft: 10,
+  },
+  buttonText: {
+    color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 5,
+    textAlign: 'center',
   },
 });

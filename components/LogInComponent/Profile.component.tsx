@@ -6,6 +6,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { useRouter } from 'expo-router';
 import { UserType } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
+import { styles } from './Profile.styles';
 
 export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
@@ -37,28 +38,39 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
     }
 
     return (
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
+        <>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading &&
-                <>
-                    <Text style={{ fontSize: hp('2.5%'), padding: 10 }}>
-                        Bentornato {userLogged.nome}
+                <View style={styles.wrapper}>
+                    <Text style={styles.title}>
+                        Bentornato <BTitle title={userLogged.nome} />
                     </Text>
                     <View style={{ marginTop: hp('1%'), padding: 10, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: hp('2.8%') }}>Ecco il riepilogo dei tuoi dati</Text>
+                        <Text style={styles.subTitle}>Ecco il riepilogo dei tuoi dati</Text>
                     </View>
                     <View style={{ marginTop: hp('1.5%'), padding: 10 }}>
-                        <Text style={{ fontSize: hp('2.5%'), paddingTop: hp('1%') }}>{'Email: ' + userLogged.email}</Text>
-                        <Text style={{ fontSize: hp('2.5%'), paddingTop: hp('1%') }}>{'Indirizzo: ' + userLogged.indirizzo}</Text>
-                        <Text style={{ fontSize: hp('2.5%'), paddingTop: hp('1%') }}>{'Città: ' + userLogged.citta}</Text>
-                        <Text style={{ fontSize: hp('2.5%'), paddingTop: hp('1%') }}>{'Cellulare: ' + userLogged.cellulare}</Text>
+                        <Text style={styles.subTitle}>Email: <BSub title={userLogged.email} /> </Text>
+                        <Text style={styles.subTitle}>Indirizzo: <BSub title={userLogged.indirizzo} /> </Text>
+                        <Text style={styles.subTitle}>Città: <BSub title={userLogged.citta} /> </Text>
+                        <Text style={styles.subTitle}>Cellulare: <BSub title={userLogged.cellulare} /> </Text>
                     </View>
                     <View style={{ marginTop: hp('1.5%'), padding: 10 }}>
-                        <Text style={{ fontSize: hp('2.5%'), paddingTop: hp('1%') }}>{'Sede presso cui sei registrato: ' + sedeSelezionata.toUpperCase()}</Text>
+                        <Text style={styles.subTitle}>Sede presso cui sei registrato: <BSub title={sedeSelezionata.toUpperCase()} /> </Text>
                     </View>
-                    <Button title="LOG OUT" onPress={() => logOut()} />
-                </>
+                    <View style={styles.btnPosition}>
+                        <Button title="LOG OUT" onPress={() => logOut()} />
+                    </View>
+                </View>
             }
-        </ScrollView>
+        </>
     );
+}
+
+
+const BTitle: React.FC<{ title: string }> = ({ title }) => {
+    return <Text style={styles.titleBOLD}> {title} </Text>
+}
+
+const BSub: React.FC<{ title: string }> = ({ title }) => {
+    return <Text style={styles.subTitleBOLD}> {title} </Text>
 }
