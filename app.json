@@ -14,24 +14,12 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.myapp",
-      "config": {
-        "usesNonExemptEncryption": false
-      }
+      "bundleIdentifier": "com.myapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "config": {
-        "useNextNetworkLayer": true,
-        "package": "com.myapp"
-      }
-    },
-    "web": {
-      "config": {
-        "useNextNetworkLayer": true
       }
     },
     "plugins": [
