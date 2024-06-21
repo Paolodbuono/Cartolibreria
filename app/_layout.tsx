@@ -13,12 +13,10 @@ type ComponentItem = {
 const componentsList: ComponentItem[] = [
   { name: 'Home', root: "HomeView" },
   { name: 'Accedi', root: "LogInView" },
-  { name: 'Search', root: "temp" },
-  { name: 'Adozioni', root: "temp" },
   { name: 'Prenota appuntamento', root: "AppuntamentoView" },
   { name: 'Chi Siamo', root: "WhoAreWeView" },
   { name: 'Avvisi Importanti', root: "NoticeView" },
-  { name: 'Perchè sceglierci', root: "temp" },
+  { name: 'Perchè sceglierci', root: "WhyChoseUsView" },
   { name: 'I miei ordini', root: "temp" },
   { name: 'Area riservata', root: "LogInView" },
   // Aggiungi qui altri componenti della tua app

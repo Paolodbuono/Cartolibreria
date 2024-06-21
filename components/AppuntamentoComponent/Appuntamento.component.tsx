@@ -15,6 +15,9 @@ import EmailForm from './EmailFormComponent/EmailForm.component';
 import { PrenotazioneData } from './Appuntamento.types';
 import { radioButtonSede } from '@/utils/global.utils';
 
+import * as Notifications from 'expo-notifications';
+import { BSub } from '../Commons/BSub.component';
+
 const AppuntamentoComponent: React.FC<{}> = () => {
 
     const router = useRouter();
@@ -43,6 +46,28 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
     LocaleConfig.locales['it'] = calendarsLocales;
     LocaleConfig.defaultLocale = 'it';
+
+    useEffect(() => {
+        const getNotificationPermission = async () => {
+            try {
+                const { status: existingStatus } = await Notifications.getPermissionsAsync();
+                let finalStatus = existingStatus;
+
+                if (existingStatus !== 'granted') {
+                    const { status } = await Notifications.requestPermissionsAsync();
+                    finalStatus = status;
+                }
+
+                if (finalStatus !== 'granted') {
+                    throw new Error('Permission to access notifications denied');
+                }
+            } catch (error: any) {
+                Alert.alert('Error', error.message);
+            }
+        };
+
+        getNotificationPermission();
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -125,8 +150,25 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             {
                 text: "Conferma",
                 onPress: async () => {
-                    await AsyncStorage.removeItem('prenotazione');
-                    setPrenotazionePresente(false);
+                    try {
+                        const prenotazioneJson = await AsyncStorage.getItem('prenotazione');
+                        if (!prenotazioneJson) {
+                            throw new Error('Nessuna prenotazione trovata');
+                        }
+                        const prenotazione = JSON.parse(prenotazioneJson);
+
+                        // Rimuovi la notifica utilizzando l'ID salvato
+                        await Notifications.cancelScheduledNotificationAsync(prenotazione.notificationId);
+
+                    } catch (errro: any) {
+                        console.log("eh", errro);
+                    } finally {
+                        // Rimuovi la prenotazione da AsyncStorage
+                        await AsyncStorage.removeItem('prenotazione');
+
+                        // Aggiorna lo stato dell'app o esegui altre azioni necessarie
+                        setPrenotazionePresente(false);
+                    }
                 }
             }
         ]
@@ -231,6 +273,20 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 const dataPrenotazioneConOrario = moment(giornoPrenotazione)
                     .set({ hour: selectedOrario, minute: selectedMinuti, second: 0, millisecond: 0 });
 
+                const notifTime = moment(dataPrenotazioneConOrario).subtract(35, 'minutes').toDate();
+
+                // Schedula la notifica
+                const schedulingOptions = {
+                    content: {
+                        title: 'Prenotazione in arrivo!',
+                        body: `Hai una prenotazione alla cartolibreria tra 15 minuti.`,
+                    },
+                    trigger: notifTime,
+                };
+
+
+                const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
+
                 const jsonPrenotazione = {
                     id: result.id,
                     nome,
@@ -240,7 +296,9 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     sede: SEDI[+sedeIndex],
                     dataPrenotazioneRaw: moment(dataPrenotazioneConOrario),
                     dataPrenotazione: dataPrenotazioneConOrario.format('DD-MM-YYYY'),
-                    orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm')
+                    orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm'),
+                    notificationId: notificationId, // Salva l'ID della notifica qui
+
                 };
 
                 console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
@@ -272,13 +330,21 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
     if (prenotazionePresente) return (<>
         <View >
-            <Text style={styles.textRiepilogoPrenotazione}>Prenotazione effettuata per il giorno</Text>
-            <Text style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.dataPrenotazione}</Text>
-            <Text style={styles.codicePrenotazione}>Sede prenotazione: {datiPrenotazionePresente?.sede}</Text>
-            <Text style={styles.codicePrenotazione}>Nome Cognome: {datiPrenotazionePresente?.nome} {datiPrenotazionePresente?.cognome}</Text>
-            <Text style={styles.codicePrenotazione}>Email: {datiPrenotazionePresente?.email}</Text>
-            <Text style={styles.codicePrenotazione}>Cellulare: {datiPrenotazionePresente?.numeroCell}</Text>
-            <Text style={styles.codicePrenotazione}>Orario Prenotazione: {datiPrenotazionePresente?.orarioPrenotazione}</Text>
+            <Text style={styles.title}>Grazie per la preferenza che ci hai accordato!</Text>
+            <Text style={styles.textRiepilogoPrenotazione}>Presentati con questo ticket... e salti la fila! </Text>
+            <Text style={styles.textRiepilogoPrenotazione}>Lo trovi nella sezione appuntamenti</Text>
+
+
+
+
+            <Text style={styles.codicePrenotazione}>Sede prenotazione <BSub title={datiPrenotazionePresente?.sede ?? ""} /> </Text>
+            <Text style={styles.codicePrenotazione}>Nome Cognome:  <BSub title={`${datiPrenotazionePresente?.nome} ${datiPrenotazionePresente?.cognome}`} /> </Text>
+            <Text style={styles.codicePrenotazione}>Email:  <BSub title={datiPrenotazionePresente?.email ?? ""} /> </Text>
+            <Text style={styles.codicePrenotazione}>Cellulare:  <BSub title={datiPrenotazionePresente?.numeroCell ?? ""} /> </Text>
+            <Text style={styles.codicePrenotazione}>Giorno Prenotazione:  <BSub title={datiPrenotazionePresente?.dataPrenotazione ?? ""} /> </Text>
+            <Text style={styles.codicePrenotazione}>Orario Prenotazione:  <BSub title={datiPrenotazionePresente?.orarioPrenotazione ?? ""} /> </Text>
+            <Text style={styles.codicePrenotazione}>Numero prenotazione</Text>
+            <Text style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.id}</Text>
             <View style={styles.containeButtonCancella}>
                 <Button title="Cancella Prenotazione" onPress={handleRemovePrenotazione} />
             </View>

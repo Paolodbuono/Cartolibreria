@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ScrollView, Button, Text, ActivityIndicator as Spinner } from 'react-native';
+import { View,  Button, Text, ActivityIndicator as Spinner } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
 import { UserType } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
 import { styles } from './Profile.styles';
+import { BTitle } from '../Commons/BTitle.component';
+import { BSub } from '../Commons/BSub.component';
 
 export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
@@ -67,10 +69,3 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
 }
 
 
-const BTitle: React.FC<{ title: string }> = ({ title }) => {
-    return <Text style={styles.titleBOLD}> {title} </Text>
-}
-
-const BSub: React.FC<{ title: string }> = ({ title }) => {
-    return <Text style={styles.subTitleBOLD}> {title} </Text>
-}

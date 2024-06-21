@@ -36,9 +36,9 @@ export const styles = StyleSheet.create({
   calendar: { width: wp('95%'), marginTop: hp('1.5%'), borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, },
   containerRiepilogoPrenotazione: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: hp('5%') },
   containeButtonCancella: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: hp('2.5%'), textAlign: 'center', },
-  textRiepilogoPrenotazione: { flexDirection: 'column', fontSize: hp('2.5%'), color: '#4975be', fontWeight: "800", alignSelf: 'center' },
+  textRiepilogoPrenotazione: { flexDirection: 'column', fontSize: hp('2.5%'), color: '#4975be', fontWeight: "800", alignSelf: 'center', marginBottom: 20 },
+  textRiepilogoNumeroPrenotazione: { flexDirection: 'column', fontSize: hp('10%'),  color: '#EB5F19',  fontWeight: "600",  alignSelf: 'center' },
   codicePrenotazione: { flexDirection: 'column', fontSize: hp('2.5%'), color: '#4975be', fontWeight: "400", alignSelf: 'center' },
-  textRiepilogoNumeroPrenotazione: { fontSize: hp('10%'), fontWeight: "bold", color: '#EB5F19', marginTop: 40, paddingBottom: 40 },
   timeContainer: { width: wp('80%'), marginTop: hp('2%'), marginBottom: hp('2%'), flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 60, },
   timeCell: { height: 39, width: 100, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, backgroundColor: "#FFFFFF" },
 });
