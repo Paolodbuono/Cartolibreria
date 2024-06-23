@@ -52,7 +52,7 @@ const HomeComponent: React.FC<{}> = () => {
                 {!isLoading && <>
                     <Text style={styles.welcome}>Benvenuto {stateUser.nome}!</Text>
                     <View style={styles.buttonRow}>
-                        <TouchableOpacity onPress={() => { }}>
+                        <TouchableOpacity onPress={() => { router.push("MyOrdersView") }}>
                             <Image style={styles.button} source={require(ordersPath)} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 I miei ordini

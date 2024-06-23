@@ -1,6 +1,5 @@
 import React from "react";
 import { SafeAreaView, Image, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export default function WhoAreWeView() {

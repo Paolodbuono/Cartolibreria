@@ -12,7 +12,7 @@ import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 import { ProfileComponent } from './Profile.component';
 import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
-import { radioButtonSede } from '@/utils/global.utils';
+import { SEDI, radioButtonSede } from '@/utils/constants';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
@@ -29,8 +29,6 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
     const [userLogged, setUserLogged] = useState<UserType>(emptyUser);
     const [isLoading, setIsLoading] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
-
-    const SEDI = ['poggiomarino', 'pompei'];
 
     const [selectedSede, setSelectedSede] = useState<string>("0");
 

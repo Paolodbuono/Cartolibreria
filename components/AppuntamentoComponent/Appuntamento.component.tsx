@@ -10,13 +10,12 @@ import { View, Alert, Modal, Text, Button, ActivityIndicator as Spinner, Touchab
 
 import { gs } from '@/style/globalStyles';
 import { styles } from './Appuntamento.styles';
-import { SEDI, calendarsLocales } from './Appuntamento.constants';
 import EmailForm from './EmailFormComponent/EmailForm.component';
 import { PrenotazioneData } from './Appuntamento.types';
-import { radioButtonSede } from '@/utils/global.utils';
 
 import * as Notifications from 'expo-notifications';
 import { BSub } from '../Commons/BSub.component';
+import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
 
 const AppuntamentoComponent: React.FC<{}> = () => {
 

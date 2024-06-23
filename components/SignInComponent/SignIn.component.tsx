@@ -1,18 +1,19 @@
 import React, { useMemo, useRef, useState } from 'react';
 import axios from 'axios';
+import Checkbox from 'expo-checkbox';
+import { useRouter } from 'expo-router';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SafeAreaView, StyleSheet, View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
-
-import { fields, PRIVACY, SEDI } from './SignIn.utils';
+import { SafeAreaView,  View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
 
 import FormFields from './FormField.component';
-import Checkbox from 'expo-checkbox';
-import { useRouter } from 'expo-router';
+import { fields, PRIVACY } from './SignIn.utils';
 import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
+
 import { gs } from '@/style/globalStyles';
-import { radioButtonSede } from '@/utils/global.utils';
+import { SEDI, radioButtonSede } from '@/utils/constants';
+import { styles } from './SignIn.styles';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -254,82 +255,3 @@ const SignInComponent: React.FC<{}> = () => {
 };
 
 export default SignInComponent;
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: hp('2.6%'),
-        textAlign: 'center',
-        fontWeight: '500',
-        marginTop: 10,
-        color: '#EB5F19'
-    },
-    subTitle: {
-        fontSize: hp('2.4%'),
-        marginTop: 10,
-        textAlign: 'center',
-        fontWeight: '100',
-        color: '#4975be'
-    },
-    containerForm: {
-        marginTop: hp('1.5%'),
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    radio: {
-        margin: 2,
-    },
-    text: {
-        fontSize: hp('1.8%'),
-        color: '#4975be'
-    },
-    container: {
-        flex: 1,
-        marginHorizontal: 16,
-        marginVertical: 32,
-    },
-    section: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    checkbox: {
-        margin: 8,
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 35,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2,
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
-    },
-    sendBtn: {
-        marginTop: hp('2.5%'),
-        backgroundColor: '#4975be',
-        padding: 10,
-        width: wp("20%"),
-        borderRadius: 5,
-        marginBottom: 20
-
-    }
-});

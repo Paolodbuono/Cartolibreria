@@ -1,3 +1,8 @@
+export const radioButtonSede = [
+    { id: '1', label: 'Poggiomarino', value: 'Poggiomarino' },
+    { id: '2', label: 'Pompei', value: 'Pompei' }
+];
+
 export const SEDI = ['poggiomarino', 'pompei'];
 
 export const calendarsLocales = {

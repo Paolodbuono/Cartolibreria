@@ -1,7 +1,5 @@
 import { Field } from "./SignIn.types";
 
-export const SEDI = ['poggiomarino', 'pompei'];
-
 export const fields: Field[] = [
     {
         label: 'Cognome',
