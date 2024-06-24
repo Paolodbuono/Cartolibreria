@@ -17,7 +17,7 @@ const componentsList: ComponentItem[] = [
   { name: 'Chi Siamo', root: "WhoAreWeView" },
   { name: 'Avvisi Importanti', root: "NoticeView" },
   { name: 'Perchè sceglierci', root: "WhyChoseUsView" },
-  { name: 'I miei ordini', root: "temp" },
+  { name: 'I miei ordini', root: "MyOrdersView" },
   { name: 'Area riservata', root: "LogInView" },
   // Aggiungi qui altri componenti della tua app
 ];

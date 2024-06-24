@@ -58,20 +58,14 @@ const HomeComponent: React.FC<{}> = () => {
                                 I miei ordini
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { }}>
-                            <Image style={styles.button} source={require(adozioniPath)} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
-                                Adozioni
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.buttonRow}>
                         <TouchableOpacity onPress={() => { router.push("AppuntamentoView") }}>
                             <Image style={styles.button} source={require(appuntamentoPath)} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 Appuntamento
                             </Text>
                         </TouchableOpacity>
+                    </View>
+                    <View style={styles.buttonRow}>
                         <TouchableOpacity onPress={() => router.push("LogInView")}>
                             <Image style={styles.button} source={require(personalAreaPath)} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
@@ -79,6 +73,9 @@ const HomeComponent: React.FC<{}> = () => {
                             </Text>
                         </TouchableOpacity>
                     </View>
+                    <TouchableOpacity style={{ backgroundColor: 'rgb(235 96 25)', paddingVertical: 12, borderRadius: 8, padding: 20 }} onPress={() => router.push("NoticeView")}>
+                        <Text style={{ color: 'white', fontSize: 22 }}>Importante</Text>
+                    </TouchableOpacity>
                 </>}
             </View>
             <Image style={styles.imgFooter} source={require(footerPath)} />
