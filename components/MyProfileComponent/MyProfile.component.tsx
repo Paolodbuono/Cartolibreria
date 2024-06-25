@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ActivityIndicator as Spinner } from 'react-native';
+import { View, ActivityIndicator as Spinner, SafeAreaView } from 'react-native';
 
 import { ProfileComponent } from './Profile.component';
 import { UserType, emptyUser } from '@/types/UserType';
