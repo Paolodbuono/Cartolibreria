@@ -10,8 +10,8 @@ import { NotLoggedComponent } from './NotLogged.component';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
-    const [isLogged, setIsLogged] = useState(false);
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [isLogged, setIsLogged] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [userLogged, setUserLogged] = useState<UserType>(emptyUser);
 
     useEffect(() => {
@@ -24,7 +24,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
                     setUserLogged(parsedValue);
                     setIsLogged(true);
                 }
-                setShowSpinner(false);
+                setIsLoading(false);
             } catch (e) {
                 console.log('Error fetching data from AsyncStorage:', e);
             }
@@ -36,8 +36,8 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-            {showSpinner && <View style={gs.spinner} children={<Spinner size="large" />} />}
-            {!showSpinner && <>
+            {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
+            {!isLoading && <>
                 {!isLogged && <NotLoggedComponent />}
                 {isLogged && <ProfileComponent userLogged={userLogged} />}
             </>}
