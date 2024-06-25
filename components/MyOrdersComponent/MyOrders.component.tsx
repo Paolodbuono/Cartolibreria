@@ -126,7 +126,7 @@ const MyOrdersComponent = ({ }) => {
                             <Text style={styles.title}>Non hai effettuato l'accesso, per poter usufruire questo servizio c'è bisogno di essere autenticati</Text>
                             <Text style={styles.subTitle}>Vai nell'area riservata ed effettua l'accesso!</Text>
                         </View>
-                        <TouchableOpacity style={styles.button} onPress={() => router.push("AccediView")}>
+                        <TouchableOpacity style={styles.button} onPress={() => { router.push("MyProfileView") }}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 Accedi

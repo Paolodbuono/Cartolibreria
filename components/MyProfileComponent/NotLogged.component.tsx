@@ -4,7 +4,7 @@ import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner } from 'react-native';
 
 import { useRouter } from 'expo-router';
-import { styles } from './LogIn.styles';
+import { styles } from './MyProfile.styles';
 
 import { gs } from '@/style/globalStyles';
 import { SEDI, radioButtonSede } from '@/utils/constants';

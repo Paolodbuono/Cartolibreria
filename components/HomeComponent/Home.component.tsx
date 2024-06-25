@@ -67,7 +67,7 @@ const HomeComponent: React.FC<{}> = () => {
                     </View>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => router.push("AccediView")}>
+                            <TouchableOpacity onPress={() => { router.push("MyProfileView") }}>
                                 <Image style={styles.marginAuto} source={require(personalAreaPath)} />
                             </TouchableOpacity>
                             <Text style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </Text>
