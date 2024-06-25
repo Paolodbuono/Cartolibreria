@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, SafeAreaView, Image } from 'react-native';
+import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, Image } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -100,7 +100,7 @@ const MyOrdersComponent = ({ }) => {
 
 
     return (
-        <SafeAreaView>
+        <View>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 {isLogged && <>
@@ -135,8 +135,7 @@ const MyOrdersComponent = ({ }) => {
                     </View>
                 </>}
             </>}
-        </SafeAreaView>
-
+        </View>
     );
 };
 

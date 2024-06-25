@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ActivityIndicator as Spinner, SafeAreaView } from 'react-native';
+import { View, ActivityIndicator as Spinner} from 'react-native';
 
 import { ProfileComponent } from './Profile.component';
 import { UserType, emptyUser } from '@/types/UserType';
@@ -34,13 +34,13 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
 
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 {!isLogged && <NotLoggedComponent />}
                 {isLogged && <ProfileComponent userLogged={userLogged} />}
             </>}
-        </SafeAreaView>
+        </View>
     );
 }
 

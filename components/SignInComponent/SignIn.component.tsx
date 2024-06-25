@@ -4,7 +4,7 @@ import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SafeAreaView, View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
+import { View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
 
 import FormFields from './FormField.component';
 import { fields, PRIVACY } from './SignIn.utils';
@@ -183,7 +183,7 @@ const SignInComponent: React.FC<{}> = () => {
         }
     }
     return (
-        <SafeAreaView>
+        <View>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 <View style={styles.containerForm}>
@@ -247,7 +247,7 @@ const SignInComponent: React.FC<{}> = () => {
                 </View>
             </>
             }
-        </SafeAreaView>
+        </View>
     )
 };
 
