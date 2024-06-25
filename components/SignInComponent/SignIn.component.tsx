@@ -2,10 +2,9 @@ import React, { useMemo, useRef, useState } from 'react';
 import axios from 'axios';
 import Checkbox from 'expo-checkbox';
 import { useRouter } from 'expo-router';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { SafeAreaView,  View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
+import { SafeAreaView, View, Alert, Text, Button, TouchableOpacity, Modal, ActivityIndicator as Spinner } from 'react-native';
 
 import FormFields from './FormField.component';
 import { fields, PRIVACY } from './SignIn.utils';
@@ -185,71 +184,69 @@ const SignInComponent: React.FC<{}> = () => {
     }
     return (
         <SafeAreaView>
-            <KeyboardAwareScrollView>
-                {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
-                {!isLoading && <>
-                    <View style={styles.containerForm}>
-                        <Text style={styles.title}>Modulo di registrazione</Text>
-                        <Text style={styles.text}>I seguenti campi sono tutti obbligatori</Text>
-                        <FormFields formValues={formValues} />
-                    </View>
-                    <View style={styles.containerForm}>
-                        <Text style={styles.text}>Selezionare sede alla quale si vuole registrare</Text>
-                        <RadioGroup
-                            radioButtons={radioButtonsData}
-                            onPress={setSelectedSede}
-                            selectedId={selectedSede}
-                            containerStyle={{ display: "flex", flexDirection: "row" }}
+            {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
+            {!isLoading && <>
+                <View style={styles.containerForm}>
+                    <Text style={styles.title}>Modulo di registrazione</Text>
+                    <Text style={styles.text}>I seguenti campi sono tutti obbligatori</Text>
+                    <FormFields formValues={formValues} />
+                </View>
+                <View style={styles.containerForm}>
+                    <Text style={styles.text}>Selezionare sede alla quale si vuole registrare</Text>
+                    <RadioGroup
+                        radioButtons={radioButtonsData}
+                        onPress={setSelectedSede}
+                        selectedId={selectedSede}
+                        containerStyle={{ display: "flex", flexDirection: "row" }}
+                    />
+                    <View style={styles.section}>
+                        <Checkbox
+                            style={styles.checkbox}
+                            value={checked}
+                            onValueChange={setChecked}
+                            color={checked ? '#4630EB' : undefined}
                         />
-                        <View style={styles.section}>
-                            <Checkbox
-                                style={styles.checkbox}
-                                value={checked}
-                                onValueChange={setChecked}
-                                color={checked ? '#4630EB' : undefined}
-                            />
-                            <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }}>Accetta il trattamento dei dati  </Text>
-                            <CustomButtonComponent onPress={trattamentoDeiDatiAlert} icon="info" />
-                        </View>
-
-                        <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
-                            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Registrati</Text>
-                        </TouchableOpacity>
-                        <Modal
-                            animationType='slide'
-                            visible={modalErrorVisibile}
-                            transparent={true}
-                            onRequestClose={() => setModalErrorVisibile(false)}>
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text style={styles.modalText}>{modalText}</Text>
-                                    <Button title="Chiudi" onPress={() => setModalErrorVisibile(false)} />
-                                </View>
-                            </View>
-                        </Modal>
-                        <Modal
-                            animationType='slide'
-                            visible={modalResponseVisible}
-                            transparent={true}
-                            onRequestClose={() => setModalResponseVisible(false)}>
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    {modalResponseText === "" && <>
-                                        <Text>Registrazione avvenuta con successo.</Text>
-                                        <Text>Benvenuto in Cartolibreria Bonagura {modalText}</Text>
-                                    </>}
-                                    {modalResponseText && <View>
-                                        <Text style={styles.modalText}>Errore nella registrazione</Text>
-                                        <Text>{modalResponseText}</Text>
-                                    </View>}
-                                    <Button title={modalResponseText ? "Riprova" : "Vai a Home"} onPress={handleOnClickResponseModal} />
-                                </View>
-                            </View>
-                        </Modal>
+                        <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }}>Accetta il trattamento dei dati  </Text>
+                        <CustomButtonComponent onPress={trattamentoDeiDatiAlert} icon="info" />
                     </View>
-                </>
-                }
-            </KeyboardAwareScrollView>
+
+                    <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
+                        <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Registrati</Text>
+                    </TouchableOpacity>
+                    <Modal
+                        animationType='slide'
+                        visible={modalErrorVisibile}
+                        transparent={true}
+                        onRequestClose={() => setModalErrorVisibile(false)}>
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView}>
+                                <Text style={styles.modalText}>{modalText}</Text>
+                                <Button title="Chiudi" onPress={() => setModalErrorVisibile(false)} />
+                            </View>
+                        </View>
+                    </Modal>
+                    <Modal
+                        animationType='slide'
+                        visible={modalResponseVisible}
+                        transparent={true}
+                        onRequestClose={() => setModalResponseVisible(false)}>
+                        <View style={styles.centeredView}>
+                            <View style={styles.modalView}>
+                                {modalResponseText === "" && <>
+                                    <Text>Registrazione avvenuta con successo.</Text>
+                                    <Text>Benvenuto in Cartolibreria Bonagura {modalText}</Text>
+                                </>}
+                                {modalResponseText && <View>
+                                    <Text style={styles.modalText}>Errore nella registrazione</Text>
+                                    <Text>{modalResponseText}</Text>
+                                </View>}
+                                <Button title={modalResponseText ? "Riprova" : "Vai a Home"} onPress={handleOnClickResponseModal} />
+                            </View>
+                        </View>
+                    </Modal>
+                </View>
+            </>
+            }
         </SafeAreaView>
     )
 };

@@ -39,7 +39,7 @@ const MyOrdersComponent = ({ }) => {
                     setIsLogged(true);
                     const user = JSON.parse(userData);
                     const encodedName = encodeURIComponent(user.nome);
-                    const response = await fetch(`https://www.libreriabonagura.it/micro/getOrdine.asp?libreria=${sedeSelezionata.toLowerCase()}&cliente=${encodedName}`);
+                    const response = await fetch(`https://www.libreriabonagura.it/micro/getOrdine.asp?libreria=${sedeSelezionata ? sedeSelezionata.toLowerCase() : "pompei"}&cliente=${encodedName}`);
                     const risposta = await response.json();
                     const allOrders: Array<OrderType> = risposta.data;
 
@@ -126,7 +126,7 @@ const MyOrdersComponent = ({ }) => {
                             <Text style={styles.title}>Non hai effettuato l'accesso, per poter usufruire questo servizio c'è bisogno di essere autenticati</Text>
                             <Text style={styles.subTitle}>Vai nell'area riservata ed effettua l'accesso!</Text>
                         </View>
-                        <TouchableOpacity style={styles.button} onPress={() => router.push("LogInView")}>
+                        <TouchableOpacity style={styles.button} onPress={() => router.push("AccediView")}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
                             <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 Accedi

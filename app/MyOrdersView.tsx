@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 import MyOrdersComponent from "@/components/MyOrdersComponent/MyOrders.component";
 
-export default function LogInView() {
+export default function MyOrdersView() {
     const navigation = useNavigation();
 
     useEffect(() => {
