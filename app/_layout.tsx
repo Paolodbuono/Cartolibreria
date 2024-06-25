@@ -59,9 +59,6 @@ export default function Layout() {
           headerRight: () => <BurgerButtonComponent onPress={getRoutes} />,
         }}
       >
-        <Stack.Screen name="LogInView" options={{}} />
-        <Stack.Screen name="SignInView" options={{}} />
-        {/* Aggiungi qui altri Stack.Screen per i tuoi componenti */}
       </Stack>
       <Modal visible={sideBarOpen} animationType="slide" transparent={true}>
         <View style={styles.modalOverlay}>
