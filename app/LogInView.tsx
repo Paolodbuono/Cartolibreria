@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 import LogInComponent from "@/components/LogInComponent/LogIn.component";
 
