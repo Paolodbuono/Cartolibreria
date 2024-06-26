@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 function LogoButtonComponent() {
     const router = useRouter();
 
-    const urlImg = "../../assets/images/icon.png";
+    const urlImg = "../../assets/images/adaptive-icon.png";
 
     const handlePress = () => {
         router.replace("HomeView");
