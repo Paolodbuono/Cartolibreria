@@ -228,36 +228,48 @@ const SignInComponent: React.FC<{}> = () => {
                             <Text style={{ color: 'white', fontWeight: "bold" }}>Registrati</Text>
                         </TouchableOpacity>
                         <Modal
-                            animationType='slide'
                             visible={modalErrorVisibile}
-                            transparent={true}
+                            transparent
+                            animationType="slide"
                             onRequestClose={() => setModalErrorVisibile(false)}>
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <Text style={styles.modalText}>{modalText}</Text>
-                                    <Button title="Chiudi" onPress={() => setModalErrorVisibile(false)} />
+                            <View style={gs.modalWrapper}>
+                                <View style={gs.modalHeader}>
+                                    <Text style={gs.modalHeaderText}>Info</Text>
+                                </View>
+                                <View style={gs.modalBody}>
+                                    <Text style={gs.modalBodyText}>{modalText}</Text>
+                                </View>
+                                <View style={gs.modalActionButtons}>
+                                    <TouchableOpacity
+                                        style={gs.modalActionBtnConfirm}
+                                        onPress={() => setModalErrorVisibile(false)}>
+                                        <Text style={gs.modalActionBtnConfirmLabel}>Chiudi</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </Modal>
                         <Modal
-                            animationType='slide'
                             visible={modalResponseVisible}
-                            transparent={true}
+                            transparent
+                            animationType="slide"
                             onRequestClose={() => setModalResponseVisible(false)}>
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    {modalResponseText === "" && <>
-                                        <Text>Registrazione avvenuta con successo.</Text>
-                                        <Text>Benvenuto in Cartolibreria Bonagura {modalText}</Text>
-                                    </>}
-                                    {modalResponseText && <View>
-                                        <Text style={styles.modalText}>Errore nella registrazione</Text>
-                                        <Text>{modalResponseText}</Text>
-                                    </View>}
-                                    <Button title={modalResponseText ? "Riprova" : "Vai a Home"} onPress={handleOnClickResponseModal} />
+                            <View style={gs.modalWrapper}>
+                                <View style={gs.modalHeader}>
+                                    <Text style={gs.modalHeaderText}>{modalResponseText === "" ? "Registrazione avvenuta con successo." : "Errore nella registrazione"}</Text>
+                                </View>
+                                <View style={gs.modalBody}>
+                                    <Text style={gs.modalBodyText}>{modalResponseText === "" ? "Benvenuto in Cartolibreria Bonagura "+ modalText : modalResponseText}</Text>
+                                </View>
+                                <View style={gs.modalActionButtons}>
+                                    <TouchableOpacity
+                                        style={gs.modalActionBtnConfirm}
+                                        onPress={handleOnClickResponseModal}>
+                                        <Text style={gs.modalActionBtnConfirmLabel}>{modalResponseText ? "Riprova" : "Vai a Home"}</Text>
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                         </Modal>
+
                     </View>
                 </>
                 }

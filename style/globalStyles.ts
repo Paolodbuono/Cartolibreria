@@ -67,9 +67,16 @@ export const gs = StyleSheet.create({
         backgroundColor: '#007bff',
         borderRadius: 5,
         alignItems: "center",
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginTop: 20,
+
     },
     modalActionBtnConfirmLabel: {
-        color: "white"
+        color: 'white',
+        fontSize: 16,
+        textAlign: 'center',
+        fontWeight: 'bold',
     }
 
 });
