@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from 'react';
+import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
 import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner } from 'react-native';
 
-import { useRouter } from 'expo-router';
-import { styles } from './MyProfile.styles';
-
 import { gs } from '@/style/globalStyles';
+import { styles } from './MyProfile.styles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
@@ -19,7 +18,6 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const [modalErrorLoginVisible, setModalErrorLoginVisible] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [secureTextEntry, setSecureTextEntry] = useState(false);
 
     const [selectedSede, setSelectedSede] = useState<string>("0");
 
@@ -86,7 +84,6 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     onChangeText={setPassword}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    secureTextEntry={secureTextEntry}
                     placeholder="Password"
                 />
                 <View style={{

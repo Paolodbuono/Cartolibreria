@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, ActivityIndicator as Spinner} from 'react-native';
 
-import { ProfileComponent } from './Profile.component';
-import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
+import { UserType, emptyUser } from '@/types/UserType';
+
+import { ProfileComponent } from './Profile.component';
 import { NotLoggedComponent } from './NotLogged.component';
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
