@@ -401,7 +401,9 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
             </View>
 
-            <Button title="Cerca disponibilità orario" onPress={checkDate} />
+            <TouchableOpacity style={styles.button} onPress={checkDate}>
+                <TextComponent style={{ color: 'white', fontSize: 22 }}>Cerca disponibilità orario</TextComponent>
+            </TouchableOpacity>
 
             <Modal visible={modalCheckDateVisibile} transparent={true} animationType="slide">
                 <View style={styles.modalContainer}>

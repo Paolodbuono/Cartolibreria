@@ -54,6 +54,8 @@ export default function Layout() {
     isSideBarOpen(true);
   }
 
+  if (!fontsLoaded) return <></>;
+
   return (
     <View style={{ flex: 1 }}>
       <Stack
