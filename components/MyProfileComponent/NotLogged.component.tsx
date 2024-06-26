@@ -8,7 +8,6 @@ import { styles } from './MyProfile.styles';
 
 import { gs } from '@/style/globalStyles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
-import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const router = useRouter();
@@ -20,7 +19,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const [modalErrorLoginVisible, setModalErrorLoginVisible] = useState(false);
 
     const [isLoading, setIsLoading] = useState(false);
-    const [secureTextEntry, setSecureTextEntry] = useState(true);
+    const [secureTextEntry, setSecureTextEntry] = useState(false);
 
     const [selectedSede, setSelectedSede] = useState<string>("0");
 
@@ -97,7 +96,6 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     marginLeft: 10,
                     marginBottom: 5
                 }}>
-                    <CustomButtonComponent onPress={() => setSecureTextEntry(!secureTextEntry)} icon={secureTextEntry ? "eye" : "closedEye"} />
                 </View>
             </View>
             <View style={styles.radioContainer}>

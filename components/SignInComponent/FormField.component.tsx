@@ -1,10 +1,6 @@
 import React from 'react';
-import { View, TextInput, Text, StyleSheet, Alert } from 'react-native';
-import { faCalendar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { View, TextInput, Text, StyleSheet, Alert, TouchableOpacity } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-
-import CustomButtonComponent from '../ButtonsComponent/CustomButton.component';
 
 import { fields } from './SignIn.utils';
 
@@ -37,7 +33,6 @@ const FormFields: React.FC<Props> = ({ formValues }) => {
         return (
             <View style={styles.container} key={index}>
                 <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center" }}>
-                    {element.type === "date" && (<FontAwesomeIcon icon={faCalendar} color='black' />)}
                     <TextInput
                         style={styles.inputText}
                         placeholder={element.placeholder}
@@ -46,9 +41,18 @@ const FormFields: React.FC<Props> = ({ formValues }) => {
                         autoCorrect={element.type === "email" ? false : true}
                     />
                     {element.type === "date" && (
-                        <>
-                            <CustomButtonComponent onPress={infoAlert} icon="info" />
-                        </>
+                        <TouchableOpacity
+                            style={{
+                                paddingTop: 5,
+                                paddingRight: 13,
+                                paddingLeft: 13,
+                                paddingBottom: 5,
+                                backgroundColor: '#007bff',
+                                borderRadius: 100,
+                            }}
+                            onPress={infoAlert}>
+                            <Text>i</Text>
+                        </TouchableOpacity>
                     )}
                 </View>
                 {element.caption && <Text style={styles.caption}>{element.caption}</Text>}
