@@ -120,17 +120,21 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 transparent
                 animationType="slide"
                 onRequestClose={() => setModalSuccessLoginVisible(false)}>
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text>Login andata a buon fine.</Text>
-                        <Text>Bentornato {nameLogin}</Text>
+                <View style={gs.modalWrapper}>
+                    <View style={gs.modalHeader}>
+                        <Text style={gs.modalHeaderText}>Login andata a buon fine.</Text>
+                    </View>
+                    <View style={gs.modalBody}>
+                        <Text style={gs.modalBodyText}>Bentornato {nameLogin}</Text>
+                    </View>
+                    <View style={gs.modalActionButtons}>
                         <TouchableOpacity
-                            style={styles.button}
+                            style={gs.modalActionBtnConfirm}
                             onPress={() => {
                                 setModalSuccessLoginVisible(false);
                                 router.replace("HomeView");
                             }}>
-                            <Text>VAI A HOME</Text>
+                            <Text style={gs.modalActionBtnConfirmLabel}>VAI A HOME</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -140,14 +144,19 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 transparent
                 animationType="slide"
                 onRequestClose={() => setModalErrorLoginVisible(false)}>
-                <View style={styles.modalContainer}>
-                    <View style={styles.modalContent}>
-                        <Text>Errore nella login</Text>
-                        <Text>Controlla Login, Password e sede. Poi riprova</Text>
+                <View style={gs.modalWrapper}>
+                    <View style={gs.modalHeader}>
+                        <Text style={gs.modalHeaderText}>Errore nella login.</Text>
+                    </View>
+                    <View style={gs.modalBody}>
+                        <Text style={gs.modalBodyText}>Controlla Login, Password e sede.</Text>
+                        <Text style={gs.modalBodyText}>Poi riprova</Text>
+                    </View>
+                    <View style={gs.modalActionButtons}>
                         <TouchableOpacity
-                            style={styles.button}
+                            style={gs.modalActionBtnConfirm}
                             onPress={() => { setModalErrorLoginVisible(false); }}>
-                            <Text>CHIUDI</Text>
+                            <Text style={gs.modalActionBtnConfirmLabel}>CHIUDI</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
