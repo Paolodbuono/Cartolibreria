@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
   },
-  title: { fontSize: hp('2.6%'), textAlign: 'center', fontWeight: '800', color: '#EB5F19', top: -30 },
+  title: { fontSize: hp('2.6%'), textAlign: 'center', fontWeight: '800', color: '#EB5F19', top: -30, width: wp('90%')},
   subTitle: { fontSize: hp('2.4%'), textAlign: 'center', fontWeight: '800', color: '#4975be', top: -20 },
   calendar: { width: wp('95%'), marginTop: hp('1.5%'), borderWidth: 1, borderColor: '#CCCCCC', borderRadius: 5, },
   containerRiepilogoPrenotazione: { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginTop: hp('5%') },

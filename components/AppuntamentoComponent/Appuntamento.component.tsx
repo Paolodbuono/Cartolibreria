@@ -333,9 +333,6 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             <Text style={styles.textRiepilogoPrenotazione}>Presentati con questo ticket... e salti la fila! </Text>
             <Text style={styles.textRiepilogoPrenotazione}>Lo trovi nella sezione appuntamenti</Text>
 
-
-
-
             <Text style={styles.codicePrenotazione}>Sede prenotazione <BSub title={datiPrenotazionePresente?.sede ?? ""} /> </Text>
             <Text style={styles.codicePrenotazione}>Nome Cognome:  <BSub title={`${datiPrenotazionePresente?.nome} ${datiPrenotazionePresente?.cognome}`} /> </Text>
             <Text style={styles.codicePrenotazione}>Email:  <BSub title={datiPrenotazionePresente?.email ?? ""} /> </Text>
@@ -410,7 +407,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
                         <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "90%" }}>
                             <View style={{ display: "flex" }}>
-                                <Text style={{ ...styles.title, fontSize: 24, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</Text>
+                                <Text style={{ ...styles.title, fontSize: 32, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</Text>
                                 <Text style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>
                                     Vuoi confermare la prenotazione per il
                                     <Text style={{ fontWeight: '800' }}>{prenotazioneDate}</Text>
@@ -418,21 +415,17 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, width: '100%', flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20 }}>
-                                <TouchableOpacity
-                                    style={{ flex: 1, backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10 }}
-                                    onPress={toggleModalCheckDate}
-                                >
-                                    <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Annulla</Text>
+                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                                <TouchableOpacity style={{ backgroundColor: 'red', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginRight: 10 }} onPress={toggleModalCheckDate}>
+                                    <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Annulla</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={{ flex: 1, backgroundColor: 'blue', paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
+                                <TouchableOpacity style={{ backgroundColor: 'blue', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
                                     onPress={() => {
                                         setModalCheckDateVisibile(false);
                                         setModalInserInfoVisibile(true);
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Conferma</Text>
+                                    <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Conferma</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

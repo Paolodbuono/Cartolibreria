@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, Modal, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import LogoButtonComponent from '@/components/ButtonsComponent/LogoButton.component';
-import BurgerButtonComponent from '@/components/ButtonsComponent/BurgerButton.component';
+import LogoButtonComponent from '@/components/Commons/LogoButton.component';
+import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type ComponentItem = {
