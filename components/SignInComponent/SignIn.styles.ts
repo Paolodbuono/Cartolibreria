@@ -73,9 +73,10 @@ export const styles = StyleSheet.create({
         marginTop: hp('2.5%'),
         backgroundColor: '#4975be',
         padding: 10,
-        width: wp("20%"),
+        width: 100,
         borderRadius: 5,
-        marginBottom: 20
+        marginBottom: 20,
+        alignItems: "center"
 
     }
 });

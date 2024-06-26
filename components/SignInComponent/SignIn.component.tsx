@@ -206,8 +206,10 @@ const SignInComponent: React.FC<{}> = () => {
                                 value={checked}
                                 onValueChange={setChecked}
                                 color={checked ? '#4630EB' : undefined}
+                                accessibilityLabel='Accetta il trattamento dei dati'
+                                accessibilityLabelledBy='AcceptData'
                             />
-                            <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }}>Accetta il trattamento dei dati  </Text>
+                            <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }} id="AcceptData">Accetta il trattamento dei dati  </Text>
                             <TouchableOpacity
                                 style={{
                                     paddingTop: 5,
@@ -223,7 +225,7 @@ const SignInComponent: React.FC<{}> = () => {
                         </View>
 
                         <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
-                            <Text style={{ color: 'white', textAlign: 'center', fontWeight: 'bold' }}>Registrati</Text>
+                            <Text style={{ color: 'white', fontWeight: "bold" }}>Registrati</Text>
                         </TouchableOpacity>
                         <Modal
                             animationType='slide'
