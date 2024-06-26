@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
     },
     textButton: {
         color: '#fff',
-        fontSize: 16,
+        fontSize: 26,
     },
     linkButton: {
         color: '#007bff',

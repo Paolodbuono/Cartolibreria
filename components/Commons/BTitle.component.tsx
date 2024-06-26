@@ -9,5 +9,5 @@ export const BTitle: React.FC<{ title: string }> = ({ title }) => {
 }
 
 const styles = StyleSheet.create({
-    titleBOLD: { fontSize: hp('2.6%'), padding: 10, fontWeight: '800', color: '#EB5F19' },
+    titleBOLD: { fontSize: 32, padding: 10, fontWeight: '800', color: '#EB5F19' },
 });

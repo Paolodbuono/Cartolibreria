@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         marginTop: hp('1%'),
     },
     title: {
-        fontSize: hp('2.5%'),
+        fontSize: 25,
         color: '#4975be',
         fontWeight: 'bold'
     },
@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         marginTop: hp('2.5%')
     },
     subTitle: {
-        fontSize: hp('2%'),
+        fontSize: 20,
         color: '#4975be',
         paddingLeft: wp('3%'),
         paddingRight: wp('3%')
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         width: wp('90%')
     },
     emailLabel: {
-        fontSize: hp('2%'),
+        fontSize: 20,
         color: '#4975be',
         marginLeft: wp('5%'),
     },

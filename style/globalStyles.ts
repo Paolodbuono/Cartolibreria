@@ -60,7 +60,7 @@ export const gs = StyleSheet.create({
         elevation: 5,
     },
     modalActionButtons: {
-        flex: 2
+        flex: 3
     },
     modalActionBtnConfirm: {
         padding: 10,
@@ -75,7 +75,9 @@ export const gs = StyleSheet.create({
     modalActionBtnConfirmLabel: {
         color: 'white',
         fontSize: 16,
+        height: 35,
         textAlign: 'center',
+        textAlignVertical:"center",
         fontWeight: 'bold',
     }
 

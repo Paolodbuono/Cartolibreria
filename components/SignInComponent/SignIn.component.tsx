@@ -226,7 +226,7 @@ const SignInComponent: React.FC<{}> = () => {
                         </View>
 
                         <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
-                            <TextComponent style={{ color: 'white', fontWeight: "bold" }}>Registrati</TextComponent>
+                            <TextComponent style={{ fontSize: 24, color: 'white', fontWeight: "bold" }}>Registrati</TextComponent>
                         </TouchableOpacity>
                         <Modal
                             visible={modalErrorVisibile}
@@ -259,7 +259,7 @@ const SignInComponent: React.FC<{}> = () => {
                                     <TextComponent style={gs.modalHeaderText}>{modalResponseText === "" ? "Registrazione avvenuta con successo." : "Errore nella registrazione"}</TextComponent>
                                 </View>
                                 <View style={gs.modalBody}>
-                                    <TextComponent style={gs.modalBodyText}>{modalResponseText === "" ? "Benvenuto in Cartolibreria Bonagura "+ modalText : modalResponseText}</TextComponent>
+                                    <TextComponent style={gs.modalBodyText}>{modalResponseText === "" ? "Benvenuto in Cartolibreria Bonagura " + modalText : modalResponseText}</TextComponent>
                                 </View>
                                 <View style={gs.modalActionButtons}>
                                     <TouchableOpacity

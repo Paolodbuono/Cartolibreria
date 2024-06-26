@@ -19,7 +19,7 @@ export default function WhoAreWeView() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
       <View style={styles.title}>
-        <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: hp('2.8%') }}>
+        <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: 28 }}>
           {'LA NOSTRA STORIA'}
         </TextComponent>
       </View>

@@ -3,14 +3,14 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 export const styles = StyleSheet.create({
     title: {
-        fontSize: hp('2.6%'),
+        fontSize: 26,
         textAlign: 'center',
         fontWeight: '500',
         marginTop: 10,
         color: '#EB5F19'
     },
     subTitle: {
-        fontSize: hp('2.4%'),
+        fontSize: 24,
         marginTop: 10,
         textAlign: 'center',
         fontWeight: '100',
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         margin: 2,
     },
     text: {
-        fontSize: hp('1.8%'),
+        fontSize: 18,
         color: '#4975be'
     },
     container: {
@@ -73,7 +73,7 @@ export const styles = StyleSheet.create({
         marginTop: hp('2.5%'),
         backgroundColor: '#4975be',
         padding: 10,
-        width: 100,
+        width: 120,
         borderRadius: 5,
         marginBottom: 20,
         alignItems: "center"

@@ -9,5 +9,5 @@ export const BSub: React.FC<{ title: string }> = ({ title }) => {
 }
 
 const styles = StyleSheet.create({
-    subTitleBOLD: { fontSize: hp('2.4%'), textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
+    subTitleBOLD: { fontSize: 26, textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
 });

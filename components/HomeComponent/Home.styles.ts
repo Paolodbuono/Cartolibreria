@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
+        backgroundColor: '#fff'
     },
     content: {
         flex: 1,
@@ -25,13 +26,15 @@ export const styles = StyleSheet.create({
     },
     buttonLabel: {
         textAlign: 'center',
-        fontSize: hp("2.5%"),
+        fontSize: 25,
         color: '#4975be',
         marginTop: 10
     },
     buttonImportant: {
+        marginTop: 10,
+        marginBottom: -20,
         backgroundColor: 'rgb(235 96 25)',
-        paddingVertical: 12,
+        paddingVertical: 16,
         borderRadius: 8,
         padding: 20,
     },
@@ -44,7 +47,11 @@ export const styles = StyleSheet.create({
     },
     imgFooter: {
         width: wp('100%'),
-        height: 150,
+        height: 130,
     },
-    welcome: { color: '#4975be', fontSize: hp('2.5%'), fontWeight: 'bold' }
+    welcome: {
+        color: '#4975be',
+        fontSize: 30,
+        fontWeight: 'bold',
+    }
 });

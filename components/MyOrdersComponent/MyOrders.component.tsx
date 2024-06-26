@@ -89,10 +89,10 @@ const MyOrdersComponent = ({ }) => {
                     width: '95%'
                 }}
                 >
-                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</TextComponent>
-                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</TextComponent>
-                    <TextComponent style={{ fontSize: hp('1.8%'), color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</TextComponent>
-                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`Stato: - ${info.item.stato}`}</TextComponent>
+                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</TextComponent>
+                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</TextComponent>
+                    <TextComponent style={{ fontSize: 18, color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</TextComponent>
+                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`Stato: - ${info.item.stato}`}</TextComponent>
                 </View>
             </View>
         )
@@ -129,7 +129,7 @@ const MyOrdersComponent = ({ }) => {
                         </View>
                         <TouchableOpacity style={styles.button} onPress={() => { router.push("MyProfileView") }}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
-                            <TextComponent style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                            <TextComponent style={{ textAlign: 'center', fontSize: 26, color: '#4975be', marginTop:10 }}>
                                 Accedi
                             </TextComponent>
                         </TouchableOpacity>
