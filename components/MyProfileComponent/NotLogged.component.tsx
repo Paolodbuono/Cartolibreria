@@ -7,6 +7,7 @@ import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Sp
 import { gs } from '@/style/globalStyles';
 import { styles } from './MyProfile.styles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
+import TextComponent from '../Commons/Text.component';
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const router = useRouter();
@@ -65,8 +66,8 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     return (
         <View style={styles.container}>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
-            <Text style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</Text>
-            <Text style={styles.subTitle}>Se sei già cliente accedi</Text>
+            <TextComponent style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</TextComponent>
+            <TextComponent style={styles.subTitle}>Se sei già cliente accedi</TextComponent>
             <View style={styles.inputContainer}>
                 <TextInput
                     style={styles.input}
@@ -96,7 +97,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 </View>
             </View>
             <View style={styles.radioContainer}>
-                <Text style={styles.text}>Seleziona sede</Text>
+                <TextComponent style={styles.text}>Seleziona sede</TextComponent>
                 <RadioGroup
                     radioButtons={radioButtonsData}
                     onPress={setSelectedSede}
@@ -105,14 +106,14 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 />
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
-                <Text style={styles.textButton}>Log In</Text>
+                <TextComponent style={styles.textButton}>Log In</TextComponent>
             </TouchableOpacity>
             <View style={styles.bottomLinks}>
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
-                    <Text style={styles.textButton}>Hai dimenticato la password?</Text>
+                    <TextComponent style={styles.textButton}>Hai dimenticato la password?</TextComponent>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}>
-                    <Text style={styles.textButton}>Non sei cliente?</Text>
+                    <TextComponent style={styles.textButton}>Non sei cliente?</TextComponent>
                 </TouchableOpacity>
             </View>
             <Modal
@@ -122,10 +123,10 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 onRequestClose={() => setModalSuccessLoginVisible(false)}>
                 <View style={gs.modalWrapper}>
                     <View style={gs.modalHeader}>
-                        <Text style={gs.modalHeaderText}>Login andata a buon fine.</Text>
+                        <TextComponent style={gs.modalHeaderText}>Login andata a buon fine.</TextComponent>
                     </View>
                     <View style={gs.modalBody}>
-                        <Text style={gs.modalBodyText}>Bentornato {nameLogin}</Text>
+                        <TextComponent style={gs.modalBodyText}>Bentornato {nameLogin}</TextComponent>
                     </View>
                     <View style={gs.modalActionButtons}>
                         <TouchableOpacity
@@ -134,7 +135,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                                 setModalSuccessLoginVisible(false);
                                 router.replace("HomeView");
                             }}>
-                            <Text style={gs.modalActionBtnConfirmLabel}>VAI A HOME</Text>
+                            <TextComponent style={gs.modalActionBtnConfirmLabel}>VAI A HOME</TextComponent>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -146,17 +147,17 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 onRequestClose={() => setModalErrorLoginVisible(false)}>
                 <View style={gs.modalWrapper}>
                     <View style={gs.modalHeader}>
-                        <Text style={gs.modalHeaderText}>Errore nella login.</Text>
+                        <TextComponent style={gs.modalHeaderText}>Errore nella login.</TextComponent>
                     </View>
                     <View style={gs.modalBody}>
-                        <Text style={gs.modalBodyText}>Controlla Login, Password e sede.</Text>
-                        <Text style={gs.modalBodyText}>Poi riprova</Text>
+                        <TextComponent style={gs.modalBodyText}>Controlla Login, Password e sede.</TextComponent>
+                        <TextComponent style={gs.modalBodyText}>Poi riprova</TextComponent>
                     </View>
                     <View style={gs.modalActionButtons}>
                         <TouchableOpacity
                             style={gs.modalActionBtnConfirm}
                             onPress={() => { setModalErrorLoginVisible(false); }}>
-                            <Text style={gs.modalActionBtnConfirmLabel}>CHIUDI</Text>
+                            <TextComponent style={gs.modalActionBtnConfirmLabel}>CHIUDI</TextComponent>
                         </TouchableOpacity>
                     </View>
                 </View>

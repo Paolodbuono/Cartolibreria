@@ -5,33 +5,34 @@ import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 
 import { styles } from './EmailForm.styles';
 import { EmailFormHandle, EmailFormProps } from './EmailForm.types';
+import TextComponent from '@/components/Commons/Text.component';
 
 const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, cognome, setCognome, email, setEmail, numeroCell, setNumroCell, handlePrenota, handleToggleModalInserInfo, prenotazioneDate }, ref) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Inserisci i tuoi dati:</Text>
-      <Text style={styles.subTitle}>{prenotazioneDate}</Text>
+      <TextComponent style={styles.title}>Inserisci i tuoi dati:</TextComponent>
+      <TextComponent style={styles.subTitle}>{prenotazioneDate}</TextComponent>
 
       <View style={styles.inputContainer}>
-        <Text style={styles.subTitle}>Nome</Text>
+        <TextComponent style={styles.subTitle}>Nome</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci il tuo nome" value={nome} onChangeText={setNome} />
 
-        <Text style={styles.subTitle}>Cognome</Text>
+        <TextComponent style={styles.subTitle}>Cognome</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci il tuo cognome" value={cognome} onChangeText={setCognome} />
 
-        <Text style={styles.subTitle}>Email</Text>
+        <TextComponent style={styles.subTitle}>Email</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci la tua email" value={email} onChangeText={setEmail} keyboardType="email-address" />
 
-        <Text style={styles.subTitle}>Numero di telefono</Text>
+        <TextComponent style={styles.subTitle}>Numero di telefono</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci il tuo numero di telefono" value={numeroCell} onChangeText={setNumroCell} keyboardType="phone-pad" />
       </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={{ ...styles.button, backgroundColor: 'red' }} onPress={handleToggleModalInserInfo}>
-          <Text style={styles.buttonText}>Annulla</Text>
+          <TextComponent style={styles.buttonText}>Annulla</TextComponent>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handlePrenota}>
-          <Text style={styles.buttonText}>Prenota</Text>
+          <TextComponent style={styles.buttonText}>Prenota</TextComponent>
         </TouchableOpacity>
       </View>
     </View>

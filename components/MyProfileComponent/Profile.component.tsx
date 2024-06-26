@@ -9,6 +9,7 @@ import { gs } from '@/style/globalStyles';
 import { styles } from './Profile.styles';
 import { BTitle } from '../Commons/BTitle.component';
 import { BSub } from '../Commons/BSub.component';
+import TextComponent from '../Commons/Text.component';
 
 export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
@@ -44,20 +45,20 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading &&
                 <View style={styles.wrapper}>
-                    <Text style={styles.title}>
+                    <TextComponent style={styles.title}>
                         Bentornato <BTitle title={userLogged.nome} />
-                    </Text>
+                    </TextComponent>
                     <View style={{ marginTop: hp('1%'), padding: 10, justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={styles.subTitle}>Ecco il riepilogo dei tuoi dati</Text>
+                        <TextComponent style={styles.subTitle}>Ecco il riepilogo dei tuoi dati</TextComponent>
                     </View>
                     <View style={{ marginTop: hp('1.5%'), padding: 10 }}>
-                        <Text style={styles.subTitle}>Email: <BSub title={userLogged.email} /> </Text>
-                        <Text style={styles.subTitle}>Indirizzo: <BSub title={userLogged.indirizzo} /> </Text>
-                        <Text style={styles.subTitle}>Città: <BSub title={userLogged.citta} /> </Text>
-                        <Text style={styles.subTitle}>Cellulare: <BSub title={userLogged.cellulare} /> </Text>
+                        <TextComponent style={styles.subTitle}>Email: <BSub title={userLogged.email} /> </TextComponent>
+                        <TextComponent style={styles.subTitle}>Indirizzo: <BSub title={userLogged.indirizzo} /> </TextComponent>
+                        <TextComponent style={styles.subTitle}>Città: <BSub title={userLogged.citta} /> </TextComponent>
+                        <TextComponent style={styles.subTitle}>Cellulare: <BSub title={userLogged.cellulare} /> </TextComponent>
                     </View>
                     <View style={{ marginTop: hp('1.5%'), padding: 10 }}>
-                        <Text style={styles.subTitle}>Sede presso cui sei registrato: <BSub title={sedeSelezionata.toUpperCase()} /> </Text>
+                        <TextComponent style={styles.subTitle}>Sede presso cui sei registrato: <BSub title={sedeSelezionata.toUpperCase()} /> </TextComponent>
                     </View>
                     <View style={styles.btnPosition}>
                         <Button title="LOG OUT" onPress={() => logOut()} />

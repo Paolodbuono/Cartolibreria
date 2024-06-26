@@ -13,7 +13,7 @@ export default function RestorePasswordView() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Stack.Screen options={{ headerTitle: "Recupera Password" }} />
+      <Stack.Screen options={{ headerTitle: "Recupera Password" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
       <PaswordRecoveryComponent />
     </View>
   );

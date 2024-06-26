@@ -5,6 +5,7 @@ import { Button, Text, TextInput, View, ActivityIndicator as Spinner } from 'rea
 
 import { styles } from "./PasswordRecovery.styles";
 import { gs } from "@/style/globalStyles";
+import TextComponent from "../Commons/Text.component";
 
 const validateEmail = (email: string) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,19 +60,19 @@ const PaswordRecoveryComponent: React.FC<{}> = () => {
             {showSpinner && <View style={gs.spinner} children={<Spinner size="large" />} />}
 
             <View style={styles.titleContainer}>
-                <Text style={styles.title}>
+                <TextComponent style={styles.title}>
                     Recupera Password per accedere
-                </Text>
+                </TextComponent>
             </View>
             <View style={styles.subTitleContainer}>
-                <Text style={styles.subTitle}>
+                <TextComponent style={styles.subTitle}>
                     Inserisci il tuo indirizzo di posta elettronica,riceverai un'Email con la password per accedere ai nostri servizi
-                </Text>
+                </TextComponent>
             </View>
             <View style={styles.emailInputContainer}>
-                <Text style={styles.emailLabel}>
+                <TextComponent style={styles.emailLabel}>
                     Email
-                </Text>
+                </TextComponent>
                 <TextInput
                     style={styles.emailInput}
                     value={emailAddress}
@@ -85,9 +86,9 @@ const PaswordRecoveryComponent: React.FC<{}> = () => {
                 <Button onPress={handleRecovery} title="Recupera" />
                 {showError && (
                     <View style={styles.showErrorContainer}>
-                        <Text style={styles.showError}>
+                        <TextComponent style={styles.showError}>
                             {errorLabel}
-                        </Text>
+                        </TextComponent>
                     </View>
                 )}
             </View>

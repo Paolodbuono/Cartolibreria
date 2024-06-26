@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Button, Modal, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import LogoButtonComponent from '@/components/Commons/LogoButton.component';
 import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts } from 'expo-font';
+import TextComponent from '@/components/Commons/Text.component';
 
 type ComponentItem = {
   name: string;
@@ -23,6 +25,10 @@ const componentsList: ComponentItem[] = [
 
 export default function Layout() {
   const router = useRouter();
+  const [fontsLoaded] = useFonts({
+    'Allan-Regular': require('@/assets/fonts/Allan-Regular.ttf'),
+    'Allan-Bold': require('@/assets/fonts/Allan-Bold.ttf'),
+  });
 
   const [sideBarOpen, isSideBarOpen] = useState(false);
   const [routesList, setRoutesList] = useState(componentsList);
@@ -67,7 +73,7 @@ export default function Layout() {
               keyExtractor={(item) => item.name}
               renderItem={({ item }) => (
                 <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
-                  <Text style={styles.componentName}>{item.name}</Text>
+                  <TextComponent style={styles.componentName}>{item.name}</TextComponent>
                 </TouchableOpacity>
               )}
             />

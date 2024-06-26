@@ -2,9 +2,10 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+import TextComponent from './Text.component';
 
 export const BTitle: React.FC<{ title: string }> = ({ title }) => {
-    return <Text style={styles.titleBOLD}> {title} </Text>
+    return <TextComponent style={styles.titleBOLD}> {title} </TextComponent>
 }
 
 const styles = StyleSheet.create({

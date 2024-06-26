@@ -3,6 +3,7 @@ import { View, TextInput, Text, StyleSheet, Alert, TouchableOpacity } from 'reac
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 import { fields } from './SignIn.utils';
+import TextComponent from '../Commons/Text.component';
 
 interface Field {
     label: string;
@@ -51,11 +52,11 @@ const FormFields: React.FC<Props> = ({ formValues }) => {
                                 borderRadius: 100,
                             }}
                             onPress={infoAlert}>
-                            <Text>i</Text>
+                            <TextComponent>i</TextComponent>
                         </TouchableOpacity>
                     )}
                 </View>
-                {element.caption && <Text style={styles.caption}>{element.caption}</Text>}
+                {element.caption && <TextComponent style={styles.caption}>{element.caption}</TextComponent>}
             </View>
         );
     };

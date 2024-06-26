@@ -6,6 +6,7 @@ import { UserType, emptyUser } from '@/types/UserType';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { gs } from '@/style/globalStyles';
 import { styles } from './Home.styles';
+import TextComponent from '@/components/Commons/Text.component';
 
 // Paths
 const bannerPath = "../../assets/images/_headerBonaguraLogo@2.png";
@@ -50,19 +51,19 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    <Text style={styles.welcome}>Benvenuto {stateUser.nome}!</Text>
+                    <TextComponent style={styles.welcome}>Benvenuto {stateUser.nome}!</TextComponent>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("MyOrdersView") }} >
                                 <Image style={styles.marginAuto} source={require(ordersPath)} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonLabel}>  I miei ordini </Text>
+                            <TextComponent style={styles.buttonLabel}>  I miei ordini </TextComponent>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("AppuntamentoView") }}>
                                 <Image style={styles.marginAuto} source={require(appuntamentoPath)} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonLabel}> Appuntamento </Text>
+                            <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
                         </View>
                     </View>
                     <View style={styles.buttonRow}>
@@ -70,11 +71,11 @@ const HomeComponent: React.FC<{}> = () => {
                             <TouchableOpacity onPress={() => { router.push("MyProfileView") }}>
                                 <Image style={styles.marginAuto} source={require(personalAreaPath)} />
                             </TouchableOpacity>
-                            <Text style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </Text>
+                            <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
                         </View>
                     </View>
                     <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
-                        <Text style={{ color: 'white', fontSize: 22 }}>Importante</Text>
+                        <TextComponent style={{ color: 'white', fontSize: 22 }}>Importante</TextComponent>
                     </TouchableOpacity>
                 </>}
             </View>

@@ -8,6 +8,7 @@ import { gs } from '@/style/globalStyles';
 import { styles } from './MyOrders.styles';
 import { OrderStatusType, OrderType } from './MyOrders.types';
 import { BSub } from '../Commons/BSub.component';
+import TextComponent from '../Commons/Text.component';
 
 const orderStatuses: OrderStatusType = {
     1: "ORDINATO NUOVO",
@@ -88,10 +89,10 @@ const MyOrdersComponent = ({ }) => {
                     width: '95%'
                 }}
                 >
-                    <Text style={{ fontSize: hp('2%'), color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</Text>
-                    <Text style={{ fontSize: hp('2%'), color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</Text>
-                    <Text style={{ fontSize: hp('1.8%'), color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</Text>
-                    <Text style={{ fontSize: hp('2%'), color: '#000' }}>{`Stato: - ${info.item.stato}`}</Text>
+                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</TextComponent>
+                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</TextComponent>
+                    <TextComponent style={{ fontSize: hp('1.8%'), color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</TextComponent>
+                    <TextComponent style={{ fontSize: hp('2%'), color: '#000' }}>{`Stato: - ${info.item.stato}`}</TextComponent>
                 </View>
             </View>
         )
@@ -105,13 +106,13 @@ const MyOrdersComponent = ({ }) => {
             {!isLoading && <>
                 {isLogged && <>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('1.8%') }}>
-                        <Text style={styles.title}>Ricorda da noi non farai mai file chilometriche</Text>
+                        <TextComponent style={styles.title}>Ricorda da noi non farai mai file chilometriche</TextComponent>
                     </View>
                     <View style={{ padding: 10, marginTop: hp('1%') }}>
-                        <Text style={styles.subTitle}>Per te che devi solo ritirare c’è una <BSub title="CORSIA PREFERENZIALE!" /></Text>
-                        <Text style={styles.subTitle}>Visto che hai già un ordine in essere puoi anche <BSub title="ORDINARE TELEFONICAMENTE" />anziché fare file in libreria!</Text>
-                        <Text style={styles.subTitle}>Qualche libro acquistato erroneamente, te lo <BSub title="SOSTITUIREMO PRONTAMENTE!" /></Text>
-                        <Text style={styles.subTitle}>Consegnaci subito i tuoi libri usati non più in uso: <BSub title="LI VALUTIAMO AL 40%!" /></Text>
+                        <TextComponent style={styles.subTitle}>Per te che devi solo ritirare c’è una <BSub title="CORSIA PREFERENZIALE!" /></TextComponent>
+                        <TextComponent style={styles.subTitle}>Visto che hai già un ordine in essere puoi anche <BSub title="ORDINARE TELEFONICAMENTE" />anziché fare file in libreria!</TextComponent>
+                        <TextComponent style={styles.subTitle}>Qualche libro acquistato erroneamente, te lo <BSub title="SOSTITUIREMO PRONTAMENTE!" /></TextComponent>
+                        <TextComponent style={styles.subTitle}>Consegnaci subito i tuoi libri usati non più in uso: <BSub title="LI VALUTIAMO AL 40%!" /></TextComponent>
                     </View>
                     <FlatList
                         style={{ width: '100%' }}
@@ -123,14 +124,14 @@ const MyOrdersComponent = ({ }) => {
                 {!isLogged && <>
                     <View style={styles.container}>
                         <View>
-                            <Text style={styles.title}>Non hai effettuato l'accesso, per poter usufruire questo servizio c'è bisogno di essere autenticati</Text>
-                            <Text style={styles.subTitle}>Vai nell'area riservata ed effettua l'accesso!</Text>
+                            <TextComponent style={styles.title}>Non hai effettuato l'accesso, per poter usufruire questo servizio c'è bisogno di essere autenticati</TextComponent>
+                            <TextComponent style={styles.subTitle}>Vai nell'area riservata ed effettua l'accesso!</TextComponent>
                         </View>
                         <TouchableOpacity style={styles.button} onPress={() => { router.push("MyProfileView") }}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
-                            <Text style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
+                            <TextComponent style={{ textAlign: 'center', fontSize: hp("2.5%"), color: '#4975be' }}>
                                 Accedi
-                            </Text>
+                            </TextComponent>
                         </TouchableOpacity>
                     </View>
                 </>}

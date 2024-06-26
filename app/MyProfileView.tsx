@@ -13,7 +13,7 @@ export default function MyProfileView() {
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Stack.Screen options={{ headerTitle: "Profilo" }} />
+            <Stack.Screen options={{ headerTitle: "Profilo", headerTitleStyle: {fontFamily:"Allan-Bold"} }} />
             <MyProfileComponent />
         </View>
     );

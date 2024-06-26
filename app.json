@@ -24,7 +24,13 @@
       "package": "com.cartolibreriabonagurasrl"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": ["./assets/fonts/Allan-Regular.ttf","./assets/fonts/Allan-Bold.ttf"]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

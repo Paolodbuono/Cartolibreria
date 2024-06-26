@@ -16,6 +16,7 @@ import { PrenotazioneData } from './Appuntamento.types';
 import * as Notifications from 'expo-notifications';
 import { BSub } from '../Commons/BSub.component';
 import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
+import TextComponent from '../Commons/Text.component';
 
 const AppuntamentoComponent: React.FC<{}> = () => {
 
@@ -329,18 +330,18 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
     if (prenotazionePresente) return (<>
         <View >
-            <Text style={styles.title}>Grazie per la preferenza che ci hai accordato!</Text>
-            <Text style={styles.textRiepilogoPrenotazione}>Presentati con questo ticket... e salti la fila! </Text>
-            <Text style={styles.textRiepilogoPrenotazione}>Lo trovi nella sezione appuntamenti</Text>
+            <TextComponent style={styles.title}>Grazie per la preferenza che ci hai accordato!</TextComponent>
+            <TextComponent style={styles.textRiepilogoPrenotazione}>Presentati con questo ticket... e salti la fila! </TextComponent>
+            <TextComponent style={styles.textRiepilogoPrenotazione}>Lo trovi nella sezione appuntamenti</TextComponent>
 
-            <Text style={styles.codicePrenotazione}>Sede prenotazione <BSub title={datiPrenotazionePresente?.sede ?? ""} /> </Text>
-            <Text style={styles.codicePrenotazione}>Nome Cognome:  <BSub title={`${datiPrenotazionePresente?.nome} ${datiPrenotazionePresente?.cognome}`} /> </Text>
-            <Text style={styles.codicePrenotazione}>Email:  <BSub title={datiPrenotazionePresente?.email ?? ""} /> </Text>
-            <Text style={styles.codicePrenotazione}>Cellulare:  <BSub title={datiPrenotazionePresente?.numeroCell ?? ""} /> </Text>
-            <Text style={styles.codicePrenotazione}>Giorno Prenotazione:  <BSub title={datiPrenotazionePresente?.dataPrenotazione ?? ""} /> </Text>
-            <Text style={styles.codicePrenotazione}>Orario Prenotazione:  <BSub title={datiPrenotazionePresente?.orarioPrenotazione ?? ""} /> </Text>
-            <Text style={styles.codicePrenotazione}>Numero prenotazione</Text>
-            <Text style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.id}</Text>
+            <TextComponent style={styles.codicePrenotazione}>Sede prenotazione <BSub title={datiPrenotazionePresente?.sede ?? ""} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Nome Cognome:  <BSub title={`${datiPrenotazionePresente?.nome} ${datiPrenotazionePresente?.cognome}`} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Email:  <BSub title={datiPrenotazionePresente?.email ?? ""} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Cellulare:  <BSub title={datiPrenotazionePresente?.numeroCell ?? ""} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Giorno Prenotazione:  <BSub title={datiPrenotazionePresente?.dataPrenotazione ?? ""} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Orario Prenotazione:  <BSub title={datiPrenotazionePresente?.orarioPrenotazione ?? ""} /> </TextComponent>
+            <TextComponent style={styles.codicePrenotazione}>Numero prenotazione</TextComponent>
+            <TextComponent style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.id}</TextComponent>
             <View style={styles.containeButtonCancella}>
                 <Button title="Cancella Prenotazione" onPress={handleRemovePrenotazione} />
             </View>
@@ -349,8 +350,8 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
     return (
         <>
-            <Text style={styles.title}>Prenota un'appuntamento... e salta la fila!</Text>
-            <Text style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</Text>
+            <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
+            <TextComponent style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</TextComponent>
 
             <RadioGroup
                 radioButtons={radioButtonsData}
@@ -382,7 +383,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
             <View style={styles.timeContainer}>
                 <View>
-                    <Text style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Ora</Text>
+                    <TextComponent style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Ora</TextComponent>
                     <View style={styles.timeCell}>
                         <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
                             {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
@@ -390,7 +391,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     </View>
                 </View>
                 <View>
-                    <Text style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Minuto</Text>
+                    <TextComponent style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Minuto</TextComponent>
                     <View style={styles.timeCell}>
                         <Picker style={{ width: '100%' }} selectedValue={selectedMinuti} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
                             {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
@@ -407,17 +408,17 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
                         <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "90%" }}>
                             <View style={{ display: "flex" }}>
-                                <Text style={{ ...styles.title, fontSize: 32, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</Text>
-                                <Text style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>
+                                <TextComponent style={{ ...styles.title, fontSize: 32, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</TextComponent>
+                                <TextComponent style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>
                                     Vuoi confermare la prenotazione per il
-                                    <Text style={{ fontWeight: '800' }}>{prenotazioneDate}</Text>
+                                    <TextComponent style={{ fontWeight: '800' }}>{prenotazioneDate}</TextComponent>
                                     ?
-                                </Text>
+                                </TextComponent>
                             </View>
 
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginRight: 10 }} onPress={toggleModalCheckDate}>
-                                    <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Annulla</Text>
+                                    <TextComponent style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ backgroundColor: 'blue', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
                                     onPress={() => {
@@ -425,20 +426,20 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                         setModalInserInfoVisibile(true);
                                     }}
                                 >
-                                    <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Conferma</Text>
+                                    <TextComponent style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Conferma</TextComponent>
                                 </TouchableOpacity>
                             </View>
                         </View>
                     </>}
                     {resCheckDate.toLocaleLowerCase() !== 'ok' && <>
                         <View style={styles.container}>
-                            <Text style={styles.title}>Orario selezionato non disponibile!</Text>
-                            <Text style={styles.subTitle}>
+                            <TextComponent style={styles.title}>Orario selezionato non disponibile!</TextComponent>
+                            <TextComponent style={styles.subTitle}>
                                 Anche se non trovi un orario utile, recati ugualmente presso uno dei nostri punti vendita.
                                 Grazie ai molti addetti alle vendite, l'attesa sarà comunque breve!
-                            </Text>
+                            </TextComponent>
                             <TouchableOpacity style={styles.button} onPress={toggleModalCheckDate}>
-                                <Text style={styles.buttonText}>Chiudi</Text>
+                                <TextComponent style={styles.buttonText}>Chiudi</TextComponent>
                             </TouchableOpacity>
                         </View>
                     </>}

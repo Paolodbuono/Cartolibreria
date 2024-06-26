@@ -13,7 +13,7 @@ export default function MyOrdersView() {
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Stack.Screen options={{ headerTitle: "I Miei Ordini" }} />
+            <Stack.Screen options={{ headerTitle: "I Miei Ordini" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
             <MyOrdersComponent />
         </View>
     );

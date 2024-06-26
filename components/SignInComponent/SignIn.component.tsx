@@ -13,6 +13,7 @@ import { gs } from '@/style/globalStyles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
 import { styles } from './SignIn.styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import TextComponent from '../Commons/Text.component';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -188,12 +189,12 @@ const SignInComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <View style={styles.containerForm}>
-                        <Text style={styles.title}>Modulo di registrazione</Text>
-                        <Text style={styles.text}>I seguenti campi sono tutti obbligatori</Text>
+                        <TextComponent style={styles.title}>Modulo di registrazione</TextComponent>
+                        <TextComponent style={styles.text}>I seguenti campi sono tutti obbligatori</TextComponent>
                         <FormFields formValues={formValues} />
                     </View>
                     <View style={styles.containerForm}>
-                        <Text style={styles.text}>Selezionare sede alla quale si vuole registrare</Text>
+                        <TextComponent style={styles.text}>Selezionare sede alla quale si vuole registrare</TextComponent>
                         <RadioGroup
                             radioButtons={radioButtonsData}
                             onPress={setSelectedSede}
@@ -209,7 +210,7 @@ const SignInComponent: React.FC<{}> = () => {
                                 accessibilityLabel='Accetta il trattamento dei dati'
                                 accessibilityLabelledBy='AcceptData'
                             />
-                            <Text style={{ fontSize: hp('1.8%'), color: '#4975be' }} id="AcceptData">Accetta il trattamento dei dati  </Text>
+                            <TextComponent style={{ fontSize: hp('1.8%'), color: '#4975be' }} id="AcceptData">Accetta il trattamento dei dati  </TextComponent>
                             <TouchableOpacity
                                 style={{
                                     paddingTop: 5,
@@ -220,12 +221,12 @@ const SignInComponent: React.FC<{}> = () => {
                                     borderRadius: 100,
                                 }}
                                 onPress={trattamentoDeiDatiAlert}>
-                                <Text>i</Text>
+                                <TextComponent>i</TextComponent>
                             </TouchableOpacity>
                         </View>
 
                         <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
-                            <Text style={{ color: 'white', fontWeight: "bold" }}>Registrati</Text>
+                            <TextComponent style={{ color: 'white', fontWeight: "bold" }}>Registrati</TextComponent>
                         </TouchableOpacity>
                         <Modal
                             visible={modalErrorVisibile}
@@ -234,16 +235,16 @@ const SignInComponent: React.FC<{}> = () => {
                             onRequestClose={() => setModalErrorVisibile(false)}>
                             <View style={gs.modalWrapper}>
                                 <View style={gs.modalHeader}>
-                                    <Text style={gs.modalHeaderText}>Info</Text>
+                                    <TextComponent style={gs.modalHeaderText}>Info</TextComponent>
                                 </View>
                                 <View style={gs.modalBody}>
-                                    <Text style={gs.modalBodyText}>{modalText}</Text>
+                                    <TextComponent style={gs.modalBodyText}>{modalText}</TextComponent>
                                 </View>
                                 <View style={gs.modalActionButtons}>
                                     <TouchableOpacity
                                         style={gs.modalActionBtnConfirm}
                                         onPress={() => setModalErrorVisibile(false)}>
-                                        <Text style={gs.modalActionBtnConfirmLabel}>Chiudi</Text>
+                                        <TextComponent style={gs.modalActionBtnConfirmLabel}>Chiudi</TextComponent>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -255,16 +256,16 @@ const SignInComponent: React.FC<{}> = () => {
                             onRequestClose={() => setModalResponseVisible(false)}>
                             <View style={gs.modalWrapper}>
                                 <View style={gs.modalHeader}>
-                                    <Text style={gs.modalHeaderText}>{modalResponseText === "" ? "Registrazione avvenuta con successo." : "Errore nella registrazione"}</Text>
+                                    <TextComponent style={gs.modalHeaderText}>{modalResponseText === "" ? "Registrazione avvenuta con successo." : "Errore nella registrazione"}</TextComponent>
                                 </View>
                                 <View style={gs.modalBody}>
-                                    <Text style={gs.modalBodyText}>{modalResponseText === "" ? "Benvenuto in Cartolibreria Bonagura "+ modalText : modalResponseText}</Text>
+                                    <TextComponent style={gs.modalBodyText}>{modalResponseText === "" ? "Benvenuto in Cartolibreria Bonagura "+ modalText : modalResponseText}</TextComponent>
                                 </View>
                                 <View style={gs.modalActionButtons}>
                                     <TouchableOpacity
                                         style={gs.modalActionBtnConfirm}
                                         onPress={handleOnClickResponseModal}>
-                                        <Text style={gs.modalActionBtnConfirmLabel}>{modalResponseText ? "Riprova" : "Vai a Home"}</Text>
+                                        <TextComponent style={gs.modalActionBtnConfirmLabel}>{modalResponseText ? "Riprova" : "Vai a Home"}</TextComponent>
                                     </TouchableOpacity>
                                 </View>
                             </View>
