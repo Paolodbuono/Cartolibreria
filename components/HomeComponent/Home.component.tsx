@@ -9,7 +9,7 @@ import { styles } from './Home.styles';
 import TextComponent from '@/components/Commons/Text.component';
 
 // Paths
-const bannerPath = "../../assets/images/_headerBonaguraLogo@2.png";
+const bannerPath = "../../assets/images/bannerBonagura.png";
 const footerPath = "../../assets/images/onda.jpg";
 const appuntamentoPath = "../../assets/images/calendar.png";
 const personalAreaPath = "../../assets/images/areaRiservata.png";

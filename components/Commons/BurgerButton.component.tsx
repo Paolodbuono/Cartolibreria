@@ -18,4 +18,8 @@ const BurgerButtonComponent: React.FC<BurgerButtonProps> = ({ onPress }) => {
 
 export default BurgerButtonComponent;
 
-const styles = StyleSheet.create({ image: { width: 54, height: 38 } });
+const styles = StyleSheet.create({
+    image:
+    {
+    }
+});
