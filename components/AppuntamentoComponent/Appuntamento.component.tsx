@@ -111,12 +111,10 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 const tempFields: { key: number; label: string }[] = [];
                 const tempFieldsMinuti: { key: number; label: string }[] = [];
 
-                for (let i = 9; i < 20; i++) {
-                    if ((i >= 9 && i < 13) || (i > 15 && i < 20)) {
-                        const hourText = moment().set({ hour: i, minute: 0 }).format('HH');
-                        tempOrariMattinoValue.push(hourText);
-                        tempFields.push({ key: i, label: hourText });
-                    }
+                for (let i = 8; i < 20; i++) {
+                    const hourText = moment().set({ hour: i, minute: 0 }).format('HH');
+                    tempOrariMattinoValue.push(hourText);
+                    tempFields.push({ key: i, label: hourText });
                 }
 
                 for (let i = 0; i < 60; i += 3) {
@@ -402,7 +400,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             </View>
 
             <TouchableOpacity style={styles.button} onPress={checkDate}>
-                <TextComponent style={{ color: 'white', fontSize: 22 }}>Cerca disponibilità orario</TextComponent>
+                <TextComponent style={{ color: 'white', fontSize: 20 }}>Cerca disponibilità orario</TextComponent>
             </TouchableOpacity>
 
             <Modal visible={modalCheckDateVisibile} transparent={true} animationType="slide">
@@ -410,7 +408,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
                         <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "90%" }}>
                             <View style={{ display: "flex" }}>
-                                <TextComponent style={{ ...styles.title, fontSize: 32, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</TextComponent>
+                                <TextComponent style={{ ...styles.title, fontSize: 30, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</TextComponent>
                                 <TextComponent style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>
                                     Vuoi confermare la prenotazione per il
                                     <TextComponent style={{ fontWeight: '800' }}>{prenotazioneDate}</TextComponent>
@@ -420,7 +418,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginRight: 10 }} onPress={toggleModalCheckDate}>
-                                    <TextComponent style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Annulla</TextComponent>
+                                    <TextComponent style={{ color: 'white', fontSize: 24, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ backgroundColor: 'blue', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
                                     onPress={() => {
@@ -428,7 +426,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                         setModalInserInfoVisibile(true);
                                     }}
                                 >
-                                    <TextComponent style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Conferma</TextComponent>
+                                    <TextComponent style={{ color: 'white', fontSize: 24, textAlign: 'center' }}>Conferma</TextComponent>
                                 </TouchableOpacity>
                             </View>
                         </View>
