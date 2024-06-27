@@ -20,7 +20,7 @@ export default function WhoAreWeView() {
       <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
       <View style={styles.title}>
         <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: 28 }}>
-          {'LA NOSTRA STORIA'}
+          LA NOSTRA STORIA
         </TextComponent>
       </View>
       <ScrollView>
@@ -40,7 +40,7 @@ export default function WhoAreWeView() {
 
 const styles = StyleSheet.create({
   title: {
-    "height": hp("3%"),
+    "height": hp("5%"),
     "width": wp("100%"),
     "display": "flex",
     "alignItems": "center",

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Button, Modal, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, usePathname } from 'expo-router';
 import LogoButtonComponent from '@/components/Commons/LogoButton.component';
 import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
 import TextComponent from '@/components/Commons/Text.component';
+
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 type ComponentItem = {
   name: string;
@@ -25,17 +27,18 @@ const componentsList: ComponentItem[] = [
 
 export default function Layout() {
   const router = useRouter();
+  const pathName = usePathname();
   const [fontsLoaded] = useFonts({
     'Allan-Regular': require('@/assets/fonts/Allan-Regular.ttf'),
     'Allan-Bold': require('@/assets/fonts/Allan-Bold.ttf'),
   });
 
-  const [sideBarOpen, isSideBarOpen] = useState(false);
+  const [sideBarOpen, setSideBarOpen] = useState(false);
   const [routesList, setRoutesList] = useState(componentsList);
 
   const navigateToComponent = (componentName: string) => {
     router.push(componentName)
-    isSideBarOpen(false);
+    setSideBarOpen(false);
   };
 
   const getRoutes = async () => {
@@ -45,13 +48,14 @@ export default function Layout() {
         const _routesList = routesList.filter(el => el.name !== "Accedi");
         setRoutesList(_routesList)
       } else {
-        setRoutesList(componentsList);
+        const _routesList = routesList.filter(el => el.name !== "Area riservata");
+        setRoutesList(_routesList);
       }
     } catch (e) {
       console.log('Error fetching data from AsyncStorage:', e);
     }
 
-    isSideBarOpen(true);
+    setSideBarOpen(true);
   }
 
   if (!fontsLoaded) return <></>;
@@ -67,20 +71,26 @@ export default function Layout() {
         }}
       >
       </Stack>
-      <Modal visible={sideBarOpen} animationType="slide" transparent={true}>
+      <Modal visible={sideBarOpen} animationType="fade" transparent={true} onRequestClose={() => { setSideBarOpen(false); }}>
         <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <FlatList
-              data={routesList}
-              keyExtractor={(item) => item.name}
-              renderItem={({ item }) => (
-                <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
-                  <TextComponent style={styles.componentName}>{item.name}</TextComponent>
-                </TouchableOpacity>
-              )}
-            />
-            <Button onPress={() => isSideBarOpen(false)} title="Close Menu" />
-          </View>
+          <TouchableOpacity
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPressOut={() => setSideBarOpen(false)}
+          >
+            <View style={styles.modalContainer}>
+              <FlatList
+                data={routesList}
+                keyExtractor={(item) => item.name}
+                renderItem={({ item }) => (
+                  <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
+                    <TextComponent style={pathName === "/" + item.root ? styles.currentComponentName : styles.componentName}>{item.name}</TextComponent>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </TouchableOpacity>
+
         </View>
       </Modal>
     </View>
@@ -89,19 +99,27 @@ export default function Layout() {
 
 const styles = StyleSheet.create({
   modalOverlay: {
-    flex: 1,
+    width: wp('100%'),
+    height: hp("100%"),
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalContainer: {
-    width: 300,
+    width: wp('75%'),
+    height: hp("100%"),
     backgroundColor: 'white',
-    borderRadius: 10,
     padding: 20,
   },
   componentName: {
-    padding: 10,
-    fontSize: 18,
+    padding: 20,
+    fontSize: 28,
+  },
+  currentComponentName: {
+    padding: 20,
+    backgroundColor: "#e1eeff",
+    color: "#2478d2",
+    borderRadius: 10,
+    fontSize: 28,
   },
 });
