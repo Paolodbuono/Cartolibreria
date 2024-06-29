@@ -390,7 +390,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                         left: 41,
                     }}>Ora
                     </TextComponent>
-                    <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
+                    <Picker style={{ width: 100 }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
                         {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
                     </Picker>
                     <View
@@ -404,6 +404,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             pointerEvents: 'none',
+                            width: 70
                         }}
                     >
                         <Text>{selectedOrario}</Text>
@@ -417,7 +418,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                         left: 32,
                     }}>Minuto
                     </TextComponent>
-                    <Picker style={{ width: '100%', }} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
+                    <Picker style={{ width: 100, }} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
                         {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
                     </Picker>
                     <View
@@ -431,6 +432,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             pointerEvents: 'none',
+                            width: 70
                         }}
                     >
                         <Text>{selectedMinuti}</Text>
