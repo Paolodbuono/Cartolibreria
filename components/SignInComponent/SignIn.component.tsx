@@ -200,8 +200,8 @@ const SignInComponent: React.FC<{}> = () => {
                             radioButtons={radioButtonsData}
                             onPress={setSelectedSede}
                             selectedId={selectedSede}
-                            containerStyle={{ display: "flex", flexDirection: "row" }}
-                        />
+                            containerStyle={{ display: "flex", flexDirection: "row", width: wp("80%"), justifyContent: "space-between" }}
+                            />
                         <View style={styles.section}>
                             <Checkbox
                                 style={styles.checkbox}

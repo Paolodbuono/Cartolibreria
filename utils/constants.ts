@@ -1,6 +1,8 @@
+import { md } from "@/constants/FontSize";
+
 export const radioButtonSede = [
-    { id: '0', label: 'Poggiomarino', value: 'poggiomarino' },
-    { id: '1', label: 'Pompei', value: 'pompei' }
+    { id: '0', label: 'Poggiomarino', value: 'poggiomarino', labelStyle: {minWidth: 120, fontFamily: "Allan-Regular", fontSize: md} },
+    { id: '1', label: 'Pompei', value: 'pompei', labelStyle: {minWidth: 120, fontFamily: "Allan-Regular", fontSize: md} }
 ];
 
 export const SEDI = ['poggiomarino', 'pompei'];

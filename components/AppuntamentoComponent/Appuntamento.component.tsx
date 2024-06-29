@@ -18,6 +18,7 @@ import { BSub } from '../Commons/BSub.component';
 import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
 import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const AppuntamentoComponent: React.FC<{}> = () => {
 
@@ -356,7 +357,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 radioButtons={radioButtonsData}
                 onPress={setSedeIndex}
                 selectedId={sedeIndex}
-                containerStyle={{ display: "flex", flexDirection: "row" }}
+                containerStyle={{ display: "flex", flexDirection: "row", width: wp("80%"), justifyContent: "space-between" }}
             />
             <Calendar
                 onDayPress={(day) => setGiornoPrenotazione(moment(day.dateString).toDate())}
@@ -381,20 +382,58 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             />
 
             <View style={styles.timeContainer}>
-                <View>
-                    <TextComponent style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Ora</TextComponent>
-                    <View style={styles.timeCell}>
-                        <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
-                            {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
-                        </Picker>
+                <View style={styles.timeCell}>
+                    <TextComponent style={{
+                        marginTop: 10, fontWeight: '800', alignSelf: "center",
+                        position: 'absolute',
+                        top: -28,
+                        left: 28,
+                    }}>Ora
+                    </TextComponent>
+                    <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
+                        {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                    </Picker>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 1,
+                            left: 1,
+                            right: 60,
+                            bottom: 0,
+                            backgroundColor: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        <Text>{selectedOrario}</Text>
                     </View>
                 </View>
-                <View>
-                    <TextComponent style={{ marginTop: 10, fontWeight: '800', alignSelf: "center" }}>Minuto</TextComponent>
-                    <View style={styles.timeCell}>
-                        <Picker style={{ width: '100%' }} selectedValue={selectedMinuti} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
-                            {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
-                        </Picker>
+                <View style={styles.timeCell}>
+                    <TextComponent style={{
+                        marginTop: 10, fontWeight: '800', alignSelf: "center",
+                        position: 'absolute',
+                        top: -28,
+                        left: 28,
+                    }}>Minuto
+                    </TextComponent>
+                    <Picker style={{ width: '100%', }} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
+                        {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                    </Picker>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 1,
+                            left: 1,
+                            right: 60,
+                            bottom: 0,
+                            backgroundColor: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            pointerEvents: 'none',
+                        }}
+                    >
+                        <Text>{selectedMinuti}</Text>
                     </View>
                 </View>
 

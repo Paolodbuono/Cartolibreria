@@ -8,6 +8,7 @@ import { gs } from '@/style/globalStyles';
 import { styles } from './MyProfile.styles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
 import TextComponent from '../Commons/Text.component';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const router = useRouter();
@@ -104,7 +105,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     radioButtons={radioButtonsData}
                     onPress={setSelectedSede}
                     selectedId={selectedSede}
-                    containerStyle={{ display: "flex", flexDirection: "row" }}
+                    containerStyle={{ display: "flex", flexDirection: "row", width: wp("80%"), justifyContent: "space-between" }}
                 />
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
