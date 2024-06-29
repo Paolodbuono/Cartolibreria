@@ -1,16 +1,17 @@
+import { bg, md } from "@/constants/FontSize";
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
     title: {
-        fontSize: 26,
+        fontSize: bg,
         textAlign: 'center',
         fontWeight: '500',
         marginTop: 10,
         color: '#EB5F19'
     },
     subTitle: {
-        fontSize: 24,
+        fontSize: bg,
         marginTop: 10,
         textAlign: 'center',
         fontWeight: '100',
@@ -26,7 +27,7 @@ export const styles = StyleSheet.create({
         margin: 2,
     },
     text: {
-        fontSize: 18,
+        fontSize: md,
         color: '#4975be'
     },
     container: {

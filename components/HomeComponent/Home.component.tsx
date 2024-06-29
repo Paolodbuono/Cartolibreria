@@ -7,6 +7,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import { gs } from '@/style/globalStyles';
 import { styles } from './Home.styles';
 import TextComponent from '@/components/Commons/Text.component';
+import { md } from '@/constants/FontSize';
 
 // Paths
 const bannerPath = "../../assets/images/bannerBonagura.png";
@@ -82,7 +83,7 @@ const HomeComponent: React.FC<{}> = () => {
                         </View>
                     </View>
                     <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
-                        <TextComponent style={{ color: 'white', fontSize: 22 }}>Importante</TextComponent>
+                        <TextComponent style={{ color: 'white', fontSize: md }}>Importante</TextComponent>
                     </TouchableOpacity>
                 </>}
             </View>

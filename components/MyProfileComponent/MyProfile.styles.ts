@@ -1,3 +1,4 @@
+import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -8,13 +9,13 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     title: {
-        fontSize: 20,
+        fontSize: bg,
         fontWeight: 'bold',
         marginBottom: 10,
         textAlign: 'center',
     },
     subTitle: {
-        fontSize: 16,
+        fontSize: md,
         marginBottom: 20,
         textAlign: 'center',
     },
@@ -45,7 +46,7 @@ export const styles = StyleSheet.create({
         marginBottom: 20,
     },
     text: {
-        fontSize: 16,
+        fontSize: md,
         marginBottom: 10,
         textAlign: 'center',
     },
@@ -70,11 +71,11 @@ export const styles = StyleSheet.create({
     },
     textButton: {
         color: '#fff',
-        fontSize: 26,
+        fontSize: bg,
     },
     linkButton: {
         color: '#007bff',
-        fontSize: 16,
+        fontSize: md,
     },
     bottomLinks: {
         margin: 20,

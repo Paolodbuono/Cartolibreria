@@ -6,6 +6,7 @@ import { Stack, useNavigation } from "expo-router";
 import { ScrollView, Text, Linking, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import TextComponent from "@/components/Commons/Text.component";
+import { bg, sm } from "@/constants/FontSize";
 
 export default function WhoAreWeView() {
 
@@ -19,7 +20,7 @@ export default function WhoAreWeView() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
       <View style={styles.title}>
-        <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: 28 }}>
+        <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: bg }}>
           LA NOSTRA STORIA
         </TextComponent>
       </View>
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
   },
   paragraph: {
     margin: 12,
-    fontSize: 14,
+    fontSize: sm,
   },
   link: {
     color: '#00C',

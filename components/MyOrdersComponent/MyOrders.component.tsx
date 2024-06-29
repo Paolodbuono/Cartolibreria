@@ -9,6 +9,7 @@ import { styles } from './MyOrders.styles';
 import { OrderStatusType, OrderType } from './MyOrders.types';
 import { BSub } from '../Commons/BSub.component';
 import TextComponent from '../Commons/Text.component';
+import { bg, md } from '@/constants/FontSize';
 
 const orderStatuses: OrderStatusType = {
     1: "ORDINATO NUOVO",
@@ -89,10 +90,10 @@ const MyOrdersComponent = ({ }) => {
                     width: '95%'
                 }}
                 >
-                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</TextComponent>
-                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</TextComponent>
-                    <TextComponent style={{ fontSize: 18, color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</TextComponent>
-                    <TextComponent style={{ fontSize: 20, color: '#000' }}>{`Stato: - ${info.item.stato}`}</TextComponent>
+                    <TextComponent style={{ fontSize: md, color: '#000' }}>{`ISBN: - ${info.item.ISBN}`}</TextComponent>
+                    <TextComponent style={{ fontSize: md, color: '#000' }}>{`Titolo: - ${info.item.TITOLO}`}</TextComponent>
+                    <TextComponent style={{ fontSize: md, color: '#000' }}>{`Quantità: - ${info.item.TCOPIE} Prezzo: - ${info.item.prezzo}`}</TextComponent>
+                    <TextComponent style={{ fontSize: md, color: '#000' }}>{`Stato: - ${info.item.stato}`}</TextComponent>
                 </View>
             </View>
         )
@@ -129,7 +130,7 @@ const MyOrdersComponent = ({ }) => {
                         </View>
                         <TouchableOpacity style={styles.button} onPress={() => { router.push("MyProfileView") }}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
-                            <TextComponent style={{ textAlign: 'center', fontSize: 26, color: '#4975be', marginTop:10 }}>
+                            <TextComponent style={{ textAlign: 'center', fontSize: bg, color: '#4975be', marginTop:10 }}>
                                 Accedi
                             </TextComponent>
                         </TouchableOpacity>

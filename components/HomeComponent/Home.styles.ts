@@ -1,3 +1,4 @@
+import { bg } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -26,7 +27,7 @@ export const styles = StyleSheet.create({
     },
     buttonLabel: {
         textAlign: 'center',
-        fontSize: 25,
+        fontSize: bg,
         color: '#4975be',
         marginTop: 10
     },
@@ -52,7 +53,7 @@ export const styles = StyleSheet.create({
     },
     welcome: {
         color: '#4975be',
-        fontSize: 30,
+        fontSize: bg,
         fontWeight: 'bold',
     }
 });

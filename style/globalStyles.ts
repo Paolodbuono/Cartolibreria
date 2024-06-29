@@ -1,3 +1,4 @@
+import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -34,13 +35,13 @@ export const gs = StyleSheet.create({
         fontWeight: '800',
         color: '#EB5F19',
         width: wp("90%"),
-        fontSize: 32
+        fontSize: bg
     },
     modalBody: {
         flex: 10,
     },
     modalBodyText: {
-        fontSize: 22,
+        fontSize: md,
         color: '#4975be',
         fontWeight: '600',
         textAlign: 'center',
@@ -74,7 +75,7 @@ export const gs = StyleSheet.create({
     },
     modalActionBtnConfirmLabel: {
         color: 'white',
-        fontSize: 16,
+        fontSize: md,
         height: 35,
         textAlign: 'center',
         textAlignVertical:"center",

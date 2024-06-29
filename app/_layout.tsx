@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import TextComponent from '@/components/Commons/Text.component';
 
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { bg } from '@/constants/FontSize';
 
 type ComponentItem = {
   name: string;
@@ -113,13 +114,13 @@ const styles = StyleSheet.create({
   },
   componentName: {
     padding: 20,
-    fontSize: 28,
+    fontSize: bg,
   },
   currentComponentName: {
     padding: 20,
     backgroundColor: "#e1eeff",
     color: "#2478d2",
     borderRadius: 10,
-    fontSize: 28,
+    fontSize: bg,
   },
 });

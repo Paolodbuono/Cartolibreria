@@ -1,3 +1,4 @@
+import { bg, md, sm } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
@@ -8,7 +9,7 @@ export const styles = StyleSheet.create({
         marginTop: hp('1%'),
     },
     title: {
-        fontSize: 25,
+        fontSize: bg,
         color: '#4975be',
         fontWeight: 'bold'
     },
@@ -18,7 +19,7 @@ export const styles = StyleSheet.create({
         marginTop: hp('2.5%')
     },
     subTitle: {
-        fontSize: 20,
+        fontSize: md,
         color: '#4975be',
         paddingLeft: wp('3%'),
         paddingRight: wp('3%')
@@ -29,7 +30,7 @@ export const styles = StyleSheet.create({
         width: wp('90%')
     },
     emailLabel: {
-        fontSize: 20,
+        fontSize: md,
         color: '#4975be',
         marginLeft: wp('5%'),
     },
@@ -55,7 +56,7 @@ export const styles = StyleSheet.create({
         marginTop: 15
     },
     showError: {
-        fontSize: 16,
+        fontSize: sm,
         color: 'red',
         paddingLeft: 12,
         paddingRight: 12

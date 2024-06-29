@@ -14,6 +14,7 @@ import { SEDI, radioButtonSede } from '@/utils/constants';
 import { styles } from './SignIn.styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TextComponent from '../Commons/Text.component';
+import { bg, md } from '@/constants/FontSize';
 
 
 const SignInComponent: React.FC<{}> = () => {
@@ -210,7 +211,7 @@ const SignInComponent: React.FC<{}> = () => {
                                 accessibilityLabel='Accetta il trattamento dei dati'
                                 accessibilityLabelledBy='AcceptData'
                             />
-                            <TextComponent style={{ fontSize: hp('1.8%'), color: '#4975be' }} id="AcceptData">Accetta il trattamento dei dati  </TextComponent>
+                            <TextComponent style={{ fontSize: md, color: '#4975be' }} id="AcceptData">Accetta il trattamento dei dati  </TextComponent>
                             <TouchableOpacity
                                 style={{
                                     paddingTop: 5,
@@ -226,7 +227,7 @@ const SignInComponent: React.FC<{}> = () => {
                         </View>
 
                         <TouchableOpacity onPress={handleSubmit} style={styles.sendBtn}>
-                            <TextComponent style={{ fontSize: 24, color: 'white', fontWeight: "bold" }}>Registrati</TextComponent>
+                            <TextComponent style={{ fontSize: bg, color: 'white', fontWeight: "bold" }}>Registrati</TextComponent>
                         </TouchableOpacity>
                         <Modal
                             visible={modalErrorVisibile}

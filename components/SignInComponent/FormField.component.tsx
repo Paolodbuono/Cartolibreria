@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import { fields } from './SignIn.utils';
 import TextComponent from '../Commons/Text.component';
+import { md, sm } from '@/constants/FontSize';
 
 interface Field {
     label: string;
@@ -86,10 +87,10 @@ const styles = StyleSheet.create({
         marginRight: 5, // Aggiunto margine destro per separare l'icona dal campo di input
         paddingVertical: 5,
         width: wp('80%'),
-        fontSize: 16,
+        fontSize: md,
     },
     caption: {
-        fontSize: 12,
+        fontSize: sm,
         fontStyle: 'italic',
         color: 'gray',
     },

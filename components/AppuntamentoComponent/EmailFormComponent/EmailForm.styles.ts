@@ -1,9 +1,10 @@
+import { bg, md, sm } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const styles = StyleSheet.create({
-  title: { fontSize: 26, textAlign: 'center', fontWeight: '800', color: '#EB5F19', marginBottom: 20 },
-  subTitle: { fontSize: 24, textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
+  title: { fontSize: bg, textAlign: 'center', fontWeight: '800', color: '#EB5F19', marginBottom: 20 },
+  subTitle: { fontSize: md, textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -34,7 +35,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: sm,
     textAlign: 'center',
   },
 });
