@@ -387,7 +387,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                         marginTop: 10, fontWeight: '800', alignSelf: "center",
                         position: 'absolute',
                         top: -28,
-                        left: 28,
+                        left: 41,
                     }}>Ora
                     </TextComponent>
                     <Picker style={{ width: '100%' }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
@@ -414,7 +414,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                         marginTop: 10, fontWeight: '800', alignSelf: "center",
                         position: 'absolute',
                         top: -28,
-                        left: 28,
+                        left: 32,
                     }}>Minuto
                     </TextComponent>
                     <Picker style={{ width: '100%', }} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
