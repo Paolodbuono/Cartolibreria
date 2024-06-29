@@ -45,6 +45,8 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     setIsLoading(false);
                     setModalSuccessLoginVisible(true);
                 } catch (e) {
+                    console.log('userData', jsonValue);
+                    console.log('sedeSelezionata', SEDI[selectedIndexSede]);
                     console.log('Error saving data:', e);
                     setIsLoading(false);
                     setModalErrorLoginVisible(true);

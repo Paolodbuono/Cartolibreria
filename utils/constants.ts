@@ -1,6 +1,6 @@
 export const radioButtonSede = [
-    { id: '1', label: 'Poggiomarino', value: 'Poggiomarino' },
-    { id: '2', label: 'Pompei', value: 'Pompei' }
+    { id: '0', label: 'Poggiomarino', value: 'poggiomarino' },
+    { id: '1', label: 'Pompei', value: 'pompei' }
 ];
 
 export const SEDI = ['poggiomarino', 'pompei'];
