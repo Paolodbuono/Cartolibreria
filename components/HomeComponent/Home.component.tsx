@@ -53,7 +53,7 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    <TextComponent style={styles.welcome}>Benvenuto {stateUser.nome}!</TextComponent>
+                    <TextComponent style={styles.welcome}>Benvenuto {stateUser.nome}</TextComponent>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("MyOrdersView") }} >
