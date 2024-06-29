@@ -7,17 +7,20 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#fff',
+        paddingTop:20
     },
     title: {
         fontSize: bg,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 5,
         textAlign: 'center',
+        color: "#f4511e"
     },
     subTitle: {
         fontSize: md,
         marginBottom: 20,
         textAlign: 'center',
+        color: "#007bff"
     },
     inputContainer: {
         width: wp('100%'),

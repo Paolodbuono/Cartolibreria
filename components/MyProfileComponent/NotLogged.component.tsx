@@ -69,7 +69,8 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     return (
         <View style={styles.container}>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
-            <TextComponent style={styles.title}>Benvenuto nell'aria riservata di Cartolibreria Bonagura srl</TextComponent>
+            <TextComponent style={styles.title}>Benvenuto nell'aria riservata di</TextComponent>
+            <TextComponent style={styles.title}>Cartolibreria Bonagura srl</TextComponent>
             <TextComponent style={styles.subTitle}>Se sei già cliente accedi</TextComponent>
             <View style={styles.inputContainer}>
                 <TextInput
