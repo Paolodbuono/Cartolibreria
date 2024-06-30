@@ -12,7 +12,6 @@ import { md } from '@/constants/FontSize';
 export const AdozioniComponent = ({ }) => {
     const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState(true);
     const [nextButtonSecondStepEnabled, setNextButtonSecondStepEnabled] = useState(true);
-    const [nextButtonThirdStepEnabled, setNextButtonThirdStepEnabled] = useState(true);
     const [sedeSelezionata, setSede] = useState('');
     const [showLoadingArea, setShowLoadingArea] = useState(false);
     const [showLoadingSchool, setShowLoadingShool] = useState(false);
