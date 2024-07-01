@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Image, Text, Button, Modal, ActivityIndicator, ActivityIndicator as Spinner, TouchableOpacity, } from 'react-native';
+import { SafeAreaView, View, Image, Text, Button, Modal, ActivityIndicator as Spinner, TouchableOpacity, } from 'react-native';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
@@ -8,152 +8,178 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { gs } from '@/style/globalStyles';
 import TextComponent from '../Commons/Text.component';
 import { md } from '@/constants/FontSize';
+import { SEDI } from '@/utils/constants';
 
 export const AdozioniComponent = ({ }) => {
     const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState(true);
-    const [nextButtonSecondStepEnabled, setNextButtonSecondStepEnabled] = useState(true);
+
     const [sedeSelezionata, setSede] = useState('');
-    const [showLoadingArea, setShowLoadingArea] = useState(false);
-    const [showLoadingSchool, setShowLoadingShool] = useState(false);
-    const [showLoadingOtherInfo, setShowLoadingOtherInfo] = useState(false);
-    const [showLoadingBooks, setShowLoadingBooks] = useState(false);
-    const [selectedIndexShool, setSelectedIndexSchool] = useState(0);
-    const [selectedIndexCourse, setSelectedIndexCourse] = useState(0);
-    const [selectedIndexSection, setSelectedIndexSection] = useState(0);
-    const [selectedIndexClass, setSelectedIndexClass] = useState(0);
-    const [areasNames, setAreasNames] = useState([]);
-    const [areas, setAreas] = useState([]);
-    const [schoolsNames, setSchoolsNames] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingCitta, setIsLoadingCitta] = useState(true);
+    const [isLoadingScuole, setIsLoadingScuole] = useState(true);
+    const [isLoadingOtherInfo, setIsLoadingOtherInfo] = useState(true);
+
+    const [showLoadingBooks, setShowLoadingBooks] = useState(true);
+
+    const [selectedIdxScuola, setSelectedIdxScuola] = useState(0);
+    const [selectedIdxCorso, setSelectedIdxCorso] = useState(0);
+    const [selectedIdxSezione, setSelectedIdxSezione] = useState(0);
+    const [selectedIdxClasse, setSelectedIdxClasse] = useState(0);
+
+    const [nomiCittaPickerItem, setNomiCittaPickerItem] = useState<Array<any>>([]);
+    const [nomiScuolePickerItem, setNomiScuolePickerItem] = useState<Array<any>>([]);
+    const [corsiPickerItem, setCorsiPickerItem] = useState<Array<any>>([]);
+    const [sezioniPickerItem, setSezioniPickerItem] = useState<Array<any>>([]);
+    const [classiPickerItem, setClassiPickerItem] = useState<Array<any>>([]);
+
     const [schoolsIds, setSchoolsIds] = useState([]);
-    const [courses, setCourses] = useState([]);
+
     const [coursesName, setCoursesName] = useState([]);
     const [sectionsName, setSectionsName] = useState([]);
-    const [classes, setClasses] = useState([]);
     const [classesName, setClassesName] = useState([]);
+
     const [books, setBooks] = useState([]);
-    const [modalScuolaNonPresente, setModalScuolaNonPresente] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState(undefined);
     const [lockSede, setLockSede] = useState(false);
-    const [modalSuccessAddToCartVisibile, setModalSuccessAddToCartVisibile] = useState(false);
-    const [modalErrorUtenteNonLoggato, setModalErrorUtenteNonLoggato] = useState(false);
-    const [showModalMoreInfo, setShowModalMoreInfo] = useState(false);
-    const [moreInfoBook, setMoreInfoBook] = useState<{ titolo?: string }>({});
-    const [selectedIndexArea, setSelectedIndexArea] = useState(0);
+    const [selectedCitta, setSelectedCitta] = useState();
+    const [selectedScuola, setSelectedScuola] = useState();
 
-    const SEDI = ['poggiomarino', 'pompei'];
+    const fetchData = async () => {
+        try {
+            setIsLoading(true);
 
-    useEffect(() => {
-        Promise.all([
-            AsyncStorage.getItem('userData'),
-            AsyncStorage.getItem('sedeSelezionata')
-        ])
-            .then((res: any) => {
-                const [userData, sedeSelezionata] = res;
-                if (userData) {
-                    setCurrentUser(JSON.parse(userData));
-                }
-                if (SEDI[0] === sedeSelezionata || SEDI[1] === sedeSelezionata) {
-                    setSede(sedeSelezionata);
-                    setNextButtonFirstStepEnabled(false);
-                    setLockSede(true);
-                }
-                setIsLoading(false);
-            });
-    }, []);
+            const sedeSelezionata = await AsyncStorage.getItem('sedeSelezionata')
 
-    const selectSedePompei = () => {
-        setSede(SEDI[1]);
-        setNextButtonFirstStepEnabled(false);
-    };
+            if (SEDI[0] === sedeSelezionata || SEDI[1] === sedeSelezionata) {
+                setSede(sedeSelezionata);
+                setNextButtonFirstStepEnabled(false);
+                setLockSede(true);
+            }
 
-    const selectSedePoggiomarino = () => {
-        setSede(SEDI[0]);
-        setNextButtonFirstStepEnabled(false);
-    };
-
-    const onNextFirstStep = () => {
-        setShowLoadingArea(true);
-        fetch('https://www.libreriabonagura.it/micro/getAreas.asp?libreria=' + sedeSelezionata, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((res) => res.json())
-            .then((areas) => {
-                const tempAreas = [];
-                const tempAreasName = [];
-                areas.data.forEach(area => {
-                    tempAreasName.push(area.scucitta)
-                    tempAreas.push(<Picker.Item key={area.scucitta} label={area.scucittal} value={area.scucittal} />)
-                });
-                setAreasNames(tempAreasName);
-                setAreas(tempAreas);
-                setShowLoadingArea(false);
-                loadShoolsFromArea(tempAreasName[0]);
-            })
-            .catch((e) => console.log('errore richiesta area !!!!!!!!!', e));
-    };
-
-    const loadShoolsFromArea = (areaName = null) => {
-        if (areaName !== null) {
-            setNextButtonSecondStepEnabled(true);
-            setShowLoadingShool(true);
-            fetch('https://www.libreriabonagura.it/micro/getSchools.asp?libreria=' + sedeSelezionata + '&area=' + areaName)
-                .then((res) => res.json())
-                .then((schools) => {
-                    const tempSchoolsName = schools.data.map(school => school.scuolacit.replace('\"', ''));
-                    const tempoSchoolsIds = schools.data.map(school => school.id);
-                    setSchoolsNames(tempSchoolsName);
-                    setSchoolsIds(tempoSchoolsIds);
-                    setShowLoadingShool(false);
-                    loadInfoSchoolFromId(tempoSchoolsIds[0]);
-                });
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
     };
 
-    const loadInfoSchoolFromId = (id) => {
-        setShowLoadingOtherInfo(true);
-        setNextButtonSecondStepEnabled(true);
-        const urls = [
-            fetch('https://www.libreriabonagura.it/micro/getCourses.asp?libreria=' + sedeSelezionata + '&school=' + id),
-            fetch('https://www.libreriabonagura.it/micro/getSections.asp?libreria=' + sedeSelezionata + '&school=' + id),
-            fetch('https://www.libreriabonagura.it/micro/getClasses.asp?libreria=' + sedeSelezionata + '&school=' + id)
-        ];
+    useEffect(() => {
+        fetchData();
+    }, []);
 
-        Promise.all(urls)
-            .then((resRaw) => Promise.all(resRaw.map(r => r.json())))
-            .then((responseTotal) => {
-                responseTotal.forEach((response, index) => {
-                    switch (index) {
-                        case 0:
-                            setCoursesName(response.data.map(course => course.tipo));
-                            break;
-                        case 1:
-                            setSectionsName(response.data);
-                            break;
-                        case 2:
-                            setClassesName(response.data.map(singleClass => singleClass.classe));
-                            break;
-                        default:
-                            break;
-                    }
-                });
-                setShowLoadingOtherInfo(false);
-                setNextButtonSecondStepEnabled(false);
+    const fetchAreasAndSetState = async () => {
+        try {
+            setIsLoadingCitta(true);
+            setIsLoadingScuole(true);
+            setIsLoadingOtherInfo(true);
+
+            const response = await fetch(`https://www.libreriabonagura.it/micro/getAreas.asp?libreria=${sedeSelezionata}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
             });
+            const areasData: { "data": Array<{ "scucitta": string }> } = await response.json();
+
+            const tempCitta: Array<any> = [];
+            const tempAreasName: Array<string> = [];
+
+
+            areasData.data.forEach(area => {
+                tempAreasName.push(area["scucitta"]);
+                tempCitta.push(<Picker.Item key={area["scucitta"]} label={area["scucitta"]} value={area["scucitta"]} />);
+            });
+
+            setNomiCittaPickerItem(tempCitta);
+            fetchSchoolsFromCitta(tempAreasName[0]);
+            setIsLoadingCitta(false);
+        } catch (error) {
+            console.error('Errore durante la richiesta delle aree:', error);
+        }
     };
 
-    const onNextSecondStep = () => {
-        setShowLoadingBooks(true);
-        fetch('https://www.libreriabonagura.it/micro/getBooks.asp?libreria=' + sedeSelezionata + '&school=' + schoolsIds[selectedIndexShool - 1] + '&type=' + encodeURIComponent(coursesName[(selectedIndexCourse - 1)]) + '&class=' + classesName[(selectedIndexClass - 1)] + '&section=' + sectionsName[(selectedIndexSection - 1)])
-            .then((res) => res.json())
-            .then((books) => {
-                setBooks(books.data);
-                setShowLoadingBooks(false);
-            });
+    const fetchBooksAndSetState = async () => {
+        try {
+            setShowLoadingBooks(true);
+
+            const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${sedeSelezionata}&school=${schoolsIds[selectedIdxScuola]}&type=${encodeURIComponent(coursesName[selectedIdxCorso])}&class=${classesName[selectedIdxClasse]}&section=${sectionsName[selectedIdxSezione]}`;
+            const response = await fetch(url);
+            const booksData = await response.json();
+
+            setBooks(booksData.data);
+            setShowLoadingBooks(false);
+        } catch (error) {
+            console.error('Errore durante la richiesta dei libri:', error);
+        }
     };
+
+    const fetchSchoolsFromCitta = async (citta: string) => {
+        try {
+            setIsLoadingScuole(true);
+            setIsLoadingOtherInfo(true);
+
+            if (citta !== null) {
+                const response = await fetch(`https://www.libreriabonagura.it/micro/getSchools.asp?libreria=${sedeSelezionata}&area=${citta}`);
+                const schoolsData: { data: Array<{ id: number; nome: string, scuolacit: string }> } = await response.json();
+
+                const tempSchoolsName: { id: number; nome: string, scuolacit: string }[] = schoolsData.data.map(school => ({
+                    ...school,
+                    nome: school.scuolacit.replace('\"', ''),
+                }));
+
+                const tempSchoolsIds: number[] = schoolsData.data.map(school => school.id);
+
+                setNomiScuolePickerItem(tempSchoolsName.map(el => <Picker.Item key={el.id} label={el.nome} value={el} />));
+                setSchoolsIds(tempSchoolsIds);
+                fetchOtherInfo(tempSchoolsIds[0]);
+
+            }
+        } catch (error) {
+            console.error('Errore durante la richiesta delle scuole:', error);
+        } finally {
+            setIsLoadingScuole(false);
+        }
+    };
+
+    const fetchOtherInfo = async (id: number) => {
+        try {
+            setIsLoadingOtherInfo(true);
+
+            const urls = [
+                `https://www.libreriabonagura.it/micro/getCourses.asp?libreria=${sedeSelezionata}&school=${id}`,
+                `https://www.libreriabonagura.it/micro/getSections.asp?libreria=${sedeSelezionata}&school=${id}`,
+                `https://www.libreriabonagura.it/micro/getClasses.asp?libreria=${sedeSelezionata}&school=${id}`
+            ];
+
+            const responses = await Promise.all(urls.map(url => fetch(url)));
+            const [coursesName, sectoinsName, classesName] = await Promise.all(responses.map(res => res.json()));
+
+            console.log("coursesName", coursesName);
+            console.log("sectoinsName", sectoinsName);
+            console.log("classesName", classesName);
+
+            setCoursesName(coursesName.data.map(course => course.tipo));
+            setSectionsName(sectoinsName.data);
+            setClassesName(classesName.data.map(singleClass => singleClass.classe));
+
+            setCorsiPickerItem(coursesName.data.map(el => <Picker.Item key={el.tipo} label={el.tipo} value={el.tipo} />))
+            setSezioniPickerItem(sectoinsName.data.map(el => <Picker.Item key={el} label={el} value={el} />))
+            setClassiPickerItem(classesName.data.map(el => <Picker.Item key={el.classe} label={el.classe} value={el.classe} />))
+
+            setIsLoadingOtherInfo(false);
+        } catch (error) {
+            console.error('Errore durante la richiesta delle informazioni sulla scuola:', error);
+        }
+    };
+
+    /** @param {number} sedeIndex - L'indice della sede (0 per Poggiomarino, 1 per Pompei). */
+    const selectSede = (sedeIndex: number) => {
+        setSede(SEDI[sedeIndex]);
+        setNextButtonFirstStepEnabled(false);
+    };
+
+    const onNextFirstStep = () => fetchAreasAndSetState();
+    const onNextSecondStep = () => fetchBooksAndSetState();
+
 
     const getPrezzoUsato = (prezzoNuovo) => {
         const price = parseFloat(prezzoNuovo);
@@ -161,90 +187,17 @@ export const AdozioniComponent = ({ }) => {
         return (prezzoNuovo - sconto).toFixed(2) + " €";
     };
 
-    const renderBooks = (info) => {
-        return (
-            <View style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
-                <Image style={{ height: '100%', width: '20%', flex: 1 }} source={{ uri: `https://www.libreriabonagura.it/${info.item.url}` }} />
-                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2 }}>
-                    <Text>{info.item.titolo}</Text>
-                    <Text>{info.item.autore}</Text>
-                    <Text>{info.item.prezzo.toFixed(2)}€</Text>
-                    <Text>{getPrezzoUsato(info.item.prezzo)}</Text>
-                    <Button title="Dettagli" onPress={() => { setMoreInfoBook(info.item); setShowModalMoreInfo(true); }} />
-                </View>
-                <Button title="Aggiungi" onPress={() => addBookToCart(info.item)} />
-            </View>
-        );
-    };
-
-    const addBookToCart = (book) => {
-        if (currentUser === undefined || currentUser === null) {
-            setModalErrorUtenteNonLoggato(true);
-            return;
-        }
-
-        const payload = {
-            user: currentUser.id,
-            sede: sedeSelezionata,
-            book: book.id,
-            quantity: 1
-        };
-
-        fetch('https://www.libreriabonagura.it/micro/addToCart.asp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        })
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.status === 'success') {
-                    setModalSuccessAddToCartVisibile(true);
-                } else {
-                    setModalErrorUtenteNonLoggato(true);
-                }
-            });
-    };
-
-    const onPaymentStepComplete = () => {
-        if (books.length === 0) {
-            return;
-        }
-        navigation.navigate("Cart");
-    };
-
     if (isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
-
 
     return (
         <SafeAreaView style={{ flex: 1, padding: 20 }}>
             <ProgressSteps>
-                <ProgressStep label="Primo passo" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo">
+                <ProgressStep label="Sede" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo">
                     <View >
                         {!lockSede && <TextComponent style={{ fontSize: md }}>Seleziona una delle nostre sedi:</TextComponent>}
                         {lockSede && <TextComponent style={{ fontSize: md }}>Puoi consultare e acquistare libri, solo presso la sede in cui sei registrato !</TextComponent>}
 
-                        <TouchableOpacity onPress={selectSedePompei} disabled={lockSede && sedeSelezionata === SEDI[0]}>
-                            <View
-                                style={{
-                                    marginTop: 15,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    alignSelf: "center",
-                                    backgroundColor: sedeSelezionata === SEDI[1] ? '#FC7307' : '#ffffff',
-                                    width: 225,
-                                    height: 175,
-                                }}
-                            >
-                                <Image
-                                    style={{ width: 175, height: 125 }}
-                                    source={require('@/assets/images/sedePompei.jpg')}
-                                />
-                            </View>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity onPress={selectSedePoggiomarino} disabled={lockSede && sedeSelezionata === SEDI[1]}>
+                        <TouchableOpacity onPress={() => selectSede(0)} disabled={lockSede && sedeSelezionata === SEDI[1]}>
                             <View
                                 style={{
                                     marginTop: 15,
@@ -262,64 +215,112 @@ export const AdozioniComponent = ({ }) => {
                                 />
                             </View>
                         </TouchableOpacity>
-                        {showLoadingArea && <ActivityIndicator size="large" />}
+
+                        <TouchableOpacity onPress={() => selectSede(1)} disabled={lockSede && sedeSelezionata === SEDI[0]}>
+                            <View
+                                style={{
+                                    marginTop: 15,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    alignSelf: "center",
+                                    backgroundColor: sedeSelezionata === SEDI[1] ? '#FC7307' : '#ffffff',
+                                    width: 225,
+                                    height: 175,
+                                }}
+                            >
+                                <Image
+                                    style={{ width: 175, height: 125 }}
+                                    source={require('@/assets/images/sedePompei.jpg')}
+                                />
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </ProgressStep>
-                <ProgressStep label="Secondo Passo" nextBtnDisabled={nextButtonSecondStepEnabled} onNext={onNextSecondStep} nextBtnText="Cerca" previousBtnText="Indietro">
+                <ProgressStep label="Informazioni" nextBtnDisabled={isLoadingOtherInfo} onNext={onNextSecondStep} nextBtnText="Cerca" previousBtnText="Indietro">
                     <View>
-                        <Text >Selezionare una città:</Text>
-                        {showLoadingSchool && <ActivityIndicator size="large" />}
-                        {!showLoadingSchool && <>
+                        <TextComponent >Selezionare una città:</TextComponent>
+                        {isLoadingCitta && <View children={<Spinner size="large" />} />}
+                        {!isLoadingCitta && <>
                             <Picker
-                                selectedValue={selectedIndexArea}
+                                selectedValue={selectedCitta}
                                 style={{ height: 50, width: '100%' }}
                                 onValueChange={(itemValue, itemIndex) => {
-                                    loadShoolsFromArea(areasNames[itemIndex]);
-                                    setSelectedIndexArea(itemIndex);
+                                    setSelectedCitta(itemValue);
+                                    fetchSchoolsFromCitta(itemValue);
                                 }}>
-                                {areas}
+                                {nomiCittaPickerItem}
                             </Picker>
                         </>}
                     </View>
                     <View>
-                        <Text>Seleziona scuola, corso, sezione, classe</Text>
-                        {showLoadingOtherInfo && <Picker
-                            selectedValue={selectedIndexArea}
-                            style={{ height: 50, width: '100%' }}
-                            onValueChange={(itemValue, itemIndex) => {
-                                loadShoolsFromArea(areasNames[itemIndex]);
-                                setSelectedIndexArea(itemIndex);
-                            }}>
-                            {areas}
-                        </Picker>}
+                        {isLoadingScuole && <View children={<Spinner size="large" />} />}
+                        {!isLoadingScuole && <>
+                            <TextComponent >Selezionare una scuola:</TextComponent>
+                            <Picker
+                                selectedValue={selectedScuola}
+                                style={{ height: 50, width: '100%' }}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedIdxScuola(itemIndex);
+                                    setSelectedScuola(itemValue);
+                                    fetchOtherInfo(itemValue.id)
+                                }}>
+                                {nomiScuolePickerItem}
+                            </Picker>
+                        </>
+                        }
+                    </View>
+                    <View>
+                        {isLoadingOtherInfo && <View children={<Spinner size="large" />} />}
+                        {!isLoadingOtherInfo && <>
+                            <TextComponent >Seleziona Corso, Classe e Sezione:</TextComponent>
+                            <Picker
+                                style={{ flex: 1, margin: 10 }}
+                                selectedValue={coursesName[(selectedIdxCorso)]}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedIdxCorso(itemIndex)
+                                }}>
+                                {corsiPickerItem}
+                            </Picker>
+
+                            <Picker
+                                style={{ flex: 1, margin: 10 }}
+                                selectedValue={classesName[(selectedIdxClasse)]}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedIdxClasse(itemIndex)
+                                }}>
+                                {classiPickerItem}
+                            </Picker>
+
+                            <Picker
+                                style={{ flex: 1, margin: 10 }}
+                                selectedValue={sectionsName[(selectedIdxSezione)]}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedIdxSezione(itemIndex)
+                                }}>
+                                {sezioniPickerItem}
+                            </Picker>
+                        </>
+                        }
                     </View>
                 </ProgressStep>
-                <ProgressStep label="Step 4" onSubmit={onPaymentStepComplete}>
+                <ProgressStep label="Lista Libri" previousBtnText="Indietro" nextBtnDisabled={nextButtonFirstStepEnabled}>
                     <View>
-                        <Text>Libri</Text>
-                        {books.map(book => renderBooks({ item: book }))}
-                        {showLoadingBooks && <ActivityIndicator size="large" />}
+                        {books.map((book, idx) =>
+                            <View key={idx} style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
+                                <Image style={{ height: '100%', width: '20%', flex: 1 }} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
+                                <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2 }}>
+                                    <Text>{book.titolo}</Text>
+                                    <Text>{book.autore}</Text>
+                                    <Text>{book.prezzo.toFixed(2)}€</Text>
+                                    <Text>{getPrezzoUsato(book.prezzo)}</Text>
+                                </View>
+                            </View>
+                        )}
+
+                        {showLoadingBooks && <View style={gs.spinner} children={<Spinner size="large" />} />}
                     </View>
                 </ProgressStep>
             </ProgressSteps>
-            <Modal visible={showModalMoreInfo} transparent={true}>
-                <View>
-                    <Text>{moreInfoBook.titolo}</Text>
-                    <Button title="Close" onPress={() => setShowModalMoreInfo(false)} />
-                </View>
-            </Modal>
-            <Modal visible={modalSuccessAddToCartVisibile} transparent={true}>
-                <View>
-                    <Text>Libro aggiunto al carrello!</Text>
-                    <Button title="Close" onPress={() => setModalSuccessAddToCartVisibile(false)} />
-                </View>
-            </Modal>
-            <Modal visible={modalErrorUtenteNonLoggato} transparent={true}>
-                <View>
-                    <Text>Errore! Utente non loggato.</Text>
-                    <Button title="Close" onPress={() => setModalErrorUtenteNonLoggato(false)} />
-                </View>
-            </Modal>
 
         </SafeAreaView>
     );
