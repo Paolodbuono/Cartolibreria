@@ -85,8 +85,8 @@ export const AdozioniComponent = ({ }) => {
                 const tempAreas = [];
                 const tempAreasName = [];
                 areas.data.forEach(area => {
-                  tempAreasName.push(area.scucitta)
-                  tempAreas.push(<Picker.Item key={area.scucitta} label={area.scucittal} value={area.scucittal} />)
+                    tempAreasName.push(area.scucitta)
+                    tempAreas.push(<Picker.Item key={area.scucitta} label={area.scucittal} value={area.scucittal} />)
                 });
                 setAreasNames(tempAreasName);
                 setAreas(tempAreas);
@@ -269,6 +269,17 @@ export const AdozioniComponent = ({ }) => {
                     <View>
                         <Text >Selezionare una città:</Text>
                         {showLoadingSchool && <ActivityIndicator size="large" />}
+                        {!showLoadingSchool && <>
+                            <Picker
+                                selectedValue={selectedIndexArea}
+                                style={{ height: 50, width: '100%' }}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    loadShoolsFromArea(areasNames[itemIndex]);
+                                    setSelectedIndexArea(itemIndex);
+                                }}>
+                                {areas}
+                            </Picker>
+                        </>}
                     </View>
                     <View>
                         <Text>Seleziona scuola, corso, sezione, classe</Text>
@@ -276,11 +287,11 @@ export const AdozioniComponent = ({ }) => {
                             selectedValue={selectedIndexArea}
                             style={{ height: 50, width: '100%' }}
                             onValueChange={(itemValue, itemIndex) => {
-                              loadShoolsFromArea(areasNames[itemIndex]);
-                              setSelectedIndexArea(itemIndex);
+                                loadShoolsFromArea(areasNames[itemIndex]);
+                                setSelectedIndexArea(itemIndex);
                             }}>
                             {areas}
-                          </Picker>}
+                        </Picker>}
                     </View>
                 </ProgressStep>
                 <ProgressStep label="Step 4" onSubmit={onPaymentStepComplete}>
