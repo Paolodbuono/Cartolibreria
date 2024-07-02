@@ -69,6 +69,7 @@ export default function Layout() {
           headerTitleStyle: { fontWeight: 'bold' },
           headerTitle: () => <LogoButtonComponent />,
           headerRight: () => <BurgerButtonComponent onPress={getRoutes} />,
+          headerShadowVisible: false,
         }}
       >
       </Stack>
