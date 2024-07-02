@@ -13,7 +13,7 @@ export default function AdozioniView() {
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Stack.Screen options={{ headerTitle: "I Miei Ordini" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
+            <Stack.Screen options={{ headerTitle: "Adozioni" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
             <AdozioniComponent />
         </View>
     );
