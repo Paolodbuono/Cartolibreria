@@ -1,4 +1,4 @@
-import { bg } from '@/constants/FontSize';
+import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -52,7 +52,9 @@ export const styles = StyleSheet.create({
     },
     welcome: {
         color: '#4975be',
-        fontSize: bg,
+        fontSize: md + 2,
         fontWeight: 'bold',
+        marginTop: 20,
+        marginBottom: -30
     }
 });
