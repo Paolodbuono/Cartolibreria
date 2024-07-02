@@ -311,8 +311,8 @@ export const AdozioniComponent = ({ }) => {
                                 <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2 }}>
                                     <Text>{book.titolo}</Text>
                                     <Text>{book.autore}</Text>
-                                    <Text>{book.prezzo.toFixed(2)}€</Text>
-                                    <Text>{getPrezzoUsato(book.prezzo)}</Text>
+                                    <Text>Nuovo: {book.prezzo.toFixed(2)}€</Text>
+                                    <Text>Usato: {getPrezzoUsato(book.prezzo)}</Text>
                                 </View>
                             </View>
                         )}
