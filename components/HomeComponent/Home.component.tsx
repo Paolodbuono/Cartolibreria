@@ -87,6 +87,9 @@ const HomeComponent: React.FC<{}> = () => {
                     </TouchableOpacity>
                 </>}
             </View>
+            <View style={{ bottom: 5, position: "absolute", display: "flex", alignItems: 'center' }}>
+                <TextComponent style={{ textAlign: 'center', color: "#FF00FF" }} >Al momento non è possibile acquistare e ordinare dall'App. Lo puoi fare tramite whatsapp SOLO SE HAI UN ACCONTO.</TextComponent>
+            </View>
             <Image style={styles.imgFooter} source={require(footerPath)} />
         </View >
     );
