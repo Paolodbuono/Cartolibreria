@@ -192,8 +192,8 @@ export const AdozioniComponent = ({ }) => {
     return (
         <SafeAreaView style={{ flex: 1, padding: 20 }}>
             <ProgressSteps>
-                <ProgressStep label="Sede" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo">
-                    <View >
+                <ProgressStep label="Sede" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo   ">
+                    <View>
                         {!lockSede && <TextComponent style={{ fontSize: md }}>Seleziona una delle nostre sedi:</TextComponent>}
                         {lockSede && <TextComponent style={{ fontSize: md }}>Puoi consultare e acquistare libri, solo presso la sede in cui sei registrato !</TextComponent>}
 
@@ -236,7 +236,7 @@ export const AdozioniComponent = ({ }) => {
                         </TouchableOpacity>
                     </View>
                 </ProgressStep>
-                <ProgressStep label="Informazioni" nextBtnDisabled={isLoadingOtherInfo} onNext={onNextSecondStep} nextBtnText="Cerca" previousBtnText="Indietro">
+                <ProgressStep label="Informazioni" nextBtnDisabled={isLoadingOtherInfo} onNext={onNextSecondStep} nextBtnText="Cerca   " previousBtnText="Indietro   ">
                     <View>
                         <TextComponent >Selezionare una città:</TextComponent>
                         {isLoadingCitta && <View children={<Spinner size="large" />} />}
@@ -303,7 +303,7 @@ export const AdozioniComponent = ({ }) => {
                         }
                     </View>
                 </ProgressStep>
-                <ProgressStep label="Lista Libri" previousBtnText="Indietro" nextBtnDisabled={nextButtonFirstStepEnabled}>
+                <ProgressStep label="Lista Libri" previousBtnText="Indietro   " nextBtnDisabled={nextButtonFirstStepEnabled}>
                     <View>
                         {books.map((book, idx) =>
                             <View key={idx} style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
