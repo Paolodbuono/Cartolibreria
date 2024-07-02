@@ -383,62 +383,23 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
             <View style={styles.timeContainer}>
                 <View style={styles.timeCell}>
-                    <TextComponent style={{
-                        marginTop: 10, fontWeight: '800', alignSelf: "center",
-                        position: 'absolute',
-                        top: -28,
-                        left: 41,
-                    }}>Ora
-                    </TextComponent>
-                    <Picker style={{ width: 100 }} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
+                    <TextComponent style={styles.timeLabel}>Ora</TextComponent>
+                    <Picker style={styles.realTimePicker} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
                         {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
                     </Picker>
-                    <View
-                        style={{
-                            position: 'absolute',
-                            top: 1,
-                            left: 1,
-                            right: 60,
-                            bottom: 0,
-                            backgroundColor: 'white',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            pointerEvents: 'none',
-                            width: 70
-                        }}
-                    >
+                    <View style={styles.timePicker}>
                         <Text>{selectedOrario}</Text>
                     </View>
                 </View>
                 <View style={styles.timeCell}>
-                    <TextComponent style={{
-                        marginTop: 10, fontWeight: '800', alignSelf: "center",
-                        position: 'absolute',
-                        top: -28,
-                        left: 32,
-                    }}>Minuto
-                    </TextComponent>
-                    <Picker style={{ width: 100, }} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
+                    <TextComponent style={styles.timeLabel}>Minuto</TextComponent>
+                    <Picker style={styles.realTimePicker} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
                         {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
                     </Picker>
-                    <View
-                        style={{
-                            position: 'absolute',
-                            top: 1,
-                            left: 1,
-                            right: 60,
-                            bottom: 0,
-                            backgroundColor: 'white',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            pointerEvents: 'none',
-                            width: 70
-                        }}
-                    >
+                    <View style={styles.timePicker}>
                         <Text>{selectedMinuti}</Text>
                     </View>
                 </View>
-
             </View>
 
             <TouchableOpacity style={styles.button} onPress={checkDate}>
