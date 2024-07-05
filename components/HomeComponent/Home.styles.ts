@@ -43,6 +43,7 @@ export const styles = StyleSheet.create({
         margin: "auto",
     },
     imgBanner: {
+        marginTop: 10,
         width: wp('100%'),
         height: 55,
     },
