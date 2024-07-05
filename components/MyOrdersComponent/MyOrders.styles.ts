@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         padding: hp('2%'),
-        height: hp("100%")
+        height: hp("100%"),
     },
     title: {
         fontSize: bg - 2,

@@ -12,7 +12,7 @@ export default function RestorePasswordView() {
   }, [navigation]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
       <Stack.Screen options={{ headerTitle: "Appuntamento", headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
       <AppuntamentoComponent />
     </View>
