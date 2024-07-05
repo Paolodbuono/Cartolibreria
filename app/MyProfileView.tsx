@@ -12,8 +12,8 @@ export default function MyProfileView() {
     }, [navigation]);
 
     return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-            <Stack.Screen options={{ headerTitle: "Profilo", headerTitleStyle: {fontFamily:"Allan-Bold"} }} />
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+            <Stack.Screen options={{ headerTitle: "Profilo", headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
             <MyProfileComponent />
         </View>
     );

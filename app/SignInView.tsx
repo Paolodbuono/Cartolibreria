@@ -14,8 +14,8 @@ export default function SignInView() {
   }, [navigation]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Stack.Screen options={{ headerTitle: "Registrati" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+      <Stack.Screen options={{ headerTitle: "Registrati" ,headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
       <SignInComponent />
     </View>
   );

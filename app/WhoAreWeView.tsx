@@ -17,8 +17,8 @@ export default function WhoAreWeView() {
   }, [navigation]);
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Bold" } }} />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
+      <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
       <View style={styles.title}>
         <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: bg }}>
           LA NOSTRA STORIA
