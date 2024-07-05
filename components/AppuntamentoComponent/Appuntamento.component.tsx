@@ -268,6 +268,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             console.log('Risposta Insert Date ---->', result);
 
             if (result.esito.toLocaleLowerCase() !== 'ko') {
+                setPrenotazionePresente(true);
                 setIsLoading(false);
 
                 const dataPrenotazioneConOrario = moment(giornoPrenotazione)
@@ -301,13 +302,15 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
                 };
 
+                setDatiPrenotazionePresente(jsonPrenotazione);
+
                 console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
                 await AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
 
                 Alert.alert(
                     'Prenotazione effettuata',
                     `Prenotazione avvenuta con successo. Indica i tuoi dati quando verrai in negozio. Il tuo codice prenotazione è: ${result.id}`,
-                    [{ text: 'OK', onPress: async () => { router.replace('HomeView'); } }],
+                    [{ text: 'OK', onPress: async () => {  } }],
                     { cancelable: false }
                 );
 
