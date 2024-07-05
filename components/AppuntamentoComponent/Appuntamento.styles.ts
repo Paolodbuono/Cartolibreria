@@ -69,15 +69,15 @@ export const styles = StyleSheet.create({
     top: -28,
     left: 55,
   },
-  timePicker : {
+  timePicker: {
     position: 'absolute',
     top: 1,
     left: 1,
     right: 60,
     bottom: 0,
+    paddingLeft: 40,
     backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center',
     pointerEvents: 'none',
     width: 100
   },
