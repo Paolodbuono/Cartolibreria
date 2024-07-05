@@ -194,7 +194,7 @@ export const AdozioniComponent = ({ }) => {
             <View style={{ top: 5, position: "absolute", display: "flex", alignItems: 'center', width: wp("95%") }}>
                 <TextComponent style={{ textAlign: 'center', color: "#FF00FF" }} >Puoi consultare la lista dei libri solo presso la sede in cui sei registrato ma non puoi ordinare e acquistare. Lo puoi fare solo se hai un acconto inviando un whatsapp al n. 08118461118 per la sede di Pompei e al n. 3511494355 per la sede di Poggiomarino. </TextComponent>
             </View>
-            <View style={{marginTop:30}}>
+            <View style={{ marginTop: 30 }}>
                 <ProgressSteps >
                     <ProgressStep label="Sede" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo   ">
                         <View>
@@ -309,7 +309,7 @@ export const AdozioniComponent = ({ }) => {
                     <ProgressStep label="Lista Libri" previousBtnText="Indietro   " nextBtnDisabled={nextButtonFirstStepEnabled}>
                         <View>
                             {books.map((book, idx) =>
-                                <View key={idx} style={{ display: "flex", flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
+                                <View key={idx} style={{ display: "flex", gap: 20, flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
                                     <Image style={{ height: '100%', width: '20%', flex: 1 }} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
                                     <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2 }}>
                                         <Text>{book.titolo}</Text>
