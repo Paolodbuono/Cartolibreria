@@ -111,7 +111,7 @@ const MyOrdersComponent = ({ }) => {
                     </View>
                     <View style={{ padding: 10, marginTop: hp('1%') }}>
                         <TextComponent style={styles.subTitle}>Per te che devi solo ritirare c’è una <BSub title="CORSIA PREFERENZIALE!" /></TextComponent>
-                        <TextComponent style={styles.subTitle}>Visto che hai già un ordine in essere puoi anche <BSub title="ORDINARE TELEFONICAMENTE" />anziché fare file in libreria!</TextComponent>
+                        <TextComponent style={styles.subTitle}>Visto che hai già un ordine in essere, invece di fare file in negozio, puoi ordinare o eliminare qualche libro inviando un WhatsApp al n. <BSub title="08118461118" /> per la sede di Pompei e al n. <BSub title="3511494355" /> per la sede di Poggiomarino.</TextComponent>
                         <TextComponent style={styles.subTitle}>Qualche libro acquistato erroneamente, te lo <BSub title="SOSTITUIREMO PRONTAMENTE!" /></TextComponent>
                         <TextComponent style={styles.subTitle}>Consegnaci subito i tuoi libri usati non più in uso: <BSub title="LI VALUTIAMO AL 40%!" /></TextComponent>
                     </View>
@@ -130,7 +130,7 @@ const MyOrdersComponent = ({ }) => {
                         </View>
                         <TouchableOpacity style={styles.button} onPress={() => { router.push("MyProfileView") }}>
                             <Image source={require("../../assets/images/areaRiservata.png")} />
-                            <TextComponent style={{ textAlign: 'center', fontSize: bg, color: '#4975be', marginTop:10 }}>
+                            <TextComponent style={{ textAlign: 'center', fontSize: bg, color: '#4975be', marginTop: 10 }}>
                                 Accedi
                             </TextComponent>
                         </TouchableOpacity>
