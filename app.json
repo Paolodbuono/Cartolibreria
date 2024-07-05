@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.myapp"
+      "bundleIdentifier": "com.cartolibreriabonagurasrl"
     },
     "android": {
       "adaptiveIcon": {
