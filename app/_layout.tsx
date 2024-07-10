@@ -8,7 +8,7 @@ import { useFonts } from 'expo-font';
 import TextComponent from '@/components/Commons/Text.component';
 
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { bg } from '@/constants/FontSize';
+import { md } from '@/constants/FontSize';
 
 type ComponentItem = {
   name: string;
@@ -23,6 +23,7 @@ const componentsList: ComponentItem[] = [
   { name: 'Avvisi Importanti', root: "NoticeView" },
   { name: 'Perchè sceglierci', root: "WhyChoseUsView" },
   { name: 'I miei ordini', root: "MyOrdersView" },
+  { name: 'Adozioni', root: "AdozioniView" },
   { name: 'Area riservata', root: "MyProfileView" },
 ];
 
@@ -115,13 +116,14 @@ const styles = StyleSheet.create({
   },
   componentName: {
     padding: 20,
-    fontSize: bg,
+    fontSize: md + 3,
+    color: "#2478d2",
   },
   currentComponentName: {
     padding: 20,
     backgroundColor: "#e1eeff",
     color: "#2478d2",
     borderRadius: 10,
-    fontSize: bg,
+    fontSize: md + 3,
   },
 });
