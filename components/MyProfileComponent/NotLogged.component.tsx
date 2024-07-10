@@ -116,9 +116,11 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
                     <TextComponent style={styles.textButton}>Hai dimenticato la password?</TextComponent>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}>
-                    <TextComponent style={styles.textButton}>Non sei cliente?</TextComponent>
-                </TouchableOpacity>
+                {/* <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}> */}
+                <TextComponent style={styles.nonSeiCliente}>Non sei cliente?</TextComponent>
+                <TextComponent style={styles.nonSeiCliente}>Puoi registrarti solo in negozio</TextComponent>
+                
+                {/* </TouchableOpacity> */}
             </View>
             <Modal
                 visible={modalSuccessLoginVisible}

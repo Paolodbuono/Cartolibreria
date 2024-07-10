@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#fff',
-        paddingTop:20
+        paddingTop: 20
     },
     title: {
         fontSize: bg,
@@ -75,6 +75,13 @@ export const styles = StyleSheet.create({
     textButton: {
         color: '#fff',
         fontSize: bg,
+    },
+    nonSeiCliente: {
+        color: '#f4511e',
+        fontSize: bg,
+        alignItems: 'center',
+        alignSelf: "center",
+        marginTop: 20
     },
     linkButton: {
         color: '#007bff',
