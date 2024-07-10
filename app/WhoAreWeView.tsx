@@ -18,7 +18,7 @@ export default function WhoAreWeView() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <Stack.Screen options={{ headerTitle: "Chi Siamo" ,headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
+      <Stack.Screen options={{ headerTitle: "Chi Siamo", headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
       <View style={styles.title}>
         <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: bg }}>
           LA NOSTRA STORIA
@@ -34,6 +34,9 @@ export default function WhoAreWeView() {
           Nel 2010 adeguandoci alle esigenze di un mercato sempre più dinamico e de-localizzato, abbiamo inaugurato lo shop on-line, <TextComponent style={styles.link}>www.cartolibreriabonagura.it</TextComponent>, piattaforma dalla quale è possibile acquistare tutte le ultime novità del reparto scuola avendo la possibilità di scegliere tra un'ampia gamma di prodotti ed accessori tra le numerosissime griffe del settore.
         </TextComponent>
         {/* Continua con gli altri paragrafi e link */}
+        <TextComponent style={styles.paragraph} onPress={() => Linking.openURL('http://www.cartolibreriabonagura.it')}>
+          Nel 2016, per facilitare gli acquisti ai tanti clienti provenienti dai vari paesi limitrofi è sorta la necessità di aprire un nuovo punto vendita in Pompei alla via Tenente Ravallese n. 16 (nei pressi della Clinica Maria Rosaria), che ben riesce a soddisfare le esigenze dei tanti che si affidano ai nostri servizi.
+        </TextComponent>
       </ScrollView>
     </View>
   );
