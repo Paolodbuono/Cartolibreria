@@ -82,9 +82,15 @@ const HomeComponent: React.FC<{}> = () => {
                             <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
-                        <TextComponent style={{ color: 'white', fontSize: bg }}>Avvisi Importanti</TextComponent>
-                    </TouchableOpacity>
+                    <View style={styles.buttonActionRow}>
+                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
+                            <TextComponent style={{ color: 'white', fontSize: md +2 }}>Avvisi Importanti</TextComponent>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("WhyChoseUsView")}>
+                            <TextComponent style={{ color: 'white', fontSize: md +2 }}>Perché Sceglierci</TextComponent>
+                        </TouchableOpacity>
+                    </View>
+
                 </>}
             </View>
             <Image style={styles.imgFooter} source={require(footerPath)} />

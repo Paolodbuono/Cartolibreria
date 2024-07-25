@@ -9,6 +9,7 @@ import { gs } from '@/style/globalStyles';
 import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
 import { SEDI } from '@/utils/constants';
+import { styles } from './Adozioni.styles';
 
 export const AdozioniComponent = ({ }) => {
     const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState(true);
@@ -191,8 +192,8 @@ export const AdozioniComponent = ({ }) => {
 
     return (
         <SafeAreaView style={{ flex: 1, padding: 20 }}>
-            <View style={{ top: 5, position: "absolute", display: "flex", alignItems: 'center', width: wp("95%") }}>
-                <TextComponent style={{ textAlign: 'center', color: "#FF00FF", fontSize: md, paddingRight: 50 }} >Puoi consultare la lista dei libri solo presso la sede in cui sei registrato ma non puoi ordinare e acquistare. Lo puoi fare solo se hai un acconto inviando un whatsapp al n. 08118461118 per la sede di Pompei e al n. 3511494355 per la sede di Poggiomarino. </TextComponent>
+            <View style={{  position: "absolute", display: "flex", alignItems: 'center', width: wp("100%") }}>
+                <TextComponent style={styles.subTitle} >Puoi consultare la lista dei libri solo presso la sede in cui sei registrato ma non puoi ordinare e acquistare. Lo puoi fare solo se hai un acconto inviando un whatsapp al n. 08118461118 per la sede di Pompei e al n. 3511494355 per la sede di Poggiomarino. </TextComponent>
             </View>
             <View style={{ marginTop: 70, height: hp("80%")}}>
                 <ProgressSteps >

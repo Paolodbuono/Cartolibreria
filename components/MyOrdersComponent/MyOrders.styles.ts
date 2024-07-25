@@ -10,13 +10,13 @@ export const styles = StyleSheet.create({
         height: hp("100%"),
     },
     title: {
-        fontSize: bg - 2,
+        fontSize: bg,
         textAlign: 'center',
         fontWeight: '800',
         color: '#EB5F19',
     },
     subTitle: {
-        fontSize: md - 2,
+        fontSize: md + 2,
         fontWeight: '600',
         color: '#4975be',
     },

@@ -21,6 +21,12 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         gap: 60,
     },
+    buttonActionRow:{
+        padding:10,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        gap: 40,
+    },
     buttonContainer: {
         display: "flex",
         gap: 10

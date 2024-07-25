@@ -274,13 +274,13 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 const dataPrenotazioneConOrario = moment(giornoPrenotazione)
                     .set({ hour: selectedOrario, minute: selectedMinuti, second: 0, millisecond: 0 });
 
-                const notifTime = moment(dataPrenotazioneConOrario).subtract(35, 'minutes').toDate();
+                const notifTime = moment(dataPrenotazioneConOrario).subtract(45, 'minutes').toDate();
 
                 // Schedula la notifica
                 const schedulingOptions = {
                     content: {
                         title: 'Prenotazione in arrivo!',
-                        body: `Hai una prenotazione alla cartolibreria tra 15 minuti.`,
+                        body: `Hai una prenotazione alla cartolibreria tra 45 minuti.`,
                     },
                     trigger: notifTime,
                 };
