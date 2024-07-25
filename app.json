@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Cartolibreria Bonagura",
-    "slug": "cartolibreria-bonagura",
+    "slug": "cartolibreria-app",
     "version": "1.1.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
