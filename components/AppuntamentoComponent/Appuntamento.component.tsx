@@ -33,6 +33,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     const [selectedMinuti, setSelectedMinuti] = useState<number>(0);
     const [orariMattino, setOrariMattino] = useState<{ key: number; label: string }[]>([]);
     const [minutiMattino, setMinutiMattino] = useState<{ key: number; label: string }[]>([]);
+    const [modalSundayCheck, setModalSundayCheck] = useState<boolean>(false);
     const [modalCheckDateVisibile, setModalCheckDateVisibile] = useState<boolean>(false);
     const [modalInserInfoVisibile, setModalInserInfoVisibile] = useState<boolean>(false);
     const [prenotazioneDate, setPrenotazioneDate] = useState<string>("");
@@ -138,6 +139,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         fetchData();
     }, []);
 
+    const toggleModalSundayCheck = () => setModalSundayCheck(!modalSundayCheck);
     const toggleModalCheckDate = () => setModalCheckDateVisibile(!modalCheckDateVisibile);
     const handleToggleModalInserInfo = () => { setModalInserInfoVisibile(!modalInserInfoVisibile); };
 
@@ -183,6 +185,11 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         const currentMinute = moment().minute();
         const bookingHour = selectedOrario;
         const bookingMinute = selectedMinuti;
+
+        if(isSunday(bookingDate)){
+            setModalSundayCheck(true);
+            return;
+        }
 
         const submitForm = async (ora: string) => {
             const url = `https://www.prenotazionilibreriabonagura.it/micro/services.php?sede=${SEDI[+sedeIndex]}&opt=1`;
@@ -310,7 +317,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 Alert.alert(
                     'Prenotazione effettuata',
                     `Prenotazione avvenuta con successo. Indica i tuoi dati quando verrai in negozio. Il tuo codice prenotazione è: ${result.id}`,
-                    [{ text: 'OK', onPress: async () => {  } }],
+                    [{ text: 'OK', onPress: async () => { } }],
                     { cancelable: false }
                 );
 
@@ -351,6 +358,13 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         </View >
     </>)
 
+    function isSunday(dateString: string): boolean {
+        // Converte la stringa di data in un oggetto Date
+        const date = new Date(dateString);
+        // Verifica se il giorno della settimana è domenica (0)
+        return date.getDay() === 0;
+    }
+
     return (
         <>
             <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
@@ -363,7 +377,13 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 containerStyle={{ display: "flex", flexDirection: "row", width: wp("80%"), justifyContent: "space-between" }}
             />
             <Calendar
-                onDayPress={(day) => setGiornoPrenotazione(moment(day.dateString).toDate())}
+                onDayPress={(day) => {
+                    if (isSunday(day.dateString)) {
+                        setModalSundayCheck(true);
+                        return
+                    }
+                    setGiornoPrenotazione(moment(day.dateString).toDate())
+                }}
                 markedDates={{ [moment(giornoPrenotazione).format('YYYY-MM-DD')]: { selected: true, selectedColor: 'blue' } }}
                 theme={{
                     textDayFontFamily: 'Arial',
@@ -451,6 +471,19 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     </>}
                 </View>
             </Modal>
+
+            <Modal visible={modalSundayCheck} transparent={true} animationType="slide">
+                <View style={styles.modalContainer}>
+                    <TextComponent style={styles.title}>Orario selezionato non disponibile!</TextComponent>
+                    <TextComponent style={styles.subTitle}>
+                        Non è possibile prenotare di domenica. Ti invitiamo a scegliere un altro giorno.
+                    </TextComponent>
+                    <TouchableOpacity style={styles.button} onPress={toggleModalSundayCheck}>
+                        <TextComponent style={styles.buttonText}>Chiudi</TextComponent>
+                    </TouchableOpacity>
+                </View>
+            </Modal>
+
             <Modal visible={modalInserInfoVisibile} animationType="slide">
                 <EmailForm
                     nome={nome}
