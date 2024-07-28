@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: 55,
+        height: 60,
     },
     imgFooter: {
         width: wp('100%'),
