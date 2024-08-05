@@ -40,7 +40,6 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     const [resCheckDate, setResCheckDate] = useState<any>('');
     const [nome, setNome] = useState<string>('');
     const [cognome, setCognome] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
     const [numeroCell, setNumroCell] = useState<string>('');
 
     const [fontsLoaded] = useFonts({ 'Arial': require('@/assets/fonts/Arial.ttf') });
@@ -85,7 +84,6 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     console.log('L\'utente ha effettuato la login (Appuntamento.Component)', userData);
                     const parsedUser = JSON.parse(userData);
 
-                    setEmail(parsedUser.email);
                     setNumroCell(parsedUser.cellulare);
                     setNome(parsedUser.nome.split(" ")[0]);
                     setCognome(parsedUser.nome.split(" ")[1]);
@@ -246,15 +244,13 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
 
     const handlePrenota = async () => {
-        if (!nome || !cognome || !email || !numeroCell) return Alert.alert('Errore', 'Compila tutti i campi');
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return Alert.alert('Errore', 'Inserisci un e-mail valida per prenotarti');
+        if (!nome || !cognome || !numeroCell) return Alert.alert('Errore', 'Compila tutti i campi');
 
         const formdata = new FormData();
         formdata.append("data", moment(giornoPrenotazione).format("YYYY-MM-DD"));
         formdata.append("ora", `${selectedOrario}:${selectedMinuti}:00`);
         formdata.append("nome", nome);
         formdata.append("cognome", cognome);
-        formdata.append("email", email);
         formdata.append("telefono", numeroCell);
 
         setIsLoading(true);
@@ -299,9 +295,9 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     id: result.id,
                     nome,
                     cognome,
-                    email,
-                    cellulare: numeroCell,
+                    numeroCell: numeroCell,
                     sede: SEDI[+sedeIndex],
+                    numPrenotazione: result.numPrenotazione,
                     dataPrenotazioneRaw: moment(dataPrenotazioneConOrario),
                     dataPrenotazione: dataPrenotazioneConOrario.format('DD-MM-YYYY'),
                     orarioPrenotazione: dataPrenotazioneConOrario.format('HH:mm'),
@@ -346,7 +342,6 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
             <TextComponent style={styles.codicePrenotazione}>Sede prenotazione <BSub title={datiPrenotazionePresente?.sede ?? ""} /> </TextComponent>
             <TextComponent style={styles.codicePrenotazione}>Nome Cognome:  <BSub title={`${datiPrenotazionePresente?.nome} ${datiPrenotazionePresente?.cognome}`} /> </TextComponent>
-            <TextComponent style={styles.codicePrenotazione}>Email:  <BSub title={datiPrenotazionePresente?.email ?? ""} /> </TextComponent>
             <TextComponent style={styles.codicePrenotazione}>Cellulare:  <BSub title={datiPrenotazionePresente?.numeroCell ?? ""} /> </TextComponent>
             <TextComponent style={styles.codicePrenotazione}>Giorno Prenotazione:  <BSub title={datiPrenotazionePresente?.dataPrenotazione ?? ""} /> </TextComponent>
             <TextComponent style={styles.codicePrenotazione}>Orario Prenotazione:  <BSub title={datiPrenotazionePresente?.orarioPrenotazione ?? ""} /> </TextComponent>
@@ -490,8 +485,6 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     setNome={setNome}
                     cognome={cognome}
                     setCognome={setCognome}
-                    email={email}
-                    setEmail={setEmail}
                     numeroCell={numeroCell}
                     setNumroCell={setNumroCell}
                     handlePrenota={handlePrenota}

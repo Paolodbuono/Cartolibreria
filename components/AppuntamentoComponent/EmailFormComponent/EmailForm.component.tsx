@@ -7,7 +7,7 @@ import { styles } from './EmailForm.styles';
 import { EmailFormHandle, EmailFormProps } from './EmailForm.types';
 import TextComponent from '@/components/Commons/Text.component';
 
-const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, cognome, setCognome, email, setEmail, numeroCell, setNumroCell, handlePrenota, handleToggleModalInserInfo, prenotazioneDate }, ref) => {
+const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, cognome, setCognome, numeroCell, setNumroCell, handlePrenota, handleToggleModalInserInfo, prenotazioneDate }, ref) => {
   return (
     <View style={styles.container}>
       <TextComponent style={styles.title}>Inserisci i tuoi dati:</TextComponent>
@@ -19,9 +19,6 @@ const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, 
 
         <TextComponent style={styles.subTitle}>Cognome</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci il tuo cognome" value={cognome} onChangeText={setCognome} />
-
-        <TextComponent style={styles.subTitle}>Email</TextComponent>
-        <TextInput style={styles.input} placeholder="Inserisci la tua email" value={email} onChangeText={setEmail} keyboardType="email-address" />
 
         <TextComponent style={styles.subTitle}>Numero di telefono</TextComponent>
         <TextInput style={styles.input} placeholder="Inserisci il tuo numero di telefono" value={numeroCell} onChangeText={setNumroCell} keyboardType="phone-pad" />

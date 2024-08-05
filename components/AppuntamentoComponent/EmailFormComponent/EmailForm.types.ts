@@ -5,8 +5,6 @@ export interface EmailFormProps {
   setNome: (nome: string) => void;
   cognome: string;
   setCognome: (cognome: string) => void;
-  email: string;
-  setEmail: (email: string) => void;
   numeroCell: string;
   setNumroCell: (numeroCell: string) => void;
   handlePrenota: () => void;

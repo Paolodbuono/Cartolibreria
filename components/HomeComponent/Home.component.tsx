@@ -54,6 +54,11 @@ const HomeComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
+                    <TouchableOpacity style={{ ...styles.buttonImportant, width: 250 }} onPress={() => router.push("ComodamenteDaCasaView")}>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2 }}> E' semplice acquistare e ordinare!                             </TextComponent>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  </TextComponent>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> come in negozio! </TextComponent>
+                    </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("MyOrdersView") }} >
@@ -84,10 +89,10 @@ const HomeComponent: React.FC<{}> = () => {
                     </View>
                     <View style={styles.buttonActionRow}>
                         <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
-                            <TextComponent style={{ color: 'white', fontSize: md +2 }}>Avvisi Importanti</TextComponent>
+                            <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Avvisi Importanti</TextComponent>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("WhyChoseUsView")}>
-                            <TextComponent style={{ color: 'white', fontSize: md +2 }}>Perché Sceglierci</TextComponent>
+                            <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Perché Sceglierci</TextComponent>
                         </TouchableOpacity>
                     </View>
 

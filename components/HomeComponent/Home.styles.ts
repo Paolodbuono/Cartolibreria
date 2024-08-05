@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
     },
     buttonImportant: {
         marginTop: 10,
-        marginBottom: -20,
+        marginBottom: -30,
         backgroundColor: 'rgb(235 96 25)',
         paddingVertical: 16,
         borderRadius: 8,
@@ -55,13 +55,12 @@ export const styles = StyleSheet.create({
     },
     imgFooter: {
         width: wp('100%'),
-        height: 130,
+        height: 100,
     },
     welcome: {
         color: '#4975be',
         fontSize: md + 2,
         fontWeight: 'bold',
-        marginTop: 20,
-        marginBottom: -30
+        marginBottom: -60
     }
 });
