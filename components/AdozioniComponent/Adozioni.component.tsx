@@ -193,7 +193,7 @@ export const AdozioniComponent = ({ }) => {
     return (
         <SafeAreaView style={{ flex: 1, padding: 20 }}>
             <View style={{ position: "absolute", display: "flex", alignItems: 'center', width: wp("90%"), paddingRight: wp("5%"), paddingLeft: wp("5%") }}>
-                <TextComponent style={styles.subTitle} >Puoi consultare la lista dei libri solo presso la sede in cui sei registrato ma non puoi ordinare e acquistare. Lo puoi fare solo se hai un acconto inviando un whatsapp al n. 08118461118 per la sede di Pompei e al n. 3511494355 per la sede di Poggiomarino. </TextComponent>
+                <TextComponent style={styles.subTitle} >In questa sezione puoi solo consultare le liste dei libri adottati con i relativi prezzi. Per acquistare e/o ordinare vai alla home page.</TextComponent>
             </View>
             <View style={{ marginTop: 70, height: hp("80%") }}>
                 <ProgressSteps >
