@@ -119,6 +119,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 {/* <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}> */}
                 <TextComponent style={styles.nonSeiCliente}>Non sei cliente?</TextComponent>
                 <TextComponent style={styles.nonSeiCliente}>Puoi registrarti solo in negozio</TextComponent>
+                <TextComponent style={styles.nonSeiCliente}>Oppure inviando i tuoi dati tramite whatsapp</TextComponent>
                 
                 {/* </TouchableOpacity> */}
             </View>

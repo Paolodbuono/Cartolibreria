@@ -54,10 +54,9 @@ const HomeComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
-                    <TouchableOpacity style={{ ...styles.buttonImportant, width: 250 }} onPress={() => router.push("ComodamenteDaCasaView")}>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2 }}> E' semplice acquistare e ordinare!                             </TextComponent>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  </TextComponent>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> come in negozio! </TextComponent>
+                    <TouchableOpacity style={{ ...styles.buttonImportant }} onPress={() => router.push("ComodamenteDaCasaView")}>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center"}}> E' semplice acquistare e ordinare!</TextComponent>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  come in negozio!</TextComponent>
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>

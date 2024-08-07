@@ -24,6 +24,7 @@ const componentsList: ComponentItem[] = [
   { name: 'Perchè sceglierci', root: "WhyChoseUsView" },
   { name: 'I miei ordini', root: "MyOrdersView" },
   { name: 'Adozioni', root: "AdozioniView" },
+  { name: 'E\' semplice ordinare e acquistare!', root: "ComodamenteDaCasaView" },
   { name: 'Area riservata', root: "MyProfileView" },
 ];
 
