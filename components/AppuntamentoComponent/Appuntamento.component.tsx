@@ -252,6 +252,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         formdata.append("nome", nome);
         formdata.append("cognome", cognome);
         formdata.append("telefono", numeroCell);
+        formdata.append("email", "temp@temp.it");
 
         setIsLoading(true);
 
