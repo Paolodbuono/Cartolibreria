@@ -106,15 +106,7 @@ const MyOrdersComponent = ({ }) => {
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 {isLogged && <>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('1.8%') }}>
-                        <TextComponent style={styles.title}>Ricorda da noi non farai mai file chilometriche</TextComponent>
-                    </View>
-                    <View style={{ padding: 10, marginTop: hp('1%') }}>
-                        <TextComponent style={styles.subTitle}>Per te che devi solo ritirare c’è una <BSub title="CORSIA PREFERENZIALE!" /></TextComponent>
-                        <TextComponent style={styles.subTitle}>Visto che hai già un ordine in essere, invece di fare file in negozio, puoi ordinare o eliminare qualche libro inviando un WhatsApp al n. <BSub title="08118461118" /> per la sede di Pompei e al n. <BSub title="3511494355" /> per la sede di Poggiomarino.</TextComponent>
-                        <TextComponent style={styles.subTitle}>Qualche libro acquistato erroneamente, te lo <BSub title="SOSTITUIREMO PRONTAMENTE!" /></TextComponent>
-                        <TextComponent style={styles.subTitle}>Consegnaci subito i tuoi libri usati non più in uso: <BSub title="LI VALUTIAMO AL 40%!" /></TextComponent>
-                    </View>
+                    <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10 }} source={require('../../assets/images/ordini_images.png')} />
                     <FlatList
                         style={{ width: '100%' }}
                         data={myOrders}
