@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Image, Text, Button, Modal, ActivityIndicator as Spinner, TouchableOpacity, } from 'react-native';
-import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
+import { SafeAreaView, View, Image, Text, ActivityIndicator as Spinner, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
@@ -10,6 +9,8 @@ import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
 import { SEDI } from '@/utils/constants';
 import { styles } from './Adozioni.styles';
+import { CustomProgressStep } from './CustomProgressStep';
+import { CustomProgressSteps } from './CustomProgressSteps';
 
 export const AdozioniComponent = ({ }) => {
     const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState(true);
@@ -102,7 +103,7 @@ export const AdozioniComponent = ({ }) => {
         try {
             setShowLoadingBooks(true);
 
-            const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${sedeSelezionata}&school=${schoolsIds[selectedIdxScuola]}&type=${encodeURIComponent(coursesName[selectedIdxCorso])}&class=${classesName[selectedIdxClasse]}&section=${sectionsName[selectedIdxSezione]}`;
+            const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${sedeSelezionata}&school=${schoolsIds[selectedIdxScuola ?? 0]}&type=${encodeURIComponent(coursesName[selectedIdxCorso])}&class=${classesName[selectedIdxClasse]}&section=${sectionsName[selectedIdxSezione]}`;
             const response = await fetch(url);
             const booksData = await response.json();
 
@@ -191,139 +192,154 @@ export const AdozioniComponent = ({ }) => {
     if (isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
 
     return (
-        <SafeAreaView style={{ flex: 1, padding: 20 }}>
-            <View style={{ position: "absolute", display: "flex", alignItems: 'center', width: wp("90%"), paddingRight: wp("5%"), paddingLeft: wp("5%") }}>
-                <TextComponent style={styles.subTitle} >In questa sezione puoi solo consultare le liste dei libri adottati con i relativi prezzi. Per acquistare e/o ordinare vai alla home page.</TextComponent>
+        <SafeAreaView style={{ flex: 1, padding: 20, width: wp("100%") }}>
+            <View style={{ position: "absolute", alignItems: 'center', width: wp("90%"), paddingHorizontal: wp("5%") }}>
+                <TextComponent style={styles.subTitle}>
+                    In questa sezione puoi solo consultare le liste dei libri adottati con i relativi prezzi. Per acquistare e/o ordinare vai alla home page.
+                </TextComponent>
             </View>
-            <View style={{ marginTop: 70, height: hp("80%") }}>
-                <ProgressSteps >
-                    <ProgressStep label="Sede" nextBtnDisabled={nextButtonFirstStepEnabled} onNext={onNextFirstStep} nextBtnText="Successivo   ">
-                        <View>
-                            <TouchableOpacity onPress={() => selectSede(0)} disabled={lockSede && sedeSelezionata === SEDI[1]}>
-                                <View
-                                    style={{
-                                        marginTop: 15,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        alignSelf: "center",
-                                        backgroundColor: sedeSelezionata === SEDI[0] ? '#FC7307' : '#ffffff',
-                                        width: 225,
-                                        height: 175,
-                                    }}
+            <View style={{ marginTop: 70, height: hp("80%"), flex: 1 }}>
+                <CustomProgressSteps>
+                    <CustomProgressStep 
+                        label="Sede" 
+                        nextBtnDisabled={nextButtonFirstStepEnabled} 
+                        onNext={onNextFirstStep} 
+                        nextBtnText="Successivo"
+                    >
+                        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+                            <View style={styles.imagesContainer}>
+                                <TouchableOpacity
+                                    onPress={() => selectSede(0)}
+                                    disabled={lockSede && sedeSelezionata === SEDI[1]}
+                                    style={styles.imageWrapper}
                                 >
-                                    <Image
-                                        style={{ width: 175, height: 125 }}
-                                        source={require('@/assets/images/sedePoggiomarino.png')}
-                                    />
-                                </View>
-                            </TouchableOpacity>
+                                    <View style={[
+                                        styles.sedeContainer,
+                                        sedeSelezionata === SEDI[0] && styles.selectedSede
+                                    ]}>
+                                        <Image
+                                            style={styles.sedeImage}
+                                            source={require('@/assets/images/sedePoggiomarino.png')}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => selectSede(1)} disabled={lockSede && sedeSelezionata === SEDI[0]}>
-                                <View
-                                    style={{
-                                        marginTop: 15,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        alignSelf: "center",
-                                        backgroundColor: sedeSelezionata === SEDI[1] ? '#FC7307' : '#ffffff',
-                                        width: 225,
-                                        height: 175,
-                                    }}
+                                <TouchableOpacity
+                                    onPress={() => selectSede(1)}
+                                    disabled={lockSede && sedeSelezionata === SEDI[0]}
+                                    style={styles.imageWrapper}
                                 >
-                                    <Image
-                                        style={{ width: 175, height: 125 }}
-                                        source={require('@/assets/images/sedePompei.jpg')}
+                                    <View style={[
+                                        styles.sedeContainer,
+                                        sedeSelezionata === SEDI[1] && styles.selectedSede
+                                    ]}>
+                                        <Image
+                                            style={styles.sedeImage}
+                                            source={require('@/assets/images/sedePompei.jpg')}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </CustomProgressStep>
+
+                    <CustomProgressStep 
+                        label="Informazioni" 
+                        nextBtnDisabled={isLoadingOtherInfo} 
+                        onNext={onNextSecondStep} 
+                        nextBtnText="Cerca   " 
+                        previousBtnText="Indietro   "
+                    >
+                        <ScrollView>
+                            <View>
+                                <TextComponent>Selezionare una città:</TextComponent>
+                                {isLoadingCitta && <Spinner size="large" />}
+                                {!isLoadingCitta && (
+                                    <Picker
+                                        selectedValue={selectedCitta}
+                                        style={styles.picker}
+                                        onValueChange={(itemValue) => {
+                                            setSelectedCitta(itemValue);
+                                            fetchSchoolsFromCitta(itemValue);
+                                        }}>
+                                        {nomiCittaPickerItem}
+                                    </Picker>
+                                )}
+                            </View>
+
+                            <View>
+                                {isLoadingScuole && <Spinner size="large" />}
+                                {!isLoadingScuole && (
+                                    <>
+                                        <TextComponent>Selezionare una scuola:</TextComponent>
+                                        <Picker
+                                            selectedValue={selectedScuola}
+                                            style={styles.picker}
+                                            onValueChange={(itemValue, itemIndex) => {
+                                                setSelectedIdxScuola(itemIndex);
+                                                setSelectedScuola(itemValue);
+                                                fetchOtherInfo(itemValue.id);
+                                            }}>
+                                            {nomiScuolePickerItem}
+                                        </Picker>
+                                    </>
+                                )}
+                            </View>
+
+                            <View>
+                                {isLoadingOtherInfo && <Spinner size="large" />}
+                                {!isLoadingOtherInfo && (
+                                    <>
+                                        <TextComponent>Seleziona Corso, Classe e Sezione:</TextComponent>
+                                        <Picker
+                                            style={styles.picker}
+                                            selectedValue={coursesName[selectedIdxCorso]}
+                                            onValueChange={(itemValue, itemIndex) => setSelectedIdxCorso(itemIndex)}>
+                                            {corsiPickerItem}
+                                        </Picker>
+
+                                        <Picker
+                                            style={styles.picker}
+                                            selectedValue={classesName[selectedIdxClasse]}
+                                            onValueChange={(itemValue, itemIndex) => setSelectedIdxClasse(itemIndex)}>
+                                            {classiPickerItem}
+                                        </Picker>
+
+                                        <Picker
+                                            style={styles.picker}
+                                            selectedValue={sectionsName[selectedIdxSezione]}
+                                            onValueChange={(itemValue, itemIndex) => setSelectedIdxSezione(itemIndex)}>
+                                            {sezioniPickerItem}
+                                        </Picker>
+                                    </>
+                                )}
+                            </View>
+                        </ScrollView>
+                    </CustomProgressStep>
+
+                    <CustomProgressStep label="Lista Libri" previousBtnText="Indietro  ">
+                        <ScrollView>
+                            {showLoadingBooks && <Spinner size="large" style={gs.spinner} />}
+                            {!showLoadingBooks && books.map((book, idx) => (
+                                <View key={idx} style={styles.bookItem}>
+                                    <Image 
+                                        style={styles.bookImage} 
+                                        source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} 
                                     />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </ProgressStep>
-                    <ProgressStep label="Informazioni" nextBtnDisabled={isLoadingOtherInfo} onNext={onNextSecondStep} nextBtnText="Cerca   " previousBtnText="Indietro   ">
-                        <View>
-                            <TextComponent >Selezionare una città:</TextComponent>
-                            {isLoadingCitta && <View children={<Spinner size="large" />} />}
-                            {!isLoadingCitta && <>
-                                <Picker
-                                    selectedValue={selectedCitta}
-                                    style={{ height: 50, width: '100%' }}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedCitta(itemValue);
-                                        fetchSchoolsFromCitta(itemValue);
-                                    }}>
-                                    {nomiCittaPickerItem}
-                                </Picker>
-                            </>}
-                        </View>
-                        <View>
-                            {isLoadingScuole && <View children={<Spinner size="large" />} />}
-                            {!isLoadingScuole && <>
-                                <TextComponent >Selezionare una scuola:</TextComponent>
-                                <Picker
-                                    selectedValue={selectedScuola}
-                                    style={{ height: 50, width: '100%' }}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedIdxScuola(itemIndex);
-                                        setSelectedScuola(itemValue);
-                                        fetchOtherInfo(itemValue.id)
-                                    }}>
-                                    {nomiScuolePickerItem}
-                                </Picker>
-                            </>
-                            }
-                        </View>
-                        <View>
-                            {isLoadingOtherInfo && <View children={<Spinner size="large" />} />}
-                            {!isLoadingOtherInfo && <>
-                                <TextComponent >Seleziona Corso, Classe e Sezione:</TextComponent>
-                                <Picker
-                                    style={{ flex: 1, margin: 10 }}
-                                    selectedValue={coursesName[(selectedIdxCorso)]}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedIdxCorso(itemIndex)
-                                    }}>
-                                    {corsiPickerItem}
-                                </Picker>
-
-                                <Picker
-                                    style={{ flex: 1, margin: 10 }}
-                                    selectedValue={classesName[(selectedIdxClasse)]}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedIdxClasse(itemIndex)
-                                    }}>
-                                    {classiPickerItem}
-                                </Picker>
-
-                                <Picker
-                                    style={{ flex: 1, margin: 10 }}
-                                    selectedValue={sectionsName[(selectedIdxSezione)]}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedIdxSezione(itemIndex)
-                                    }}>
-                                    {sezioniPickerItem}
-                                </Picker>
-                            </>
-                            }
-                        </View>
-                    </ProgressStep>
-                    <ProgressStep label="Lista Libri" previousBtnText="Indietro   " nextBtnDisabled={nextButtonFirstStepEnabled}>
-                        <View>
-                            {books.map((book, idx) =>
-                                <View key={idx} style={{ display: "flex", gap: 20, flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', height: hp('20%'), marginTop: 10 }}>
-                                    <Image style={{ height: '100%', width: '20%', flex: 1 }} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
-                                    <View style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 2 }}>
+                                    <View style={styles.bookInfo}>
                                         <Text>{book.titolo}</Text>
                                         <Text>{book.autore}</Text>
                                         <Text>Nuovo: {book.prezzo.toFixed(2)}€</Text>
                                         <Text>Usato: {getPrezzoUsato(book.prezzo)}</Text>
                                     </View>
                                 </View>
-                            )}
-
-                            {showLoadingBooks && <View style={gs.spinner} children={<Spinner size="large" />} />}
-                        </View>
-                    </ProgressStep>
-                </ProgressSteps>
+                            ))}
+                        </ScrollView>
+                    </CustomProgressStep>
+                </CustomProgressSteps>
             </View>
         </SafeAreaView>
-    );
+    )
 };

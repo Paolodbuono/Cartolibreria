@@ -34,5 +34,33 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: "center"
-    }
+    },
+    scrollViewContent: {
+        flexGrow: 1,
+        justifyContent: 'center',
+    },
+    imagesContainer: {
+        alignItems: 'center',
+        width: '100%',
+    },
+    imageWrapper: {
+        width: wp('80%'),
+        aspectRatio: 16 / 9,
+        marginVertical: hp('2%'),
+    },
+    sedeContainer: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+        overflow: 'hidden',
+        borderWidth: 4,
+        borderColor: 'transparent',
+    },
+    selectedSede: {
+        borderColor: 'green',
+    },
+    sedeImage: {
+        width: '100%',
+        height: '100%',
+    },
 });
