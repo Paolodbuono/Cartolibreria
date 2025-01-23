@@ -3,52 +3,51 @@ import { SafeAreaView, View, Image, Text, ActivityIndicator as Spinner, Touchabl
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { gs } from '@/style/globalStyles';
-import TextComponent from '../Commons/Text.component';
-import { bg, md } from '@/constants/FontSize';
 import { SEDI } from '@/utils/constants';
 import { styles } from './Adozioni.styles';
+import TextComponent from '../Commons/Text.component';
 import { CustomProgressStep } from './CustomProgressStep';
 import { CustomProgressSteps } from './CustomProgressSteps';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 export const AdozioniComponent = ({ }) => {
-    const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState(true);
+    const [nextButtonFirstStepEnabled, setNextButtonFirstStepEnabled] = useState<boolean>(true);
+    const [sedeSelezionata, setSede] = useState<string>('');
 
-    const [sedeSelezionata, setSede] = useState('');
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoadingCitta, setIsLoadingCitta] = useState<boolean>(true);
+    const [isLoadingScuole, setIsLoadingScuole] = useState<boolean>(true);
+    const [isLoadingOtherInfo, setIsLoadingOtherInfo] = useState<boolean>(true);
 
-    const [isLoading, setIsLoading] = useState(true);
-    const [isLoadingCitta, setIsLoadingCitta] = useState(true);
-    const [isLoadingScuole, setIsLoadingScuole] = useState(true);
-    const [isLoadingOtherInfo, setIsLoadingOtherInfo] = useState(true);
+    const [showLoadingBooks, setShowLoadingBooks] = useState<boolean>(true);
 
-    const [showLoadingBooks, setShowLoadingBooks] = useState(true);
+    const [selectedIdxScuola, setSelectedIdxScuola] = useState<number>(0);
+    const [selectedIdxCorso, setSelectedIdxCorso] = useState<number>(0);
+    const [selectedIdxSezione, setSelectedIdxSezione] = useState<number>(0);
+    const [selectedIdxClasse, setSelectedIdxClasse] = useState<number>(0);
 
-    const [selectedIdxScuola, setSelectedIdxScuola] = useState(0);
-    const [selectedIdxCorso, setSelectedIdxCorso] = useState(0);
-    const [selectedIdxSezione, setSelectedIdxSezione] = useState(0);
-    const [selectedIdxClasse, setSelectedIdxClasse] = useState(0);
+    const [nomiCittaPickerItem, setNomiCittaPickerItem] = useState<Array<string>>([]);
+    const [nomiScuolePickerItem, setNomiScuolePickerItem] = useState<Array<string>>([]);
+    const [corsiPickerItem, setCorsiPickerItem] = useState<Array<string>>([]);
+    const [sezioniPickerItem, setSezioniPickerItem] = useState<Array<string>>([]);
+    const [classiPickerItem, setClassiPickerItem] = useState<Array<string>>([]);
 
-    const [nomiCittaPickerItem, setNomiCittaPickerItem] = useState<Array<any>>([]);
-    const [nomiScuolePickerItem, setNomiScuolePickerItem] = useState<Array<any>>([]);
-    const [corsiPickerItem, setCorsiPickerItem] = useState<Array<any>>([]);
-    const [sezioniPickerItem, setSezioniPickerItem] = useState<Array<any>>([]);
-    const [classiPickerItem, setClassiPickerItem] = useState<Array<any>>([]);
+    const [schoolsIds, setSchoolsIds] = useState<Array<string>>([]);
 
-    const [schoolsIds, setSchoolsIds] = useState([]);
+    const [coursesName, setCoursesName] = useState<Array<string>>([]);
+    const [sectionsName, setSectionsName] = useState<Array<string>>([]);
+    const [classesName, setClassesName] = useState<Array<string>>([]);
 
-    const [coursesName, setCoursesName] = useState([]);
-    const [sectionsName, setSectionsName] = useState([]);
-    const [classesName, setClassesName] = useState([]);
+    const [books, setBooks] = useState<Array<any>>([]);
+    const [lockSede, setLockSede] = useState<boolean>(false);
+    const [selectedCitta, setSelectedCitta] = useState<string>();
+    const [selectedScuola, setSelectedScuola] = useState<string>();
 
-    const [books, setBooks] = useState([]);
-    const [lockSede, setLockSede] = useState(false);
-    const [selectedCitta, setSelectedCitta] = useState();
-    const [selectedScuola, setSelectedScuola] = useState();
 
     const fetchData = async () => {
+        setIsLoading(true);
         try {
-            setIsLoading(true);
 
             const sedeSelezionata = await AsyncStorage.getItem('sedeSelezionata')
 
@@ -58,19 +57,27 @@ export const AdozioniComponent = ({ }) => {
                 setLockSede(true);
             }
 
-            setIsLoading(false);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+        setIsLoading(false);
     };
 
     useEffect(() => {
         fetchData();
     }, []);
 
+    /** @param {number} sedeIndex - L'indice della sede (0 per Poggiomarino, 1 per Pompei). */
+    const selectSede = (sedeIndex: number) => {
+        setSede(SEDI[sedeIndex]);
+        setNextButtonFirstStepEnabled(false);
+    };
+
     const fetchAreasAndSetState = async () => {
+        console.log("Tutto apposto?");
+
         try {
-            setIsLoadingCitta(true);
+            // setIsLoadingCitta(true);
             setIsLoadingScuole(true);
             setIsLoadingOtherInfo(true);
 
@@ -93,10 +100,10 @@ export const AdozioniComponent = ({ }) => {
 
             setNomiCittaPickerItem(tempCitta);
             fetchSchoolsFromCitta(tempAreasName[0]);
-            setIsLoadingCitta(false);
         } catch (error) {
             console.error('Errore durante la richiesta delle aree:', error);
         }
+        setIsLoadingCitta(false);
     };
 
     const fetchBooksAndSetState = async () => {
@@ -173,16 +180,6 @@ export const AdozioniComponent = ({ }) => {
         }
     };
 
-    /** @param {number} sedeIndex - L'indice della sede (0 per Poggiomarino, 1 per Pompei). */
-    const selectSede = (sedeIndex: number) => {
-        setSede(SEDI[sedeIndex]);
-        setNextButtonFirstStepEnabled(false);
-    };
-
-    const onNextFirstStep = () => fetchAreasAndSetState();
-    const onNextSecondStep = () => fetchBooksAndSetState();
-
-
     const getPrezzoUsato = (prezzoNuovo) => {
         const price = parseFloat(prezzoNuovo);
         const sconto = (price * 35) / 100;
@@ -200,10 +197,10 @@ export const AdozioniComponent = ({ }) => {
             </View>
             <View style={{ marginTop: 70, height: hp("80%"), flex: 1 }}>
                 <CustomProgressSteps>
-                    <CustomProgressStep 
-                        label="Sede" 
-                        nextBtnDisabled={nextButtonFirstStepEnabled} 
-                        onNext={onNextFirstStep} 
+                    <CustomProgressStep
+                        label="Sede"
+                        nextBtnDisabled={nextButtonFirstStepEnabled}
+                        onNext={fetchAreasAndSetState}
                         nextBtnText="Successivo"
                     >
                         <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -245,11 +242,12 @@ export const AdozioniComponent = ({ }) => {
                         </ScrollView>
                     </CustomProgressStep>
 
-                    <CustomProgressStep 
-                        label="Informazioni" 
-                        nextBtnDisabled={isLoadingOtherInfo} 
-                        onNext={onNextSecondStep} 
-                        nextBtnText="Cerca   " 
+                    <CustomProgressStep
+                        label="Informazioni"
+                        nextBtnDisabled={isLoadingOtherInfo}
+                        onPrevious={() => null}
+                        onNext={() => fetchBooksAndSetState()}
+                        nextBtnText="Cerca   "
                         previousBtnText="Indietro   "
                     >
                         <ScrollView>
@@ -324,9 +322,9 @@ export const AdozioniComponent = ({ }) => {
                             {showLoadingBooks && <Spinner size="large" style={gs.spinner} />}
                             {!showLoadingBooks && books.map((book, idx) => (
                                 <View key={idx} style={styles.bookItem}>
-                                    <Image 
-                                        style={styles.bookImage} 
-                                        source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} 
+                                    <Image
+                                        style={styles.bookImage}
+                                        source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }}
                                     />
                                     <View style={styles.bookInfo}>
                                         <Text>{book.titolo}</Text>
