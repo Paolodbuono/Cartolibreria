@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 interface CustomProgressStepsProps {
@@ -7,18 +7,34 @@ interface CustomProgressStepsProps {
 
 export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ children }) => {
     const [currentStep, setCurrentStep] = useState(0);
+    const [props, setProps] = useState({
+        label : "",
+        onNext : null,
+        onPrevious : null,
+        nextBtnText : '',
+        previousBtnText : '',
+        nextBtnDisabled : false,
+        previousBtnDisabled : false,
+
+    });
 
     const goToNextStep = () => {
         if (currentStep < children.length - 1) {
             setCurrentStep(currentStep + 1);
         }
+        if(props.onNext) props.onNext()
     };
 
     const goToPreviousStep = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
         }
+        if(props.onPrevious) props.onPrevious()
     };
+
+    useEffect(() => {
+        setProps(children[currentStep].props)
+    },[currentStep])
 
     return (
         <View style={styles.container}>
@@ -34,8 +50,8 @@ export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ childr
                 ))}
             </View>
             {React.cloneElement(children[currentStep], {
-                onNext: goToNextStep,
-                onPrevious: goToPreviousStep,
+                onNext: props.onNext && goToNextStep,
+                onPrevious: props.onPrevious && goToPreviousStep,
                 nextBtnDisabled: currentStep === children.length - 1,
                 previousBtnDisabled: currentStep === 0,
             })}
