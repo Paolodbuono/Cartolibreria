@@ -63,4 +63,12 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    bookImage: {
+        width: 100,
+        height: 150,
+        alignSelf: "center"
+    },
+    step: {
+        margin: 10
+    }
 });

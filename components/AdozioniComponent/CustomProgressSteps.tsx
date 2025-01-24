@@ -5,7 +5,7 @@ interface CustomProgressStepsProps {
     children: React.ReactElement[];
 }
 
-export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ children }) => {
+export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ children, state}) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [props, setProps] = useState({
         label : "",
@@ -34,7 +34,7 @@ export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ childr
 
     useEffect(() => {
         setProps(children[currentStep].props)
-    },[currentStep])
+    },[currentStep, state])
 
     return (
         <View style={styles.container}>
@@ -52,8 +52,8 @@ export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ childr
             {React.cloneElement(children[currentStep], {
                 onNext: props.onNext && goToNextStep,
                 onPrevious: props.onPrevious && goToPreviousStep,
-                nextBtnDisabled: currentStep === children.length - 1,
-                previousBtnDisabled: currentStep === 0,
+                nextBtnDisabled: currentStep === children.length - 1 || props.nextBtnDisabled,
+                previousBtnDisabled: currentStep === 0 || props.previousBtnDisabled ,
             })}
         </View>
     );

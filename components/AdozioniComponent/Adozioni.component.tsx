@@ -121,7 +121,7 @@ export const AdozioniComponent = ({ }) => {
             });
 
             updateState({ nomiCittaPickerItem: tempCitta });
-            fetchSchoolsFromCitta(tempAreasName[0]);
+            await fetchSchoolsFromCitta(tempAreasName[0]);
         } catch (error) {
             console.error('Errore durante la richiesta delle aree:', error);
         }
@@ -131,6 +131,7 @@ export const AdozioniComponent = ({ }) => {
     const fetchBooksAndSetState = async () => {
         try {
             updateState({ showLoadingBooks: true });
+            console.log("state", state)
 
             const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${state.sedeSelezionata}&school=${state.availableSchoolsIds[state.selectedIdxScuola ?? 0]}&type=${encodeURIComponent(state.coursesName[state.selectedIdxCorso])}&class=${state.classesName[state.selectedIdxClasse]}&section=${state.sectionsName[state.selectedIdxSezione]}`;
             const response = await fetch(url);
@@ -168,7 +169,7 @@ export const AdozioniComponent = ({ }) => {
                     availableSchoolsIds: tempSchoolsIds
                 });
 
-                fetchOtherInfo(tempSchoolsIds[0]);
+                await fetchOtherInfo(tempSchoolsIds[0]);
             }
         } catch (error) {
             console.error('Errore durante la richiesta delle scuole:', error);
@@ -221,7 +222,7 @@ export const AdozioniComponent = ({ }) => {
                 </TextComponent>
             </View>
             <View style={{ marginTop: 70, height: hp("80%"), flex: 1 }}>
-                <CustomProgressSteps>
+                <CustomProgressSteps state={state}>
                     <CustomProgressStep
                         label="Sede"
                         nextBtnDisabled={state.nextButtonFirstStepEnabled}
@@ -267,23 +268,24 @@ export const AdozioniComponent = ({ }) => {
                         </ScrollView>
                     </CustomProgressStep>
 
+
                     <CustomProgressStep
                         label="Informazioni"
-                        nextBtnDisabled={state.isLoadingOtherInfo}
+                        nextBtnDisabled={state.isLoadingOtherInfo || state.isLoading || state.isLoadingCitta || state.isLoadingScuole}
                         onPrevious={() => null}
                         onNext={fetchBooksAndSetState}
-                        nextBtnText="Cerca   "
-                        previousBtnText="Indietro   "
+                        nextBtnText="Cerca"
+                        previousBtnText="Indietro"
                     >
                         <ScrollView>
                             <View>
-                                <TextComponent>Selezionare una città:</TextComponent>
+                                <TextComponent style={styles.step}>Selezionare una città:</TextComponent>
                                 {state.isLoadingCitta && <Spinner size="large" />}
                                 {!state.isLoadingCitta && (
                                     <Picker
+                                        style={styles.step}
                                         selectedValue={state.selectedCitta}
                                         onValueChange={(itemValue) => {
-                                            console.log("itemValue", itemValue);
                                             updateState({ selectedCitta: itemValue });
                                             fetchSchoolsFromCitta(itemValue);
                                         }}>
@@ -293,10 +295,11 @@ export const AdozioniComponent = ({ }) => {
                             </View>
 
                             <View>
-                                <TextComponent>Selezionare una scuola:</TextComponent>
+                                <TextComponent style={styles.step}>Selezionare una scuola:</TextComponent>
                                 {state.isLoadingScuole && <Spinner size="large" />}
                                 {!state.isLoadingScuole && (
-                                    <Picker 
+                                    <Picker
+                                        style={styles.step}
                                         selectedValue={state.selectedScuola}
                                         onValueChange={(itemValue) => {
                                             const item = JSON.parse(itemValue);
@@ -309,23 +312,26 @@ export const AdozioniComponent = ({ }) => {
                             </View>
 
                             <View>
-                                <TextComponent>Seleziona Corso, Classe e Sezione:</TextComponent>
+                                <TextComponent style={styles.step}>Seleziona Corso, Classe e Sezione:</TextComponent>
                                 {state.isLoadingOtherInfo && <Spinner size="large" />}
                                 {!state.isLoadingOtherInfo && (
                                     <>
                                         <Picker
+                                            style={styles.step}
                                             selectedValue={state.coursesName[state.selectedIdxCorso]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxCorso: itemIndex })}>
                                             {state.corsiPickerItem}
                                         </Picker>
 
                                         <Picker
+                                            style={styles.step}
                                             selectedValue={state.classesName[state.selectedIdxClasse]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxClasse: itemIndex })}>
                                             {state.classiPickerItem}
                                         </Picker>
 
                                         <Picker
+                                            style={styles.step}
                                             selectedValue={state.sectionsName[state.selectedIdxSezione]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxSezione: itemIndex })}>
                                             {state.sezioniPickerItem}
@@ -336,14 +342,12 @@ export const AdozioniComponent = ({ }) => {
                         </ScrollView>
                     </CustomProgressStep>
 
-                    <CustomProgressStep label="Lista Libri" previousBtnText="Indietro  ">
+                    <CustomProgressStep label="Lista Libri" previousBtnText="Indietro" onPrevious={() => null}>
                         <ScrollView>
                             {state.showLoadingBooks && <Spinner size="large" style={gs.spinner} />}
                             {!state.showLoadingBooks && state.books.map((book, idx) => (
                                 <View key={idx}>
-                                    <Image
-                                        source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }}
-                                    />
+                                    <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
                                     <View>
                                         <Text>{book.titolo}</Text>
                                         <Text>{book.autore}</Text>
