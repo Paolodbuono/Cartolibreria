@@ -22,14 +22,6 @@ export const CustomProgressStep: React.FC<CustomProgressStepProps> = ({
     previousBtnDisabled = false,
     children,
 }) => {
-    console.log("label",label);
-    console.log("onNext",onNext);
-    console.log("onPrevious",onPrevious);
-    console.log("nextBtnText",nextBtnText);
-    console.log("previousBtnText",previousBtnText);
-    console.log("nextBtnDisabled",nextBtnDisabled);
-    console.log("previousBtnDisabled",previousBtnDisabled);
-    console.log("children",children);
     return (
         <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>

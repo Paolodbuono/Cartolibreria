@@ -33,7 +33,7 @@ export const AdozioniComponent = ({ }) => {
     const [sezioniPickerItem, setSezioniPickerItem] = useState<Array<string>>([]);
     const [classiPickerItem, setClassiPickerItem] = useState<Array<string>>([]);
 
-    const [schoolsIds, setSchoolsIds] = useState<Array<string>>([]);
+    const [schoolsIds, setSchoolsIds] = useState<Array<number>>([]);
 
     const [coursesName, setCoursesName] = useState<Array<string>>([]);
     const [sectionsName, setSectionsName] = useState<Array<string>>([]);
@@ -74,10 +74,8 @@ export const AdozioniComponent = ({ }) => {
     };
 
     const fetchAreasAndSetState = async () => {
-        console.log("Tutto apposto?");
-
         try {
-            // setIsLoadingCitta(true);
+            setIsLoadingCitta(true);
             setIsLoadingScuole(true);
             setIsLoadingOtherInfo(true);
 
