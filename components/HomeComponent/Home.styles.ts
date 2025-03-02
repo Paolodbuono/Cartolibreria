@@ -6,7 +6,8 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        alignItems:"center"
     },
     content: {
         flex: 1,
@@ -51,7 +52,7 @@ export const styles = StyleSheet.create({
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: 60,
+        height: 100,
     },
     imgFooter: {
         width: wp('100%'),
