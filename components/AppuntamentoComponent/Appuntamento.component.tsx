@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import { useFonts } from 'expo-font';
-import { useRouter } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,16 +12,14 @@ import { styles } from './Appuntamento.styles';
 import EmailForm from './EmailFormComponent/EmailForm.component';
 import { PrenotazioneData } from './Appuntamento.types';
 
-import * as Notifications from 'expo-notifications';
-import { BSub } from '../Commons/BSub.component';
-import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
-import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
+import { BSub } from '../Commons/BSub.component';
+import * as Notifications from 'expo-notifications';
+import TextComponent from '../Commons/Text.component';
+import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const AppuntamentoComponent: React.FC<{}> = () => {
-
-    const router = useRouter();
 
     const [sedeIndex, setSedeIndex] = useState<string>("1");
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -184,7 +181,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         const bookingHour = selectedOrario;
         const bookingMinute = selectedMinuti;
 
-        if(isSunday(bookingDate)){
+        if (isSunday(bookingDate)) {
             setModalSundayCheck(true);
             return;
         }
@@ -402,22 +399,30 @@ const AppuntamentoComponent: React.FC<{}> = () => {
 
             <View style={styles.timeContainer}>
                 <View style={styles.timeCell}>
-                    <TextComponent style={styles.timeLabel}>Ora</TextComponent>
-                    <Picker style={styles.realTimePicker} selectedValue={selectedOrario} onValueChange={(itemValue, itemIndex) => setSelectedOrario(itemValue)}>
-                        {orariMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                    <Text style={styles.timeLabel}>Ora</Text>
+                    <Picker
+                        style={styles.realTimePicker}
+                        selectedValue={selectedOrario}
+                        onValueChange={(itemValue) => setSelectedOrario(itemValue)}
+                        itemStyle={styles.pickerItem}
+                    >
+                        {orariMattino.map((orario) => (
+                            <Picker.Item key={orario.key} label={orario.label} value={orario.label} />
+                        ))}
                     </Picker>
-                    <View style={styles.timePicker}>
-                        <Text>{selectedOrario}</Text>
-                    </View>
                 </View>
                 <View style={styles.timeCell}>
-                    <TextComponent style={styles.timeLabel}>Minuto</TextComponent>
-                    <Picker style={styles.realTimePicker} selectedValue={0} onValueChange={(itemValue, itemIndex) => setSelectedMinuti(itemValue)} >
-                        {minutiMattino.map((orario) => <Picker.Item key={orario.key} label={orario.label} value={+orario.label} />)}
+                    <Text style={styles.timeLabel}>Minuto</Text>
+                    <Picker
+                        style={styles.realTimePicker}
+                        selectedValue={selectedMinuti}
+                        onValueChange={(itemValue) => setSelectedMinuti(itemValue)}
+                        itemStyle={styles.pickerItem}
+                    >
+                        {minutiMattino.map((minuto) => (
+                            <Picker.Item key={minuto.key} label={minuto.label} value={minuto.label} />
+                        ))}
                     </Picker>
-                    <View style={styles.timePicker}>
-                        <Text>{selectedMinuti}</Text>
-                    </View>
                 </View>
             </View>
 

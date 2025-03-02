@@ -41,47 +41,29 @@ export const styles = StyleSheet.create({
   textRiepilogoNumeroPrenotazione: { flexDirection: 'column', fontSize: 100, color: '#EB5F19', alignSelf: 'center' },
   codicePrenotazione: { flexDirection: 'column', fontSize: bg, color: '#4975be', alignSelf: 'center' },
   timeContainer: {
-    width: wp('100%'),
-    marginTop: 20,
-    marginBottom: 20,
     flexDirection: 'row',
-    justifyContent: 'center',
-    gap: wp('5%')
+    justifyContent: 'space-between',
+    padding: 10,
   },
   timeCell: {
-    height: 45,
-    width: wp("40%"),
-    flexDirection: 'column',
-    justifyContent: 'center',
+    flex: 1,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#CCCCCC',
-    borderRadius: 5,
-    backgroundColor: "#FFFFFF",
-    position: 'relative', marginTop: 30
   },
   timeLabel: {
-    marginTop: 10,
-    width: wp("70%"),
-    fontWeight: '800',
-    alignSelf: "center",
-    position: 'absolute',
-    top: -28,
-    left: 55,
-  },
-  timePicker: {
-    position: 'absolute',
-    top: 1,
-    left: 1,
-    right: 60,
-    bottom: 0,
-    paddingLeft: 40,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    pointerEvents: 'none',
-    width: 100
+    fontSize: 18,
+    marginBottom: 10,
   },
   realTimePicker: {
-    width: wp("40%"),
+    width: 100,
+    height: 50,
+    marginRight: 10,
+    marginLeft: 10
+  },
+  timePicker: {
+    marginTop: 10,
+  },
+  pickerItem: {
+    fontSize: 18,
+    textAlign: 'center', 
   }
 });
