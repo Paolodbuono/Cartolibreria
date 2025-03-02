@@ -3,9 +3,10 @@ import { View, StyleSheet } from 'react-native';
 
 interface CustomProgressStepsProps {
     children: React.ReactElement[];
+    state: any
 }
 
-export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ children }) => {
+export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ children, state}) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [props, setProps] = useState({
         label : "",
@@ -22,19 +23,19 @@ export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ childr
         if (currentStep < children.length - 1) {
             setCurrentStep(currentStep + 1);
         }
-        if(props.onNext) props.onNext()
+        if(props.onNext) (props as any).onNext()
     };
 
     const goToPreviousStep = () => {
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
         }
-        if(props.onPrevious) props.onPrevious()
+        if(props.onPrevious) (props as any).onPrevious()
     };
 
     useEffect(() => {
         setProps(children[currentStep].props)
-    },[currentStep])
+    },[currentStep, state])
 
     return (
         <View style={styles.container}>
@@ -52,8 +53,8 @@ export const CustomProgressSteps: React.FC<CustomProgressStepsProps> = ({ childr
             {React.cloneElement(children[currentStep], {
                 onNext: props.onNext && goToNextStep,
                 onPrevious: props.onPrevious && goToPreviousStep,
-                nextBtnDisabled: currentStep === children.length - 1,
-                previousBtnDisabled: currentStep === 0,
+                nextBtnDisabled: currentStep === children.length - 1 || props.nextBtnDisabled,
+                previousBtnDisabled: currentStep === 0 || props.previousBtnDisabled ,
             })}
         </View>
     );
