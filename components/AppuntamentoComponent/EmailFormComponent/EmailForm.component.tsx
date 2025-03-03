@@ -10,6 +10,15 @@ import TextComponent from '@/components/Commons/Text.component';
 const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, cognome, setCognome, numeroCell, setNumroCell, handlePrenota, handleToggleModalInserInfo, prenotazioneDate }, ref) => {
   return (
     <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={{ ...styles.button, backgroundColor: 'red' }} onPress={handleToggleModalInserInfo}>
+          <TextComponent style={styles.buttonText}>Annulla</TextComponent>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handlePrenota}>
+          <TextComponent style={styles.buttonText}>Prenota</TextComponent>
+        </TouchableOpacity>
+      </View>
+      
       <TextComponent style={styles.title}>Inserisci i tuoi dati:</TextComponent>
       <TextComponent style={styles.subTitle}>{prenotazioneDate}</TextComponent>
 
@@ -24,14 +33,7 @@ const EmailForm = forwardRef<EmailFormHandle, EmailFormProps>(({ nome, setNome, 
         <TextInput style={styles.input} placeholder="Inserisci il tuo numero di telefono" value={numeroCell} onChangeText={setNumroCell} keyboardType="phone-pad" />
       </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={{ ...styles.button, backgroundColor: 'red' }} onPress={handleToggleModalInserInfo}>
-          <TextComponent style={styles.buttonText}>Annulla</TextComponent>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={handlePrenota}>
-          <TextComponent style={styles.buttonText}>Prenota</TextComponent>
-        </TouchableOpacity>
-      </View>
+      
     </View>
   );
 });

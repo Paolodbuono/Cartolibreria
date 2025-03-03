@@ -25,6 +25,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 20,
+    marginTop: 20,
   },
   button: {
     flex: 1,
