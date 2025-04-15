@@ -106,7 +106,7 @@ const MyOrdersComponent = ({ }) => {
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 {isLogged && <>
-                    <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10 }} source={require('../../assets/images/ordini_images.png')} />
+                    <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10, resizeMode: 'contain'}} source={require('../../assets/images/ordini_images.png')} />
                     <FlatList
                         style={{ width: '100%' }}
                         data={myOrders}
