@@ -4,7 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import { fields } from './SignIn.utils';
 import TextComponent from '../Commons/Text.component';
-import { md, sm } from '@/constants/fontSize';
+import { md, sm } from '@/constants/FontSize';
 
 interface Field {
     label: string;

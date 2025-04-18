@@ -1,4 +1,4 @@
-import { bg, md } from '@/constants/fontSize';
+import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 

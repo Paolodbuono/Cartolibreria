@@ -9,7 +9,7 @@ import { styles } from './MyOrders.styles';
 import { OrderStatusType, OrderType } from './MyOrders.types';
 import { BSub } from '../Commons/BSub.component';
 import TextComponent from '../Commons/Text.component';
-import { bg, md } from '@/constants/fontSize';
+import { bg, md } from '@/constants/FontSize';
 
 const orderStatuses: OrderStatusType = {
     1: "ORDINATO NUOVO",

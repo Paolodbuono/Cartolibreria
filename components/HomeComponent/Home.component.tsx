@@ -6,7 +6,7 @@ import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
 import { styles } from './Home.styles';
 import TextComponent from '@/components/Commons/Text.component';
-import { md } from '@/constants/fontSize';
+import { md } from '@/constants/FontSize';
 
 // Paths
 const bannerPath = "../../assets/images/bannerBonagura.png";
@@ -60,13 +60,13 @@ const HomeComponent: React.FC<{}> = () => {
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("/MyOrdersView") }} >
-                                <Image style={styles.marginAuto} source={require(ordersPath)} />
+                                <Image style={styles.image} source={require(ordersPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}>  I miei ordini </TextComponent>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("/AdozioniView") }}>
-                                <Image style={styles.marginAuto} source={require(adozioniPath)} />
+                                <Image style={styles.image} source={require(adozioniPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> Adozioni </TextComponent>
                         </View>
@@ -74,13 +74,13 @@ const HomeComponent: React.FC<{}> = () => {
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("/AppuntamentoView") }}>
-                                <Image style={styles.marginAuto} source={require(appuntamentoPath)} />
+                                <Image style={styles.image} source={require(appuntamentoPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
                         </View>
                         <View style={styles.buttonContainer}>
                             <TouchableOpacity onPress={() => { router.push("/MyProfileView") }}>
-                                <Image style={styles.marginAuto} source={require(personalAreaPath)} />
+                                <Image style={styles.image} source={require(personalAreaPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
                         </View>

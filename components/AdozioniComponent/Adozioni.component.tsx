@@ -100,8 +100,6 @@ export const AdozioniComponent = ({ }) => {
     };
 
     const fetchAreasAndSetState = async () => {
-        console.log("Tutto apposto?");
-
         try {
             updateState({ isLoadingCitta: true, isLoadingScuole: true, isLoadingOtherInfo: true });
 
@@ -194,12 +192,12 @@ export const AdozioniComponent = ({ }) => {
             const [coursesName, sectoinsName, classesName] = await Promise.all(responses.map(res => res.json()));
 
             updateState({
-                coursesName: coursesName.data.map(course => course.tipo),
+                coursesName: coursesName.data.map((course: { tipo: any; }) => course.tipo),
                 sectionsName: sectoinsName.data,
-                classesName: classesName.data.map(singleClass => singleClass.classe),
-                corsiPickerItem: coursesName.data.map(el => <Picker.Item key={el.tipo} label={el.tipo} value={el.tipo} />),
-                sezioniPickerItem: sectoinsName.data.map(el => <Picker.Item key={el} label={el} value={el} />),
-                classiPickerItem: classesName.data.map(el => <Picker.Item key={el.classe} label={el.classe} value={el.classe} />),
+                classesName: classesName.data.map((singleClass: { classe: any; }) => singleClass.classe),
+                corsiPickerItem: coursesName.data.map((el: { tipo: string | undefined; }) => <Picker.Item key={el.tipo} label={el.tipo} value={el.tipo} />),
+                sezioniPickerItem: sectoinsName.data.map((el: string | undefined) => <Picker.Item key={el} label={el} value={el} />),
+                classiPickerItem: classesName.data.map((el: { classe: string | undefined; }) => <Picker.Item key={el.classe} label={el.classe} value={el.classe} />),
                 isLoadingOtherInfo: false
             });
 
@@ -208,10 +206,10 @@ export const AdozioniComponent = ({ }) => {
         }
     };
 
-    const getPrezzoUsato = (prezzoNuovo) => {
+    const getPrezzoUsato = (prezzoNuovo: string) => {
         const price = parseFloat(prezzoNuovo);
         const sconto = (price * 35) / 100;
-        return (prezzoNuovo - sconto).toFixed(2) + " €";
+        return (price - sconto).toFixed(2) + " €";
     };
 
     if (state.isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
@@ -233,34 +231,36 @@ export const AdozioniComponent = ({ }) => {
                     >
                         <ScrollView contentContainerStyle={styles.scrollViewContent}>
                             <View style={styles.imagesContainer}>
+                                {/* Sede Poggiomarino */}
                                 <TouchableOpacity
                                     onPress={() => selectSede(0)}
                                     disabled={state.lockSede && state.sedeSelezionata === SEDI[1]}
                                     style={styles.imageWrapper}
                                 >
-                                    <View style={[
-                                        styles.sedeContainer,
-                                        state.sedeSelezionata === SEDI[0] && styles.selectedSede
-                                    ]}>
+                                    <View style={[styles.sedeContainer, state.sedeSelezionata === SEDI[0] && styles.selectedSede]}>
                                         <Image
-                                            style={styles.sedeImage}
+                                            style={[
+                                                styles.sedeImage,
+                                                state.lockSede && state.sedeSelezionata === SEDI[1] && styles.disabledImage,
+                                            ]}
                                             source={require('@/assets/images/sedePoggiomarino.png')}
                                             resizeMode="cover"
                                         />
                                     </View>
                                 </TouchableOpacity>
 
+                                {/* Sede Pompei */}
                                 <TouchableOpacity
                                     onPress={() => selectSede(1)}
                                     disabled={state.lockSede && state.sedeSelezionata === SEDI[0]}
                                     style={styles.imageWrapper}
                                 >
-                                    <View style={[
-                                        styles.sedeContainer,
-                                        state.sedeSelezionata === SEDI[1] && styles.selectedSede
-                                    ]}>
+                                    <View style={[styles.sedeContainer, state.sedeSelezionata === SEDI[1] && styles.selectedSede]}>
                                         <Image
-                                            style={styles.sedeImage}
+                                            style={[
+                                                styles.sedeImage,
+                                                state.lockSede && state.sedeSelezionata === SEDI[0] && styles.disabledImage,
+                                            ]}
                                             source={require('@/assets/images/sedePompei.jpg')}
                                             resizeMode="cover"
                                         />
@@ -278,12 +278,16 @@ export const AdozioniComponent = ({ }) => {
                         previousBtnText="Indietro"
                     >
                         <ScrollView>
-                            <View>
-                                <TextComponent style={styles.step}>Selezionare una città:</TextComponent>
-                                {state.isLoadingCitta && <Spinner size="large" />}
-                                {!state.isLoadingCitta && (
+                            <TextComponent >Selezionare una città:</TextComponent>
+                            {state.isLoadingCitta && <Spinner size="large" />}
+                            {!state.isLoadingCitta && (
+                                <View style={styles.step}>
                                     <Picker
-                                        style={styles.step}
+                                        mode="dropdown" // Android dropdown
+                                        style={{
+                                            padding: 0,
+                                            margin: 0,
+                                        }}
                                         selectedValue={state.selectedCitta}
                                         onValueChange={(itemValue) => {
                                             updateState({ selectedCitta: itemValue });
@@ -291,15 +295,14 @@ export const AdozioniComponent = ({ }) => {
                                         }}>
                                         {state.nomiCittaPickerItem}
                                     </Picker>
-                                )}
-                            </View>
+                                </View>
+                            )}
 
-                            <View>
-                                <TextComponent style={styles.step}>Selezionare una scuola:</TextComponent>
-                                {state.isLoadingScuole && <Spinner size="large" />}
-                                {!state.isLoadingScuole && (
+                            <TextComponent>Selezionare una scuola:</TextComponent>
+                            {state.isLoadingScuole && <Spinner size="large" />}
+                            {!state.isLoadingScuole && (
+                                <View style={styles.step}>
                                     <Picker
-                                        style={styles.step}
                                         selectedValue={state.selectedScuola}
                                         onValueChange={(itemValue) => {
                                             const item = JSON.parse(itemValue);
@@ -308,37 +311,38 @@ export const AdozioniComponent = ({ }) => {
                                         }}>
                                         {state.nomiScuolePickerItem}
                                     </Picker>
-                                )}
-                            </View>
+                                </View>
+                            )}
 
-                            <View>
-                                <TextComponent style={styles.step}>Seleziona Corso, Classe e Sezione:</TextComponent>
-                                {state.isLoadingOtherInfo && <Spinner size="large" />}
-                                {!state.isLoadingOtherInfo && (
-                                    <>
+                            <TextComponent>Seleziona Corso, Classe e Sezione:</TextComponent>
+                            {state.isLoadingOtherInfo && <Spinner size="large" />}
+                            {!state.isLoadingOtherInfo && (
+                                <>
+                                    <View style={styles.step}>
                                         <Picker
-                                            style={styles.step}
                                             selectedValue={state.coursesName[state.selectedIdxCorso]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxCorso: itemIndex })}>
                                             {state.corsiPickerItem}
                                         </Picker>
+                                    </View>
+                                    <View style={styles.step}>
 
                                         <Picker
-                                            style={styles.step}
                                             selectedValue={state.classesName[state.selectedIdxClasse]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxClasse: itemIndex })}>
                                             {state.classiPickerItem}
                                         </Picker>
+                                    </View>
+                                    <View style={styles.step}>
 
                                         <Picker
-                                            style={styles.step}
                                             selectedValue={state.sectionsName[state.selectedIdxSezione]}
                                             onValueChange={(itemValue, itemIndex) => updateState({ selectedIdxSezione: itemIndex })}>
                                             {state.sezioniPickerItem}
                                         </Picker>
-                                    </>
-                                )}
-                            </View>
+                                    </View>
+                                </>
+                            )}
                         </ScrollView>
                     </CustomProgressStep>
 

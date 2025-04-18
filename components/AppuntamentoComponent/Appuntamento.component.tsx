@@ -12,7 +12,7 @@ import { styles } from './Appuntamento.styles';
 import EmailForm from './EmailFormComponent/EmailForm.component';
 import { PrenotazioneData } from './Appuntamento.types';
 
-import { bg, md } from '@/constants/fontSize';
+import { bg, md } from '@/constants/FontSize';
 import { BSub } from '../Commons/BSub.component';
 import * as Notifications from 'expo-notifications';
 import TextComponent from '../Commons/Text.component';

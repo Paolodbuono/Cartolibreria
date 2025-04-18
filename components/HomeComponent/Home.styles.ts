@@ -1,4 +1,4 @@
-import { bg, md } from '@/constants/fontSize';
+import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         gap: 60,
     },
     buttonActionRow:{
-        padding:10,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
         gap: 40,
@@ -36,7 +36,6 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: md + 2,
         color: '#4975be',
-        marginTop: 10
     },
     buttonImportant: {
         marginTop: 10,
@@ -46,7 +45,7 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         padding: 20,
     },
-    marginAuto: {
+    image: {
         margin: "auto",
     },
     imgBanner: {

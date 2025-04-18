@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
     stepIndicatorContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         marginBottom: 20,
     },
     stepIndicator: {
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
         height: 10,
         borderRadius: 5,
         backgroundColor: '#CCCCCC',
+        marginHorizontal: 20,
     },
     activeStepIndicator: {
         backgroundColor: '#007AFF',
