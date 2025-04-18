@@ -1,4 +1,4 @@
-import { md } from "@/constants/FontSize";
+import { md } from "@/constants/fontSize";
 
 export const radioButtonSede = [
     { id: '0', label: 'Poggiomarino', value: 'poggiomarino', labelStyle: {minWidth: 120, fontFamily: "Allan-Regular", fontSize: md} },

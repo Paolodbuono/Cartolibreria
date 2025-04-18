@@ -1,67 +1,94 @@
 import React, { useState } from 'react';
-import { View, Button, Modal, FlatList, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { Stack, useRouter, usePathname } from 'expo-router';
+import { View, Modal, FlatList, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { useFonts } from 'expo-font';
+import { Stack, useRouter, usePathname, Href } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+import { md } from '@/constants/fontSize';
+import { loadFonts } from '@/constants/fonts';
+import TextComponent from '@/components/Commons/Text.component';
 import LogoButtonComponent from '@/components/Commons/LogoButton.component';
 import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFonts } from 'expo-font';
-import TextComponent from '@/components/Commons/Text.component';
-
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import { md } from '@/constants/FontSize';
-
-type ComponentItem = {
-  name: string;
-  root: string;
-};
-
-const componentsList: ComponentItem[] = [
-  { name: 'Home', root: "HomeView" },
-  { name: 'Accedi', root: "MyProfileView" },
-  { name: 'Prenota appuntamento', root: "AppuntamentoView" },
-  { name: 'Chi Siamo', root: "WhoAreWeView" },
-  { name: 'Avvisi Importanti', root: "NoticeView" },
-  { name: 'Perchè sceglierci', root: "WhyChoseUsView" },
-  { name: 'I miei ordini', root: "MyOrdersView" },
-  { name: 'Adozioni', root: "AdozioniView" },
-  { name: 'E\' semplice ordinare e acquistare!', root: "ComodamenteDaCasaView" },
-  { name: 'Area riservata', root: "MyProfileView" },
-];
+import { routes, RoutesType, ValidRoutes } from '@/constants/routes';
 
 export default function Layout() {
   const router = useRouter();
   const pathName = usePathname();
-  const [fontsLoaded] = useFonts({
-    'Allan-Regular': require('@/assets/fonts/Allan-Regular.ttf'),
-    'Allan-Bold': require('@/assets/fonts/Allan-Bold.ttf'),
-  });
+  const [fontsLoaded] = useFonts(loadFonts);
 
   const [sideBarOpen, setSideBarOpen] = useState(false);
-  const [routesList, setRoutesList] = useState(componentsList);
+  const [routesList, setRoutesList] = useState<RoutesType[]>([...routes]);
 
-  const navigateToComponent = (componentName: string) => {
-    router.push(componentName)
+  const { width } = Dimensions.get('window');
+
+  const isTablet = width > 768;
+
+  const navigateToComponent = (componentName: ValidRoutes) => {
+    router.push(componentName);
     setSideBarOpen(false);
   };
 
+
+
   const getRoutes = async () => {
     try {
-      const value = await AsyncStorage.getItem('userData');
-      if (value !== null) { // Vuol dire che è loggato
-        const _routesList = routesList.filter(el => el.name !== "Accedi");
-        setRoutesList(_routesList)
-      } else {
-        const _routesList = routesList.filter(el => el.name !== "Area riservata");
-        setRoutesList(_routesList);
-      }
+      const isLogged = !!await AsyncStorage.getItem('userData');
+      const filteredRoutes = routes.filter(el =>
+        isLogged ? el.name !== "Accedi" : el.name !== "Area riservata"
+      );
+      setRoutesList(filteredRoutes);
     } catch (e) {
-      console.log('Error fetching data from AsyncStorage:', e);
+      console.error('Error fetching data from AsyncStorage:', e);
+    } finally {
+      setSideBarOpen(true);
     }
+  };
 
-    setSideBarOpen(true);
+  const isActiveRoute = (route: string) => pathName === route;
+
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <TextComponent>Caricamento...</TextComponent>
+      </View>
+    );
   }
 
-  if (!fontsLoaded) return <></>;
+  const styles = StyleSheet.create({
+    modalOverlay: {
+      width: '100%',
+      height: '100%',
+      justifyContent: 'flex-start', // Cambiato per evitare il centramento verticale
+      alignItems: 'flex-end', // Allinea a destra
+      backgroundColor: 'rgba(0,0,0,0.5)', // Sfondo semi-trasparente
+    },
+    modalContainer: {
+      width: isTablet ? 300 : '75%', // Larghezza dinamica in base al dispositivo
+      height: '100%',
+      backgroundColor: 'white',
+      padding: 20,
+      // Aggiunto box-shadow opzionale per estetica
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5, // Ombra per Android
+    },
+    componentName: {
+      padding: 20,
+      fontSize: md + 3,
+      color: "#2478d2",
+    },
+    currentComponentName: {
+      padding: 20,
+      backgroundColor: "#e1eeff",
+      color: "#2478d2",
+      borderRadius: 10,
+      fontSize: md + 3,
+    },
+  });
 
   return (
     <View style={{ flex: 1 }}>
@@ -75,56 +102,30 @@ export default function Layout() {
         }}
       >
       </Stack>
-      <Modal visible={sideBarOpen} animationType="fade" transparent={true} onRequestClose={() => { setSideBarOpen(false); }}>
-        <View style={styles.modalOverlay}>
-          <TouchableOpacity
-            style={styles.modalOverlay}
-            activeOpacity={1}
-            onPressOut={() => setSideBarOpen(false)}
-          >
-            <View style={styles.modalContainer}>
-              <FlatList
-                data={routesList}
-                keyExtractor={(item) => item.name}
-                renderItem={({ item }) => (
-                  <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
-                    <TextComponent style={pathName === "/" + item.root ? styles.currentComponentName : styles.componentName}>{item.name}</TextComponent>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
-          </TouchableOpacity>
-
-        </View>
+      <Modal visible={sideBarOpen} animationType="fade" transparent onRequestClose={() => setSideBarOpen(false)}>
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={() => setSideBarOpen(false)}
+        >
+          <View style={styles.modalContainer}>
+            <FlatList
+              data={routesList}
+              keyExtractor={(item) => item.name}
+              renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => navigateToComponent(item.root)}>
+                  <TextComponent style={!pathName || isActiveRoute(item.root) ? styles.currentComponentName : styles.componentName}>
+                    {item.name}
+                  </TextComponent>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </TouchableOpacity>
       </Modal>
+
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  modalOverlay: {
-    width: wp('100%'),
-    height: hp("100%"),
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContainer: {
-    width: wp('75%'),
-    height: hp("100%"),
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  componentName: {
-    padding: 20,
-    fontSize: md + 3,
-    color: "#2478d2",
-  },
-  currentComponentName: {
-    padding: 20,
-    backgroundColor: "#e1eeff",
-    color: "#2478d2",
-    borderRadius: 10,
-    fontSize: md + 3,
-  },
-});
+

@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import TextComponent from './Text.component';
-import { bg, md } from '@/constants/FontSize';
+import { bg, md } from '@/constants/fontSize';
 
 export const BSub: React.FC<{ title: string }> = ({ title }) => {
     return <TextComponent style={styles.subTitleBOLD}> {title} </TextComponent>

@@ -6,7 +6,7 @@ import { Stack, useNavigation } from "expo-router";
 import { ScrollView, Text, Linking, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import TextComponent from "@/components/Commons/Text.component";
-import { sm, md, bg } from "@/constants/FontSize";
+import { sm, md, bg } from "@/constants/fontSize";
 
 export default function WhoAreWeView() {
 

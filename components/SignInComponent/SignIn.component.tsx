@@ -14,7 +14,7 @@ import { SEDI, radioButtonSede } from '@/utils/constants';
 import { styles } from './SignIn.styles';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import TextComponent from '../Commons/Text.component';
-import { bg, md } from '@/constants/FontSize';
+import { bg, md } from '@/constants/fontSize';
 
 
 const SignInComponent: React.FC<{}> = () => {
