@@ -181,7 +181,7 @@ const SignInComponent: React.FC<{}> = () => {
     const handleOnClickResponseModal = () => {
         if (modalResponseText) setModalResponseVisible(false);
         else {
-            router.replace("HomeView"); // redirectToHome
+            router.replace("/HomeView"); // redirectToHome
         }
     }
     return (

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { Text, View, StyleSheet, Image, TouchableOpacity, ActivityIndicator as Spinner } from 'react-native';
+import { View, Image, TouchableOpacity, ActivityIndicator as Spinner } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserType, emptyUser } from '@/types/UserType';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import { gs } from '@/style/globalStyles';
 import { styles } from './Home.styles';
 import TextComponent from '@/components/Commons/Text.component';
-import { bg, md } from '@/constants/FontSize';
+import { md } from '@/constants/fontSize';
 
 // Paths
 const bannerPath = "../../assets/images/bannerBonagura.png";
@@ -54,19 +53,19 @@ const HomeComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
-                    <TouchableOpacity style={{ ...styles.buttonImportant,  backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("ComodamenteDaCasaView")}>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center"}}> E' semplice acquistare e ordinare!</TextComponent>
+                    <TouchableOpacity style={{ ...styles.buttonImportant, backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
+                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> E' semplice acquistare e ordinare!</TextComponent>
                         <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  come in negozio!</TextComponent>
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("MyOrdersView") }} >
+                            <TouchableOpacity onPress={() => { router.push("/MyOrdersView") }} >
                                 <Image style={styles.marginAuto} source={require(ordersPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}>  I miei ordini </TextComponent>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("AdozioniView") }}>
+                            <TouchableOpacity onPress={() => { router.push("/AdozioniView") }}>
                                 <Image style={styles.marginAuto} source={require(adozioniPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> Adozioni </TextComponent>
@@ -74,23 +73,23 @@ const HomeComponent: React.FC<{}> = () => {
                     </View>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("AppuntamentoView") }}>
+                            <TouchableOpacity onPress={() => { router.push("/AppuntamentoView") }}>
                                 <Image style={styles.marginAuto} source={require(appuntamentoPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
                         </View>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("MyProfileView") }}>
+                            <TouchableOpacity onPress={() => { router.push("/MyProfileView") }}>
                                 <Image style={styles.marginAuto} source={require(personalAreaPath)} />
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
                         </View>
                     </View>
                     <View style={styles.buttonActionRow}>
-                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("NoticeView")}>
+                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("/NoticeView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Avvisi Importanti</TextComponent>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("WhyChoseUsView")}>
+                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("/WhyChoseUsView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Perché Sceglierci</TextComponent>
                         </TouchableOpacity>
                     </View>

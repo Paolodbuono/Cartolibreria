@@ -113,10 +113,10 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 <TextComponent style={styles.textButton}>Log In</TextComponent>
             </TouchableOpacity>
             <View style={styles.bottomLinks}>
-                <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('PaswordRecoveryView')}>
+                <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('/PaswordRecoveryView')}>
                     <TextComponent style={styles.textButton}>Hai dimenticato la password?</TextComponent>
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('SignInView')}> */}
+                {/* <TouchableOpacity style={styles.secondaryButton} onPress={() => router.push('/SignInView')}> */}
                 <TextComponent style={styles.nonSeiCliente}>Non sei cliente?</TextComponent>
                 <TextComponent style={styles.nonSeiCliente}>Puoi registrarti solo in negozio</TextComponent>
                 <TextComponent style={styles.nonSeiCliente}>Oppure inviando i tuoi dati tramite whatsapp</TextComponent>
@@ -140,7 +140,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                             style={gs.modalActionBtnConfirm}
                             onPress={() => {
                                 setModalSuccessLoginVisible(false);
-                                router.replace("HomeView");
+                                router.replace("/HomeView");
                             }}>
                             <TextComponent style={gs.modalActionBtnConfirmLabel}>VAI A HOME</TextComponent>
                         </TouchableOpacity>

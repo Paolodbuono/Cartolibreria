@@ -8,7 +8,7 @@ function LogoButtonComponent() {
     const urlImg = "../../assets/images/adaptive-icon.png";
 
     const handlePress = () => {
-        router.replace("HomeView");
+        router.replace("/HomeView");
     };
 
     return (

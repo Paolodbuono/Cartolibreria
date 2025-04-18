@@ -33,7 +33,7 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
         Promise.all(arrayAsyncStorege)
             .then(() => {
                 setIsLoading(false);
-                router.replace("HomeView");
+                router.replace("/HomeView");
             })
             .catch((e) => {
                 console.log('errore durante la logOut !!!', e)

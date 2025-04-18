@@ -45,7 +45,7 @@ const PaswordRecoveryComponent: React.FC<{}> = () => {
                 .then((res) => {
                     setShowSpinner(false);
                     if (res.data && res.data.err === "" || !res.data) {
-                        router.replace("HomeView");
+                        router.replace("/HomeView");
                     } else {
                         setErrorLabel(res.data.err);
                         setShowError(true);
