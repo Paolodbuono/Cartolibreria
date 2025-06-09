@@ -2,6 +2,8 @@ import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
+import { Platform } from 'react-native';
+
 const isTabletOrDesktop = wp('100%') > 768;
 
 export const styles = StyleSheet.create({
@@ -38,7 +40,7 @@ export const styles = StyleSheet.create({
     },
     buttonContainer: {
         display: "flex",
-        gap: 10,
+        gap: Platform.OS === 'web' ? 0 : 10,
         width: isTabletOrDesktop ? 350 : undefined,
     },
     buttonLabel: {
@@ -56,8 +58,8 @@ export const styles = StyleSheet.create({
     },
     image: {
         margin: "auto",
-        width: isTabletOrDesktop ? 200 : undefined,
-        height: isTabletOrDesktop ? 200 : undefined,
+        width: isTabletOrDesktop ? 200 : (Platform.OS === 'web' ? 75 : undefined),
+        height: isTabletOrDesktop ? 200 : (Platform.OS === 'web' ? 75 : undefined),
     },
     imgBanner: {
         marginTop: 10,
@@ -69,7 +71,7 @@ export const styles = StyleSheet.create({
         height: 100,
     },
     imgFooterTablet: {
-        position:"absolute",
+        position: "absolute",
         bottom: -700,
         width: wp('100%'),
         height: 1000,
