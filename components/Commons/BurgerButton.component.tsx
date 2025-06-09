@@ -1,6 +1,10 @@
 import React from 'react';
 import { GestureResponderEvent, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const isTabletOrDesktop = wp('100%') > 768;
+
 interface BurgerButtonProps {
     onPress: (event: GestureResponderEvent) => void;
 }
@@ -21,5 +25,14 @@ export default BurgerButtonComponent;
 const styles = StyleSheet.create({
     image:
     {
-    }
+        ...(isTabletOrDesktop && {
+            right: -25,
+            top: -75,
+            position: "absolute",
+            padding: 20,
+            margin: 50,
+            width: 50,
+            height: 50
+        })
+    },
 });

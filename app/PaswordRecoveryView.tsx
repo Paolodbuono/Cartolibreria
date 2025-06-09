@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 import PaswordRecoveryComponent from "@/components/PaswordRecoveryComponent/PasswordRecovery.component";
+import { bg } from "@/constants/FontSize";
 
 export default function RestorePasswordView() {
   const navigation = useNavigation();
@@ -13,7 +14,7 @@ export default function RestorePasswordView() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <Stack.Screen options={{ headerTitle: "Recupera Password" ,headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
+      <Stack.Screen options={{ headerTitle: "Recupera Password", headerTitleStyle: { fontFamily: "Allan-Regular", fontSize: bg } }} />
       <PaswordRecoveryComponent />
     </View>
   );

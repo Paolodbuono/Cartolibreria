@@ -2,6 +2,10 @@ import React from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useRouter } from 'expo-router';
 
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const isTabletOrDesktop = wp('100%') > 768;
+
 function LogoButtonComponent() {
     const router = useRouter();
 
@@ -19,4 +23,4 @@ function LogoButtonComponent() {
 
 export default LogoButtonComponent;
 
-const styles = StyleSheet.create({ image: { width: 50, height: 50 } });
+const styles = StyleSheet.create({ image: { width: isTabletOrDesktop ? 75 : 50, height: isTabletOrDesktop ? 75 : 50 } });

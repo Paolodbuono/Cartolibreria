@@ -99,6 +99,9 @@ export default function Layout() {
           headerTitle: () => <LogoButtonComponent />,
           headerRight: () => <BurgerButtonComponent onPress={getRoutes} />,
           headerShadowVisible: false,
+          headerStyle: {
+            height: isTablet ? 100 : undefined,
+          },
         }}
       >
       </Stack>

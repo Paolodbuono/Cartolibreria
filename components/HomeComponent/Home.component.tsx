@@ -8,9 +8,14 @@ import { styles } from './Home.styles';
 import TextComponent from '@/components/Commons/Text.component';
 import { md } from '@/constants/FontSize';
 
+import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const isTabletOrDesktop = wp('100%') > 768;
+
 // Paths
 const bannerPath = "../../assets/images/bannerBonagura.png";
 const footerPath = "../../assets/images/onda.jpg";
+const footerPathTablet = "../../assets/images/onda_tablet.png";
 const adozioniPath = "../../assets/images/listaScuole.png";
 const appuntamentoPath = "../../assets/images/calendar.png";
 const personalAreaPath = "../../assets/images/areaRiservata.png";
@@ -70,21 +75,38 @@ const HomeComponent: React.FC<{}> = () => {
                             </TouchableOpacity>
                             <TextComponent style={styles.buttonLabel}> Adozioni </TextComponent>
                         </View>
+                        {isTabletOrDesktop && <>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity onPress={() => { router.push("/AppuntamentoView") }}>
+                                    <Image style={styles.image} source={require(appuntamentoPath)} />
+                                </TouchableOpacity>
+                                <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity onPress={() => { router.push("/MyProfileView") }}>
+                                    <Image style={styles.image} source={require(personalAreaPath)} />
+                                </TouchableOpacity>
+                                <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
+                            </View>
+                        </>}
+
                     </View>
-                    <View style={styles.buttonRow}>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("/AppuntamentoView") }}>
-                                <Image style={styles.image} source={require(appuntamentoPath)} />
-                            </TouchableOpacity>
-                            <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
+                    {!isTabletOrDesktop &&
+                        <View style={styles.buttonRow}>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity onPress={() => { router.push("/AppuntamentoView") }}>
+                                    <Image style={styles.image} source={require(appuntamentoPath)} />
+                                </TouchableOpacity>
+                                <TextComponent style={styles.buttonLabel}> Appuntamento </TextComponent>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <TouchableOpacity onPress={() => { router.push("/MyProfileView") }}>
+                                    <Image style={styles.image} source={require(personalAreaPath)} />
+                                </TouchableOpacity>
+                                <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
+                            </View>
                         </View>
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity onPress={() => { router.push("/MyProfileView") }}>
-                                <Image style={styles.image} source={require(personalAreaPath)} />
-                            </TouchableOpacity>
-                            <TextComponent style={styles.buttonLabel}> {isUserLogged ? "Area Riservata" : "Login"} </TextComponent>
-                        </View>
-                    </View>
+                    }
                     <View style={styles.buttonActionRow}>
                         <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("/NoticeView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Avvisi Importanti</TextComponent>
@@ -96,7 +118,9 @@ const HomeComponent: React.FC<{}> = () => {
 
                 </>}
             </View>
-            <Image style={styles.imgFooter} source={require(footerPath)} />
+            {isTabletOrDesktop && <Image style={styles.imgFooterTablet} source={require(footerPathTablet)} />}
+            {!isTabletOrDesktop && <Image style={styles.imgFooter} source={require(footerPath)} />}
+
         </View >
     );
 }

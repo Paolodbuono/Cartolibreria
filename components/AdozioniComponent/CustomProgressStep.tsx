@@ -1,5 +1,9 @@
+import { bg } from '@/constants/FontSize';
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const isTablet = wp('100%') > 768; // Condizione per determinare se è tablet
 
 interface CustomProgressStepProps {
     label: string;
@@ -56,7 +60,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     label: {
-        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 10,
     },
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#007AFF',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 25,
     },
     disabledButton: {
         backgroundColor: '#CCCCCC',
@@ -79,5 +82,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
+        fontSize: bg,
+        padding: 20
     },
 });

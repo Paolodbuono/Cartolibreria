@@ -18,7 +18,7 @@ export default function WhoAreWeView() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <Stack.Screen options={{ headerTitle: "Chi Siamo", headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
+      <Stack.Screen options={{ headerTitle: "Chi Siamo", headerTitleStyle: { fontFamily: "Allan-Regular", fontSize: bg } }} />
       <View style={styles.title}>
         <TextComponent style={{ color: 'rgb(252, 115, 7)', fontWeight: 'bold', fontSize: bg }}>
           LA NOSTRA STORIA
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: md,
     fontWeight: '600',
     color: '#4975be',
-    
+
   },
   link: {
     color: '#00C',

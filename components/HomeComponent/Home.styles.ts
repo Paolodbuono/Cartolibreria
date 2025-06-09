@@ -2,27 +2,35 @@ import { bg, md } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
+const isTabletOrDesktop = wp('100%') > 768;
+
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'space-between',
         backgroundColor: '#fff',
-        alignItems:"center"
+        alignItems: "center",
+        ...(isTabletOrDesktop && {
+            backgroundColor: '#f0f0f0',
+            flexDirection: 'column',
+            padding: 20,
+            paddingBottom: 100
+        })
     },
     content: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: 60,
+        gap: isTabletOrDesktop ? 100 : 60,
         marginTop: 10
     },
     buttonRow: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        gap: 60,
+        gap: isTabletOrDesktop ? 80 : 60,
     },
-    buttonActionRow:{
+    buttonActionRow: {
         padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -30,7 +38,8 @@ export const styles = StyleSheet.create({
     },
     buttonContainer: {
         display: "flex",
-        gap: 10
+        gap: 10,
+        width: isTabletOrDesktop ? 350 : undefined,
     },
     buttonLabel: {
         textAlign: 'center',
@@ -43,19 +52,28 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgb(235 96 25)',
         paddingVertical: 16,
         borderRadius: 8,
-        padding: 20,
+        padding: isTabletOrDesktop ? 50 : 20,
     },
     image: {
         margin: "auto",
+        width: isTabletOrDesktop ? 200 : undefined,
+        height: isTabletOrDesktop ? 200 : undefined,
     },
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: 100,
+        height: isTabletOrDesktop ? 250 : 100,
     },
     imgFooter: {
         width: wp('100%'),
         height: 100,
+    },
+    imgFooterTablet: {
+        position:"absolute",
+        bottom: -700,
+        width: wp('100%'),
+        height: 1000,
+        zIndex: -1
     },
     welcome: {
         color: '#4975be',

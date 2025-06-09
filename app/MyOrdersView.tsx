@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 import MyOrdersComponent from "@/components/MyOrdersComponent/MyOrders.component";
+import { bg } from "@/constants/FontSize";
 
 export default function MyOrdersView() {
     const navigation = useNavigation();
@@ -13,7 +14,7 @@ export default function MyOrdersView() {
 
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-            <Stack.Screen options={{ headerTitle: "I Miei Ordini", headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
+            <Stack.Screen options={{ headerTitle: "I Miei Ordini", headerTitleStyle: { fontFamily: "Allan-Regular", fontSize: bg } }} />
             <MyOrdersComponent />
         </View>
     );

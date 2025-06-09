@@ -444,10 +444,10 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                             </View>
 
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                                <TouchableOpacity style={{ backgroundColor: 'red', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginRight: 10 }} onPress={toggleModalCheckDate}>
+                                <TouchableOpacity style={{ backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10, padding: 20 }} onPress={toggleModalCheckDate}>
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: 'blue', width: 150, height: 60, paddingVertical: 12, borderRadius: 8, marginLeft: 10 }}
+                                <TouchableOpacity style={{ backgroundColor: 'blue', paddingVertical: 12, borderRadius: 8, marginLeft: 10, padding: 20 }}
                                     onPress={() => {
                                         setModalCheckDateVisibile(false);
                                         setModalInserInfoVisibile(true);

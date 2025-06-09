@@ -2,6 +2,8 @@ import { bg, md, sm } from "@/constants/FontSize";
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+const isTablet = wp('100%') > 768; // Condizione per determinare se è tablet
+
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -42,9 +44,11 @@ export const styles = StyleSheet.create({
     imagesContainer: {
         alignItems: 'center',
         width: '100%',
+        flexDirection: isTablet ? 'row' : 'column', // Se è tablet, le immagini vengono affiancate
+        justifyContent: isTablet ? 'space-around' : 'center',
     },
     imageWrapper: {
-        width: wp('80%'),
+        width: isTablet ? 1000 :  wp('80%'),
         aspectRatio: 16 / 9,
         marginVertical: hp('2%'),
     },
@@ -60,8 +64,8 @@ export const styles = StyleSheet.create({
         borderColor: 'green',
     },
     sedeImage: {
-        width: '100%',
-        height: '100%',
+        width:'100%',
+        height:'100%',
     },
     bookImage: {
         width: 100,

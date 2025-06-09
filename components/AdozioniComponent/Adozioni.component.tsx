@@ -243,7 +243,7 @@ export const AdozioniComponent = ({ }) => {
                                                 styles.sedeImage,
                                                 state.lockSede && state.sedeSelezionata === SEDI[1] && styles.disabledImage,
                                             ]}
-                                            source={require('@/assets/images/sedePoggiomarino.png')}
+                                            source={require('@/assets/images/sedePoggiomarino.jpg')}
                                             resizeMode="cover"
                                         />
                                     </View>

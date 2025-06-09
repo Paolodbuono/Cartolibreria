@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { Stack, useNavigation } from "expo-router";
 
 import SignInComponent from "@/components/SignInComponent/SignIn.component";
+import { bg } from "@/constants/FontSize";
 
 export default function SignInView() {
 
@@ -15,7 +16,7 @@ export default function SignInView() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "white" }}>
-      <Stack.Screen options={{ headerTitle: "Registrati" ,headerTitleStyle: { fontFamily: "Allan-Regular" } }} />
+      <Stack.Screen options={{ headerTitle: "Registrati", headerTitleStyle: { fontFamily: "Allan-Regular", fontSize: bg } }} />
       <SignInComponent />
     </View>
   );
