@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
         color: '#4975be',
     },
     buttonImportant: {
-        marginTop: 10,
+        marginTop: (Platform.OS === 'web' ? -40 : 10) ,
         marginBottom: -30,
         backgroundColor: 'rgb(235 96 25)',
         paddingVertical: 16,
