@@ -433,7 +433,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             <Modal visible={modalCheckDateVisibile} transparent={true} animationType="slide">
                 <View style={styles.modalContainer}>
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
-                        <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "90%" }}>
+                        <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "100%" }}>
                             <View style={{ display: "flex" }}>
                                 <TextComponent style={{ ...styles.title, fontSize: bg, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</TextComponent>
                                 <TextComponent style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>

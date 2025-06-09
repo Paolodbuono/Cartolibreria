@@ -2,6 +2,9 @@ import { bg, md, sm } from '@/constants/FontSize';
 import { StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+import { Platform } from 'react-native';
+
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -24,6 +27,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 8,
     marginTop: 20, // Aggiunto spazio extra per separare i Picker dal pulsante
+    marginBottom:  Platform.OS === 'web' ? 150 : 0,
     zIndex: 0, // Impostato per assicurare che il pulsante stia sotto i Picker
     position: 'relative',
   },
