@@ -108,10 +108,10 @@ const HomeComponent: React.FC<{}> = () => {
                         </View>
                     }
                     <View style={styles.buttonActionRow}>
-                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("/NoticeView")}>
+                        <TouchableOpacity style={{...styles.buttonImportant, marginTop: 10}} onPress={() => router.push("/NoticeView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Avvisi Importanti</TextComponent>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonImportant} onPress={() => router.push("/WhyChoseUsView")}>
+                        <TouchableOpacity style={{...styles.buttonImportant, marginTop: 10}} onPress={() => router.push("/WhyChoseUsView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Perché Sceglierci</TextComponent>
                         </TouchableOpacity>
                     </View>
