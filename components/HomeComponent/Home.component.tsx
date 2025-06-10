@@ -58,8 +58,8 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
-                    <TouchableOpacity style={{backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
+                    {stateUser?.nome && <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>}
+                    <TouchableOpacity style={{ backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
                         <Image style={styles.imgSimple} source={require(semplicePath)} />
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>

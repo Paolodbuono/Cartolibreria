@@ -27,10 +27,10 @@ export const styles = StyleSheet.create({
         marginTop: 10
     },
     buttonRow: {
-        flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        gap: isTabletOrDesktop ? 80 : 60,
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: isTabletOrDesktop ? 80 : 30,
     },
     buttonActionRow: {
         padding: 10,
@@ -40,8 +40,10 @@ export const styles = StyleSheet.create({
     },
     buttonContainer: {
         display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         gap: Platform.OS === 'web' ? 0 : 10,
-        width: isTabletOrDesktop ? 350 : undefined,
+        width: isTabletOrDesktop ? 150 : undefined,
     },
     buttonLabel: {
         textAlign: 'center',
@@ -49,7 +51,7 @@ export const styles = StyleSheet.create({
         color: '#4975be',
     },
     buttonImportant: {
-        marginTop: (Platform.OS === 'web' ? -40 : 10) ,
+        marginTop: (Platform.OS === 'web' ? -40 : 10),
         marginBottom: -30,
         backgroundColor: 'rgb(235 96 25)',
         paddingVertical: 16,
@@ -58,18 +60,17 @@ export const styles = StyleSheet.create({
     },
     image: {
         margin: "auto",
-        width: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 65 : undefined),
-        height: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 65 : undefined),
+        width: isTabletOrDesktop ? 120 : (Platform.OS === 'web' ? 65 : undefined),
+        height: isTabletOrDesktop ? 120 : (Platform.OS === 'web' ? 65 : undefined),
     },
     imgSimple: {
-        margin: "auto",
-        width: isTabletOrDesktop ? 1000 : (Platform.OS === 'web' ? 300 : undefined),
-        height: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 55 : undefined),
+        width: isTabletOrDesktop ? 700 : (Platform.OS === 'web' ? 300 : undefined),
+        height: isTabletOrDesktop ? 140 : (Platform.OS === 'web' ? 55 : undefined),
     },
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: isTabletOrDesktop ? 250 : 100,
+        height: isTabletOrDesktop ? 150 : 100,
     },
     imgFooter: {
         width: wp('100%'),

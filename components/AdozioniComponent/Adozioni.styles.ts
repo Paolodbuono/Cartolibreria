@@ -2,7 +2,9 @@ import { bg, md, sm } from "@/constants/FontSize";
 import { StyleSheet } from "react-native";
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const isTablet = wp('100%') > 768; // Condizione per determinare se è tablet
+import { Platform } from 'react-native';
+
+const isTablet = wp('100%') > 600; // Condizione per determinare se è tablet
 
 export const styles = StyleSheet.create({
     container: {
@@ -44,11 +46,12 @@ export const styles = StyleSheet.create({
     imagesContainer: {
         alignItems: 'center',
         width: '100%',
-        flexDirection: isTablet ? 'row' : 'column', // Se è tablet, le immagini vengono affiancate
-        justifyContent: isTablet ? 'space-around' : 'center',
+        flexDirection: Platform.OS === 'web' && !isTablet ? 'column' : 'row', // Se lo spazio è piccolo sul web, le immagini vanno una sotto l'altra
+        justifyContent: 'center',
+        gap: Platform.OS === 'web' && !isTablet ? 20 : 50, // Aggiunge spazio quando sono verticali
     },
     imageWrapper: {
-        width: isTablet ? 1000 :  wp('80%'),
+        width: isTablet ? (wp('100%') / 2) - 150 : wp('80%'), // Se lo spazio è ridotto, le immagini si restringono
         aspectRatio: 16 / 9,
         marginVertical: hp('2%'),
     },
@@ -64,8 +67,8 @@ export const styles = StyleSheet.create({
         borderColor: 'green',
     },
     sedeImage: {
-        width:'100%',
-        height:'100%',
+        width: '100%',
+        height: '100%',
     },
     bookImage: {
         width: 100,
@@ -73,17 +76,17 @@ export const styles = StyleSheet.create({
         alignSelf: "center"
     },
     step: {
-        borderWidth: 1, 
-        borderColor: '#D3D3D3', 
-        borderRadius: 10, 
-        padding: 15, 
-        marginVertical: 10, 
-        backgroundColor: 'white', 
-        shadowColor: '#000', 
+        borderWidth: 1,
+        borderColor: '#D3D3D3',
+        borderRadius: 10,
+        padding: 15,
+        marginVertical: 10,
+        backgroundColor: 'white',
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 2, 
+        elevation: 2,
     },
     disabledImage: {
         filter: "grayscale(100%)"
