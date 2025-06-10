@@ -75,6 +75,7 @@ export const styles = StyleSheet.create({
     imgFooter: {
         width: wp('100%'),
         height: 100,
+        zIndex: -1
     },
     imgFooterTablet: {
         position: "absolute",
