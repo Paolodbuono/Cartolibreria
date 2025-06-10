@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: isTabletOrDesktop ? 100 : 60,
+        gap: isTabletOrDesktop ? 100 : (Platform.OS === 'web' ? 30 : 60),
         marginTop: 10
     },
     buttonRow: {
