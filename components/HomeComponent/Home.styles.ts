@@ -58,8 +58,13 @@ export const styles = StyleSheet.create({
     },
     image: {
         margin: "auto",
-        width: isTabletOrDesktop ? 200 : (Platform.OS === 'web' ? 75 : undefined),
-        height: isTabletOrDesktop ? 200 : (Platform.OS === 'web' ? 75 : undefined),
+        width: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 65 : undefined),
+        height: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 65 : undefined),
+    },
+    imgSimple: {
+        margin: "auto",
+        width: isTabletOrDesktop ? 1000 : (Platform.OS === 'web' ? 300 : undefined),
+        height: isTabletOrDesktop ? 150 : (Platform.OS === 'web' ? 55 : undefined),
     },
     imgBanner: {
         marginTop: 10,

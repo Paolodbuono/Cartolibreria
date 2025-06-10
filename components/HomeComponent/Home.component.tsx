@@ -18,6 +18,7 @@ const footerPath = "../../assets/images/onda.jpg";
 const footerPathTablet = "../../assets/images/onda_tablet.png";
 const adozioniPath = "../../assets/images/listaScuole.png";
 const appuntamentoPath = "../../assets/images/calendar.png";
+const semplicePath = "../../assets/images/simple.png";
 const personalAreaPath = "../../assets/images/areaRiservata.png";
 const ordersPath = "../../assets/images/ordini.png";
 
@@ -58,9 +59,8 @@ const HomeComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
-                    <TouchableOpacity style={{ ...styles.buttonImportant, backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> E' semplice acquistare e ordinare!</TextComponent>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  come in negozio!</TextComponent>
+                    <TouchableOpacity style={{backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
+                        <Image style={styles.imgSimple} source={require(semplicePath)} />
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
@@ -108,10 +108,10 @@ const HomeComponent: React.FC<{}> = () => {
                         </View>
                     }
                     <View style={styles.buttonActionRow}>
-                        <TouchableOpacity style={{...styles.buttonImportant, marginTop: 10}} onPress={() => router.push("/NoticeView")}>
+                        <TouchableOpacity style={{ ...styles.buttonImportant, marginTop: 10 }} onPress={() => router.push("/NoticeView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Avvisi Importanti</TextComponent>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{...styles.buttonImportant, marginTop: 10}} onPress={() => router.push("/WhyChoseUsView")}>
+                        <TouchableOpacity style={{ ...styles.buttonImportant, marginTop: 10 }} onPress={() => router.push("/WhyChoseUsView")}>
                             <TextComponent style={{ color: 'white', fontSize: md + 2 }}>Perché Sceglierci</TextComponent>
                         </TouchableOpacity>
                     </View>
