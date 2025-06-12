@@ -46,9 +46,6 @@ export const styles = StyleSheet.create({
     color: '#EB5F19',
     top: -30,
     width: wp('90%'),
-    ...(isTablet && {
-      marginTop: 170,
-  })
   },
   subTitle: {
     fontSize: md,
