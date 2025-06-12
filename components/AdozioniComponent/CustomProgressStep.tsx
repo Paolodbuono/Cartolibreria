@@ -77,13 +77,16 @@ const styles = StyleSheet.create({
         marginTop: 20,
         ...(isTablet && {
             alignSelf: "end",
-            marginRight: "100px"
+            marginRight: "100px",
         })
     },
     button: {
         backgroundColor: '#007AFF',
         padding: 10,
         borderRadius: 25,
+        ...(isTablet && {
+            margin: "40px",
+        })
     },
     disabledButton: {
         backgroundColor: '#CCCCCC',
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: isTablet ? bg : sm,
+        fontSize: isTablet ? md : sm,
         padding: isTablet ? 20 : 5,
     },
 });
