@@ -2,13 +2,15 @@ import React, { useState, useMemo } from 'react';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner } from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner, Platform } from 'react-native';
 
 import { gs } from '@/style/globalStyles';
 import { styles } from './MyProfile.styles';
 import { SEDI, radioButtonSede } from '@/utils/constants';
 import TextComponent from '../Commons/Text.component';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const isWeb = Platform.OS === "web";
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const router = useRouter();
@@ -37,10 +39,15 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 const jsonValue = JSON.stringify(loginResponse.data[0]);
 
                 try {
-                    await Promise.all([
-                        AsyncStorage.setItem('userData', jsonValue),
-                        AsyncStorage.setItem('sedeSelezionata', SEDI[selectedIndexSede])
-                    ]);
+                    if (isWeb) {
+                        localStorage.setItem('userData', jsonValue);
+                        localStorage.setItem('sedeSelezionata', SEDI[selectedIndexSede]);
+                    } else {
+                        await Promise.all([
+                            AsyncStorage.setItem('userData', jsonValue),
+                            AsyncStorage.setItem('sedeSelezionata', SEDI[selectedIndexSede])
+                        ]);
+                    }
 
                     setNameLogin(loginResponse.data[0].nome);
                     setIsLoading(false);
@@ -120,7 +127,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 <TextComponent style={styles.nonSeiCliente}>Non sei cliente?</TextComponent>
                 <TextComponent style={styles.nonSeiCliente}>Puoi registrarti solo in negozio</TextComponent>
                 <TextComponent style={styles.nonSeiCliente}>Oppure inviando i tuoi dati tramite whatsapp</TextComponent>
-                
+
                 {/* </TouchableOpacity> */}
             </View>
             <Modal

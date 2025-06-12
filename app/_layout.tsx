@@ -12,6 +12,10 @@ import LogoButtonComponent from '@/components/Commons/LogoButton.component';
 import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
 import { routes, RoutesType, ValidRoutes } from '@/constants/Routes';
 
+import { Platform } from "react-native";
+
+const isWeb = Platform.OS === "web";
+
 export default function Layout() {
   const router = useRouter();
   const pathName = usePathname();
@@ -33,7 +37,7 @@ export default function Layout() {
 
   const getRoutes = async () => {
     try {
-      const isLogged = !!await AsyncStorage.getItem('userData');
+      const isLogged = isWeb ? !!localStorage.getItem('userData') : !!await AsyncStorage.getItem('userData');
       const filteredRoutes = routes.filter(el =>
         isLogged ? el.name !== "Accedi" : el.name !== "Area riservata"
       );

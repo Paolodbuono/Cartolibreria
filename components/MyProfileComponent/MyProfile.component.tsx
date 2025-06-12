@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, ActivityIndicator as Spinner} from 'react-native';
+import { View, ActivityIndicator as Spinner, Platform} from 'react-native';
 
 import { gs } from '@/style/globalStyles';
 import { UserType, emptyUser } from '@/types/UserType';
 
 import { ProfileComponent } from './Profile.component';
 import { NotLoggedComponent } from './NotLogged.component';
+
+const isWeb = Platform.OS === "web";
 
 export const LogInComponent: React.FC<{}> = ({ }) => {
 
@@ -17,7 +19,7 @@ export const LogInComponent: React.FC<{}> = ({ }) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const value = await AsyncStorage.getItem('userData');
+                const value = isWeb ? localStorage.getItem('userData') : await AsyncStorage.getItem('userData');
                 if (value !== null) {
                     const parsedValue: UserType = JSON.parse(value);
                     if (!parsedValue) return;

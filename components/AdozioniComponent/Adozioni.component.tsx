@@ -11,6 +11,8 @@ import { CustomProgressStep } from './CustomProgressStep';
 import { CustomProgressSteps } from './CustomProgressSteps';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+const isWeb = Platform.OS === "web";
+
 const isTablet = wp('100%') > 600; // Condizione per determinare se è tablet
 
 interface State {
@@ -76,7 +78,7 @@ export const AdozioniComponent = ({ }) => {
         updateState({ isLoading: true })
         try {
 
-            const sedeSelezionata = await AsyncStorage.getItem('sedeSelezionata')
+            const sedeSelezionata = isWeb ? localStorage.getItem('sedeSelezionata') :  await AsyncStorage.getItem('sedeSelezionata')
 
             if (SEDI[0] === sedeSelezionata || SEDI[1] === sedeSelezionata) {
                 updateState({ sedeSelezionata: sedeSelezionata, nextButtonFirstStepEnabled: false, lockSede: true });

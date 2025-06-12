@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, Image } from 'react-native';
+import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -10,6 +10,8 @@ import { OrderStatusType, OrderType } from './MyOrders.types';
 import { BSub } from '../Commons/BSub.component';
 import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
+
+const isWeb = Platform.OS === "web";
 
 const orderStatuses: OrderStatusType = {
     1: "ORDINATO NUOVO",
@@ -32,7 +34,7 @@ const MyOrdersComponent = ({ }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [userData, sedeSelezionata] = await Promise.all([
+                const [userData, sedeSelezionata] = isWeb ? [localStorage.getItem('userData'), localStorage.getItem('sedeSelezionata')] : await Promise.all([
                     AsyncStorage.getItem('userData'),
                     AsyncStorage.getItem('sedeSelezionata')
                 ]);
@@ -106,7 +108,7 @@ const MyOrdersComponent = ({ }) => {
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
             {!isLoading && <>
                 {isLogged && <>
-                    <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10, resizeMode: 'contain'}} source={require('../../assets/images/ordini_images.png')} />
+                    <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10, resizeMode: 'contain' }} source={require('../../assets/images/ordini_images.png')} />
                     <FlatList
                         style={{ width: '100%' }}
                         data={myOrders}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { View, Image, TouchableOpacity, ActivityIndicator as Spinner } from 'react-native';
+import { View, Image, TouchableOpacity, ActivityIndicator as Spinner, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
@@ -11,6 +11,8 @@ import { md } from '@/constants/FontSize';
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 const isTabletOrDesktop = wp('100%') > 768;
+
+const isWeb = Platform.OS === "web";
 
 // Paths
 const bannerPath = "../../assets/images/bannerBonagura.png";
@@ -32,7 +34,7 @@ const HomeComponent: React.FC<{}> = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const value = await AsyncStorage.getItem('userData');
+                const value = isWeb ? localStorage.getItem('userData') : await AsyncStorage.getItem('userData');
                 if (value !== null) {
                     const parsedValue: UserType = JSON.parse(value);
                     setStateUser(parsedValue);

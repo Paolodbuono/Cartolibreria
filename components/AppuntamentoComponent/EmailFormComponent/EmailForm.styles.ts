@@ -1,6 +1,10 @@
 import { bg, md, sm } from '@/constants/FontSize';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const { width } = Dimensions.get('window');
+
+const isTablet = width > 768;
 
 export const styles = StyleSheet.create({
   title: { fontSize: bg, textAlign: 'center', fontWeight: '800', color: '#EB5F19', marginBottom: 20 },
@@ -24,9 +28,14 @@ export const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginBottom: 20,
     marginTop: 20,
+    ...(!isTablet && {
+      justifyContent: 'space-between',
+    }),
+    ...(isTablet && {
+      justifyContent: "center"
+    })
   },
   button: {
     flex: 1,
@@ -34,6 +43,9 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     marginLeft: 10,
+    ...(isTablet && {
+      maxWidth: 200
+    })
   },
   buttonText: {
     color: 'white',

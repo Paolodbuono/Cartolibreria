@@ -19,6 +19,10 @@ import TextComponent from '../Commons/Text.component';
 import { SEDI, calendarsLocales, radioButtonSede } from '@/utils/constants';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
+import { Platform } from "react-native";
+
+const isWeb = Platform.OS === "web";
+
 const AppuntamentoComponent: React.FC<{}> = () => {
 
     const [sedeIndex, setSedeIndex] = useState<string>("1");
@@ -72,9 +76,15 @@ const AppuntamentoComponent: React.FC<{}> = () => {
         const fetchData = async () => {
             try {
                 const requestArray = [];
-                requestArray.push(AsyncStorage.getItem('userData'))
-                requestArray.push(AsyncStorage.getItem('prenotazione'))
-                requestArray.push(AsyncStorage.getItem('sedeSelezionata'));
+                if (isWeb) {
+                    requestArray.push(localStorage.getItem('userData'))
+                    requestArray.push(localStorage.getItem('prenotazione'))
+                    requestArray.push(localStorage.getItem('sedeSelezionata'));
+                } else {
+                    requestArray.push(AsyncStorage.getItem('userData'))
+                    requestArray.push(AsyncStorage.getItem('prenotazione'))
+                    requestArray.push(AsyncStorage.getItem('sedeSelezionata'));
+                }
                 const [userData, prenotazione, sedeSelezionata] = await Promise.all(requestArray);
 
                 if (userData) {
@@ -97,7 +107,11 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                         setPrenotazionePresente(true);
                     } else {
                         console.log('Prenotazione scaduta ---->');
-                        AsyncStorage.removeItem('prenotazione');
+                        if (isWeb) {
+                            localStorage.removeItem('prenotazione');
+                        } else {
+                            AsyncStorage.removeItem('prenotazione');
+                        }
                     }
                 }
 
@@ -148,7 +162,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 text: "Conferma",
                 onPress: async () => {
                     try {
-                        const prenotazioneJson = await AsyncStorage.getItem('prenotazione');
+                        const prenotazioneJson = isWeb ? localStorage.getItem('prenotazione') : await AsyncStorage.getItem('prenotazione');
                         if (!prenotazioneJson) {
                             throw new Error('Nessuna prenotazione trovata');
                         }
@@ -160,8 +174,11 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     } catch (errro: any) {
                         console.log("eh", errro);
                     } finally {
-                        // Rimuovi la prenotazione da AsyncStorage
-                        await AsyncStorage.removeItem('prenotazione');
+                        if (isWeb) {
+                            localStorage.removeItem('prenotazione');
+                        } else {
+                            await AsyncStorage.removeItem('prenotazione');
+                        }
 
                         // Aggiorna lo stato dell'app o esegui altre azioni necessarie
                         setPrenotazionePresente(false);
@@ -306,7 +323,11 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 setDatiPrenotazionePresente(jsonPrenotazione);
 
                 console.log('dataPrenotazioneConOrario ---->', JSON.stringify(jsonPrenotazione));
-                await AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+                if (isWeb) {
+                    localStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+                } else {
+                    await AsyncStorage.setItem('prenotazione', JSON.stringify(jsonPrenotazione));
+                }
 
                 Alert.alert(
                     'Prenotazione effettuata',
@@ -433,7 +454,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             <Modal visible={modalCheckDateVisibile} transparent={true} animationType="slide">
                 <View style={styles.modalContainer}>
                     {resCheckDate.toLocaleLowerCase() == 'ok' && <>
-                        <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "100%" }}>
+                        <View style={{ display: "flex", justifyContent: 'space-between', alignItems: 'center', height: "100%", width: wp("100%") }}>
                             <View style={{ display: "flex" }}>
                                 <TextComponent style={{ ...styles.title, fontSize: bg, marginBottom: 10, flex: 1 }}>L'orario selezionato è disponibile!</TextComponent>
                                 <TextComponent style={{ ...styles.subTitle, fontWeight: '400', textAlign: 'center', marginBottom: 'auto', flex: 1 }}>

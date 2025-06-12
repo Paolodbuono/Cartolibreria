@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View,  Button, Text, ActivityIndicator as Spinner } from 'react-native';
+import { View, Button, Text, ActivityIndicator as Spinner, Platform } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { useRouter } from 'expo-router';
 import { UserType } from '@/types/UserType';
@@ -11,6 +11,9 @@ import { BTitle } from '../Commons/BTitle.component';
 import { BSub } from '../Commons/BSub.component';
 import TextComponent from '../Commons/Text.component';
 
+const isWeb = Platform.OS === "web";
+
+
 export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogged }) => {
     const router = useRouter();
 
@@ -18,7 +21,7 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
     const [sedeSelezionata, setSedeSelezionata] = useState<string>('');
 
     const getSedeFromStorage = async () => {
-        const res = await AsyncStorage.getItem('sedeSelezionata');
+        const res = isWeb ? localStorage.getItem('sedeSelezionata') : await AsyncStorage.getItem('sedeSelezionata');
         setSedeSelezionata(res ?? "");
         setIsLoading(false);
     }
@@ -27,17 +30,26 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
 
     const logOut = () => {
         setIsLoading(true)
-        const arrayAsyncStorege = [];
-        arrayAsyncStorege.push(AsyncStorage.removeItem('userData'))
-        arrayAsyncStorege.push(AsyncStorage.removeItem('sedeSelezionata'))
-        Promise.all(arrayAsyncStorege)
-            .then(() => {
-                setIsLoading(false);
-                router.replace("/HomeView");
-            })
-            .catch((e) => {
-                console.log('errore durante la logOut !!!', e)
-            })
+        if (isWeb) {
+            localStorage.removeItem("userData");
+            localStorage.removeItem("sedeSelezionata");
+
+            setIsLoading(false);
+            router.replace("/HomeView");
+        } else {
+
+            const arrayAsyncStorege = [];
+            arrayAsyncStorege.push(AsyncStorage.removeItem('userData'))
+            arrayAsyncStorege.push(AsyncStorage.removeItem('sedeSelezionata'))
+            Promise.all(arrayAsyncStorege)
+                .then(() => {
+                    setIsLoading(false);
+                    router.replace("/HomeView");
+                })
+                .catch((e) => {
+                    console.log('errore durante la logOut !!!', e)
+                })
+        }
     }
 
     return (
@@ -57,7 +69,7 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
                         <TextComponent style={styles.subTitle}>Città: <BSub title={userLogged.citta} /> </TextComponent>
                         <TextComponent style={styles.subTitle}>Cellulare: <BSub title={userLogged.cellulare} /> </TextComponent>
                     </View>
-                    <View style={{ marginTop: hp('1.5%'), padding: 10, display:"flex", justifyContent:"center" }}>
+                    <View style={{ marginTop: hp('1.5%'), padding: 10, display: "flex", justifyContent: "center" }}>
                         <TextComponent style={styles.subTitle}>Sede presso cui sei registrato: <BSub title={sedeSelezionata.toUpperCase()} /> </TextComponent>
                     </View>
                     <View style={styles.btnPosition}>
