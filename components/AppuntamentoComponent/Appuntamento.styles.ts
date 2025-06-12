@@ -4,6 +4,7 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 
 import { Platform } from 'react-native';
 
+const isTablet = wp('100%') > 600; // Condizione per determinare se è tablet
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     height: hp('100%'),
     width: wp('80%'),
+
   },
   modalContainer: {
     padding: hp('10%'),
@@ -44,6 +46,9 @@ export const styles = StyleSheet.create({
     color: '#EB5F19',
     top: -30,
     width: wp('90%'),
+    ...(isTablet && {
+      marginTop: 170,
+  })
   },
   subTitle: {
     fontSize: md,

@@ -4,7 +4,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 
 import { Platform } from 'react-native';
 
-const isTablet = wp('100%') > 768;
+const isTablet = wp('100%') > 600;
 
 export const styles = StyleSheet.create({
     container: {
@@ -16,15 +16,14 @@ export const styles = StyleSheet.create({
             backgroundColor: '#f0f0f0',
             flexDirection: 'column',
             padding: 20,
-            paddingBottom: 100
         })
     },
     content: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: isTablet ? 100 : (Platform.OS === 'web' ? 30 : 60),
-        marginTop: isTablet ? 150 : 10
+        gap: isTablet ? 50 : (Platform.OS === 'web' ? 30 : 60),
+        marginTop: isTablet ? 80 : 10
     },
     buttonRow: {
         flexDirection: 'row',
@@ -60,8 +59,8 @@ export const styles = StyleSheet.create({
     },
     image: {
         margin: "auto",
-        width: isTablet ? 100 : (Platform.OS === 'web' ? 65 : undefined),
-        height: isTablet ? 100 : (Platform.OS === 'web' ? 65 : undefined),
+        width: isTablet ? 80 : (Platform.OS === 'web' ? 65 : undefined),
+        height: isTablet ? 80 : (Platform.OS === 'web' ? 65 : undefined),
     },
     imgSimple: {
         width: isTablet ? 500 : (Platform.OS === 'web' ? 300 : undefined),
@@ -70,7 +69,7 @@ export const styles = StyleSheet.create({
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: isTablet ? 200 : 100,
+        height: isTablet ? 150 : 100,
         ...(isTablet && {
             top: -100,
             position: "absolute",

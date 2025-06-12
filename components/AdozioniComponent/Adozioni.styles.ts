@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         gap: Platform.OS === 'web' && !isTablet ? 20 : 50, // Aggiunge spazio quando sono verticali
     },
     imageWrapper: {
-        width: isTablet ? (wp('100%') / 2) - 150 : wp('80%'), // Se lo spazio è ridotto, le immagini si restringono
+        width: isTablet ? (wp('100%') / 3) - 150 : wp('80%'), // Se lo spazio è ridotto, le immagini si restringono
         aspectRatio: 16 / 9,
         marginVertical: hp('2%'),
     },

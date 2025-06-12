@@ -65,7 +65,7 @@ export default function Layout() {
       backgroundColor: 'rgba(0,0,0,0.5)', // Sfondo semi-trasparente
     },
     modalContainer: {
-      width: isTablet ? 150 : '75%', // Larghezza dinamica in base al dispositivo
+      width: isTablet ? 200 : '75%', // Larghezza dinamica in base al dispositivo
       height: '100%',
       backgroundColor: 'white',
       padding: 20,
@@ -87,6 +87,7 @@ export default function Layout() {
       color: "#2478d2",
       borderRadius: 10,
       fontSize: md + 3,
+      width: 1000
     },
   });
 
