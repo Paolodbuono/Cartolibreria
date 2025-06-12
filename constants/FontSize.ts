@@ -1,8 +1,9 @@
 
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-const isTabletOrDesktop = wp('100%') > 768;
+const isTablet = wp('100%') > 768;
+const isDesktop = wp('100%') > 1668;
 
-export const bg = isTabletOrDesktop ? (24 * 5) / 2 : 24;
-export const md = isTabletOrDesktop ? (18 * 5) / 2 : 18;
-export const sm = isTabletOrDesktop ? (12 * 5) / 2 : 12;
+export const bg = isTablet ? (24 * 3) / 2 : 24;
+export const md = isTablet ? (18 * 3) / 2 : 18;
+export const sm = isTablet ? (12 * 3) / 2 : 12;

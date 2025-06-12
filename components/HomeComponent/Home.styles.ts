@@ -4,7 +4,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 
 import { Platform } from 'react-native';
 
-const isTabletOrDesktop = wp('100%') > 768;
+const isTablet = wp('100%') > 768;
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#fff',
         alignItems: "center",
-        ...(isTabletOrDesktop && {
+        ...(isTablet && {
             backgroundColor: '#f0f0f0',
             flexDirection: 'column',
             padding: 20,
@@ -23,14 +23,14 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: isTabletOrDesktop ? 100 : (Platform.OS === 'web' ? 30 : 60),
-        marginTop: 10
+        gap: isTablet ? 100 : (Platform.OS === 'web' ? 30 : 60),
+        marginTop: isTablet ? 150 : 10
     },
     buttonRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        gap: isTabletOrDesktop ? 80 : 30,
+        gap: isTablet ? 80 : 30,
     },
     buttonActionRow: {
         padding: 10,
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         gap: Platform.OS === 'web' ? 0 : 10,
-        width: isTabletOrDesktop ? 150 : undefined,
+        width: isTablet ? 150 : undefined,
     },
     buttonLabel: {
         textAlign: 'center',
@@ -56,21 +56,25 @@ export const styles = StyleSheet.create({
         backgroundColor: 'rgb(235 96 25)',
         paddingVertical: 16,
         borderRadius: 8,
-        padding: isTabletOrDesktop ? 50 : 20,
+        padding: isTablet ? 30 : 20,
     },
     image: {
         margin: "auto",
-        width: isTabletOrDesktop ? 120 : (Platform.OS === 'web' ? 65 : undefined),
-        height: isTabletOrDesktop ? 120 : (Platform.OS === 'web' ? 65 : undefined),
+        width: isTablet ? 100 : (Platform.OS === 'web' ? 65 : undefined),
+        height: isTablet ? 100 : (Platform.OS === 'web' ? 65 : undefined),
     },
     imgSimple: {
-        width: isTabletOrDesktop ? 700 : (Platform.OS === 'web' ? 300 : undefined),
-        height: isTabletOrDesktop ? 140 : (Platform.OS === 'web' ? 55 : undefined),
+        width: isTablet ? 500 : (Platform.OS === 'web' ? 300 : undefined),
+        height: isTablet ? 100 : (Platform.OS === 'web' ? 55 : undefined),
     },
     imgBanner: {
         marginTop: 10,
         width: wp('100%'),
-        height: isTabletOrDesktop ? 150 : 100,
+        height: isTablet ? 200 : 100,
+        ...(isTablet && {
+            top: -100,
+            position: "absolute",
+        })
     },
     imgFooter: {
         width: wp('100%'),

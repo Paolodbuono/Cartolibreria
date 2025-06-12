@@ -58,8 +58,13 @@ export const CustomProgressStep: React.FC<CustomProgressStepProps> = ({
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        ...(isTablet && {
+            width: wp("100%"),
+            alignItems: "center",
+        })
     },
     label: {
+        fontSize: isTablet ? bg : sm,
         fontWeight: 'bold',
         marginBottom: 10,
     },
@@ -70,6 +75,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 20,
+        ...(isTablet && {
+            alignSelf: "end",
+            marginRight: "100px"
+        })
     },
     button: {
         backgroundColor: '#007AFF',
@@ -82,7 +91,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: isTablet ? md : sm,
-        padding: isTablet ? 20 : 5, 
+        fontSize: isTablet ? bg : sm,
+        padding: isTablet ? 20 : 5,
     },
 });
