@@ -91,4 +91,24 @@ export const styles = StyleSheet.create({
     disabledImage: {
         filter: "grayscale(100%)"
     },
+    listaLibri: {
+        width: wp("80%"),
+        height: hp("68%"),
+        overflowY: "scroll",
+        flexWrap: "wrap",
+    flexDirection: "row"
+    },
+    bookItem: {
+        width: 200,
+        margin: 10,
+        alignItems: "center",
+    },
+    author: {
+        fontSize: 14,
+        color: "#555",
+    },
+    price: {
+        fontSize: 14,
+        color: "#007BFF",
+    },
 });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Image, Text, ActivityIndicator as Spinner, TouchableOpacity, ScrollView } from 'react-native';
+import { SafeAreaView, View, Image, Text, ActivityIndicator as Spinner, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 
@@ -10,6 +10,8 @@ import TextComponent from '../Commons/Text.component';
 import { CustomProgressStep } from './CustomProgressStep';
 import { CustomProgressSteps } from './CustomProgressSteps';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+const isTablet = wp('100%') > 600; // Condizione per determinare se è tablet
 
 interface State {
     nextButtonFirstStepEnabled: boolean;
@@ -347,20 +349,37 @@ export const AdozioniComponent = ({ }) => {
                     </CustomProgressStep>
 
                     <CustomProgressStep label="Lista Libri" previousBtnText="Indietro" onPrevious={() => null}>
-                        <ScrollView>
-                            {state.showLoadingBooks && <Spinner size="large" style={gs.spinner} />}
-                            {!state.showLoadingBooks && state.books.map((book, idx) => (
-                                <View key={idx}>
-                                    <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
-                                    <View>
-                                        <Text>{book.titolo}</Text>
-                                        <Text>{book.autore}</Text>
-                                        <Text>Nuovo: {book.prezzo.toFixed(2)}€</Text>
-                                        <Text>Usato: {getPrezzoUsato(book.prezzo)}</Text>
-                                    </View>
+                        {state.showLoadingBooks && <Spinner size="large" style={gs.spinner} />}
+                        {!state.showLoadingBooks && <>
+                            {Platform.OS === 'web' && isTablet && <>
+                                <View style={styles.listaLibri}>
+                                    {state.books.map((book, idx) => (
+                                        <View key={idx} style={styles.bookItem}>
+                                            <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
+                                            <Text style={styles.title}>{book.titolo}</Text>
+                                            <Text style={styles.author}>{book.autore}</Text>
+                                            <Text style={styles.price}>Nuovo: {book.prezzo.toFixed(2)}€</Text>
+                                            <Text style={styles.price}>Usato: {getPrezzoUsato(book.prezzo)}</Text>
+                                        </View>
+                                    ))}
                                 </View>
-                            ))}
-                        </ScrollView>
+                            </>}
+                            {Platform.OS !== 'web' &&
+                                <ScrollView>
+                                    {state.books.map((book, idx) => (
+                                        <View key={idx}>
+                                            <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
+                                            <View>
+                                                <Text>{book.titolo}</Text>
+                                                <Text>{book.autore}</Text>
+                                                <Text>Nuovo: {book.prezzo.toFixed(2)}€</Text>
+                                                <Text>Usato: {getPrezzoUsato(book.prezzo)}</Text>
+                                            </View>
+                                        </View>
+                                    ))}
+                                </ScrollView>
+                            }
+                        </>}
                     </CustomProgressStep>
                 </CustomProgressSteps>
             </View>
