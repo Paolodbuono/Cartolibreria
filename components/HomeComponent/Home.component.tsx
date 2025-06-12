@@ -58,7 +58,7 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    {stateUser?.nome && <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>}
+                    {stateUser?.nome && <TextComponent style={styles.welcome}> {` Ciao, ${stateUser.nome.toUpperCase()}`}</TextComponent>}
                     <TouchableOpacity style={{ backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
                         <Image style={styles.imgSimple} source={require(semplicePath)} />
                     </TouchableOpacity>

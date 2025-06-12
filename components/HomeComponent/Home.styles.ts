@@ -91,6 +91,6 @@ export const styles = StyleSheet.create({
         color: '#4975be',
         fontSize: md + 2,
         fontWeight: 'bold',
-        marginBottom: -60
+        marginBottom: isTablet ? 0 : -60
     }
 });

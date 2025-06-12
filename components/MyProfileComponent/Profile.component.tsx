@@ -57,7 +57,7 @@ export const ProfileComponent: React.FC<{ userLogged: UserType }> = ({ userLogge
                         <TextComponent style={styles.subTitle}>Città: <BSub title={userLogged.citta} /> </TextComponent>
                         <TextComponent style={styles.subTitle}>Cellulare: <BSub title={userLogged.cellulare} /> </TextComponent>
                     </View>
-                    <View style={{ marginTop: hp('1.5%'), padding: 10 }}>
+                    <View style={{ marginTop: hp('1.5%'), padding: 10, display:"flex", justifyContent:"center" }}>
                         <TextComponent style={styles.subTitle}>Sede presso cui sei registrato: <BSub title={sedeSelezionata.toUpperCase()} /> </TextComponent>
                     </View>
                     <View style={styles.btnPosition}>
