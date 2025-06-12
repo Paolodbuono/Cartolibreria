@@ -78,6 +78,9 @@ const styles = StyleSheet.create({
         ...(isTablet && {
             alignSelf: "end",
             marginRight: "100px",
+            position:"absolute",
+            bottom: 0,
+            right: 150
         })
     },
     button: {
