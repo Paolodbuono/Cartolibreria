@@ -420,7 +420,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     }
 
     return (
-        <View style={{ transform: "scale(0.9)" }}>
+        <View style={{height: "90%", overflow:"auto", paddingTop:"35px"}}>
             <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
             <TextComponent style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</TextComponent>
 
