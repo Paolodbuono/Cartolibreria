@@ -82,8 +82,8 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                 <TextComponent style={styles.title}>Cartolibreria Bonagura srl</TextComponent>
             </>}
             <TextComponent style={styles.subTitle}>Se sei già cliente accedi</TextComponent>
-            {isWeb && <View style={{display:"flex", flexDirection:"row", width:"100%", alignSelf:"center",justifyContent:"center", alignItems:"center"}}>
-                <View style={{...styles.inputContainer, flexGrow: 1, maxWidth: 600}}>
+            {isWeb && <View style={{ display: "flex", flexDirection: "row", width: "100%", alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
+                <View style={{ ...styles.inputContainer, flexGrow: 1, maxWidth: 600 }}>
                     <TextInput
                         style={styles.input}
                         value={username}
@@ -93,7 +93,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                         placeholder="Email"
                     />
                 </View>
-                <View style={{...styles.passwordContainer, flexGrow: 1, maxWidth: 500}}>
+                <View style={{ ...styles.passwordContainer, flexGrow: 1, maxWidth: 500 }}>
                     <TextInput
                         style={{ ...styles.input, flex: 1 }}
                         value={password}
@@ -144,12 +144,12 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
             </>}
 
             <View style={styles.radioContainer}>
-                <TextComponent style={styles.text}>Seleziona sede</TextComponent>
+                <TextComponent style={styles.text}>Seleziona sede :</TextComponent>
                 <RadioGroup
                     radioButtons={radioButtonsData}
                     onPress={setSelectedSede}
                     selectedId={selectedSede}
-                    containerStyle={{ display: "flex", flexDirection: "row", width: wp("80%"), justifyContent: "space-between" }}
+                    containerStyle={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}
                 />
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>

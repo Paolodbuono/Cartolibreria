@@ -54,10 +54,12 @@ export const styles = StyleSheet.create({
     radioContainer: {
         alignItems: 'center',
         marginBottom: 20,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
     },
     text: {
         fontSize: md,
-        marginBottom: 10,
         textAlign: 'center',
     },
     loginButton: {
