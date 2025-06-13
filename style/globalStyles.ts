@@ -27,8 +27,7 @@ export const gs = StyleSheet.create({
         alignContent: "space-between"
     },
     modalHeader: {
-        flex: 3,
-        paddingBottom: 60,
+        flex: 5,
     },
     modalHeaderText: {
         textAlign: 'center',
@@ -61,7 +60,9 @@ export const gs = StyleSheet.create({
         elevation: 5,
     },
     modalActionButtons: {
-        flex: 3
+        flex: 10,
+        width: wp("50%"),
+        margin: "auto"
     },
     modalActionBtnConfirm: {
         padding: 10,
@@ -71,7 +72,6 @@ export const gs = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 20,
         marginTop: 20,
-
     },
     modalActionBtnConfirmLabel: {
         color: 'white',
