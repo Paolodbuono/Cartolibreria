@@ -14,7 +14,9 @@ const footerPath = "../../assets/images/onda.jpg";
 const adozioniPath = "../../assets/images/listaScuole.png";
 const appuntamentoPath = "../../assets/images/calendar.png";
 const personalAreaPath = "../../assets/images/areaRiservata.png";
+const semplicePath = "../../assets/images/simple.png";
 const ordersPath = "../../assets/images/ordini.png";
+
 
 const HomeComponent: React.FC<{}> = () => {
     const router = useRouter();
@@ -52,10 +54,9 @@ const HomeComponent: React.FC<{}> = () => {
             <View style={styles.content}>
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
-                    <TextComponent style={styles.welcome}> {stateUser?.nome ? ` Ciao, ${stateUser.nome.toUpperCase()}` : ""}</TextComponent>
-                    <TouchableOpacity style={{ ...styles.buttonImportant, backgroundColor: 'rgb(37, 211, 102)' }} onPress={() => router.push("/ComodamenteDaCasaView")}>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> E' semplice acquistare e ordinare!</TextComponent>
-                        <TextComponent style={{ color: 'white', fontSize: md + 2, textAlign: "center" }}> Comodamente da casa...  come in negozio!</TextComponent>
+                    {stateUser?.nome && <TextComponent style={styles.welcome}> {`Ciao, ${stateUser.nome.toUpperCase()}`}</TextComponent>}
+                    <TouchableOpacity onPress={() => router.push("/ComodamenteDaCasaView")}>
+                        <Image style={styles.imageSemplice} source={require(semplicePath)} />
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>

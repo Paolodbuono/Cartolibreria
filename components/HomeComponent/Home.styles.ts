@@ -7,13 +7,13 @@ export const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         backgroundColor: '#fff',
-        alignItems:"center"
+        alignItems: "center"
     },
     content: {
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        gap: 60,
+        gap: 30,
         marginTop: 10
     },
     buttonRow: {
@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-around',
         gap: 60,
     },
-    buttonActionRow:{
+    buttonActionRow: {
         padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -48,10 +48,14 @@ export const styles = StyleSheet.create({
     image: {
         margin: "auto",
     },
+    imageSemplice: {
+        width: wp('80%'),
+        height: 50,
+    },
     imgBanner: {
-        marginTop: 10,
         width: wp('100%'),
         height: 100,
+        marginBottom: -10,
     },
     imgFooter: {
         width: wp('100%'),
@@ -61,6 +65,7 @@ export const styles = StyleSheet.create({
         color: '#4975be',
         fontSize: md + 2,
         fontWeight: 'bold',
-        marginBottom: -60
+        marginBottom: -20,
+        marginTop: -10
     }
 });
