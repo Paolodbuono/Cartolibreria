@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cartolibreriabonagurasrl"
+      "bundleIdentifier": "com.cartolibreriabonagurasrl",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -28,7 +31,10 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Allan-Regular.ttf","./assets/fonts/Allan-Bold.ttf"]
+          "fonts": [
+            "./assets/fonts/Allan-Regular.ttf",
+            "./assets/fonts/Allan-Bold.ttf"
+          ]
         }
       ]
     ],
