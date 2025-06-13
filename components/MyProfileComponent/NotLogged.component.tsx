@@ -76,37 +76,73 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     return (
         <View style={styles.container}>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
-            <TextComponent style={styles.title}>Benvenuto nell'area riservata di</TextComponent>
-            <TextComponent style={styles.title}>Cartolibreria Bonagura srl</TextComponent>
+            {isWeb && <TextComponent style={styles.title}>Benvenuto nell'area riservata di Cartolibreria Bonagura srl</TextComponent>}
+            {!isWeb && <>
+                <TextComponent style={styles.title}>Benvenuto nell'area riservata di</TextComponent>
+                <TextComponent style={styles.title}>Cartolibreria Bonagura srl</TextComponent>
+            </>}
             <TextComponent style={styles.subTitle}>Se sei già cliente accedi</TextComponent>
-            <View style={styles.inputContainer}>
-                <TextInput
-                    style={styles.input}
-                    value={username}
-                    onChangeText={setUsername}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder="Email"
-                />
-            </View>
-            <View style={styles.passwordContainer}>
-                <TextInput
-                    style={{ ...styles.input, flex: 1 }}
-                    value={password}
-                    onChangeText={setPassword}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder="Password"
-                />
-                <View style={{
-                    borderWidth: 1,
-                    borderColor: '#ccc',
-                    borderRadius: 50,
-                    marginLeft: 10,
-                    marginBottom: 5
-                }}>
+            {isWeb && <View style={{display:"flex", flexDirection:"row", width:"100%", alignSelf:"center",justifyContent:"center", alignItems:"center"}}>
+                <View style={{...styles.inputContainer, flexGrow: 1, maxWidth: 600}}>
+                    <TextInput
+                        style={styles.input}
+                        value={username}
+                        onChangeText={setUsername}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Email"
+                    />
                 </View>
-            </View>
+                <View style={{...styles.passwordContainer, flexGrow: 1, maxWidth: 500}}>
+                    <TextInput
+                        style={{ ...styles.input, flex: 1 }}
+                        value={password}
+                        onChangeText={setPassword}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Password"
+                    />
+                    <View style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        borderRadius: 50,
+                        marginLeft: 10,
+                        marginBottom: 5
+                    }}>
+                    </View>
+                </View>
+            </View>}
+            {!isWeb && <>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.input}
+                        value={username}
+                        onChangeText={setUsername}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Email"
+                    />
+                </View>
+                <View style={styles.passwordContainer}>
+                    <TextInput
+                        style={{ ...styles.input, flex: 1 }}
+                        value={password}
+                        onChangeText={setPassword}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Password"
+                    />
+                    <View style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        borderRadius: 50,
+                        marginLeft: 10,
+                        marginBottom: 5
+                    }}>
+                    </View>
+                </View>
+            </>}
+
             <View style={styles.radioContainer}>
                 <TextComponent style={styles.text}>Seleziona sede</TextComponent>
                 <RadioGroup
