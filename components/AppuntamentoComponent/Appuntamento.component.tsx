@@ -303,8 +303,10 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     trigger: notifTime,
                 };
 
-
-                const notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
+                let notificationId = '';
+                if(!isWeb) {
+                    notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
+                }
 
                 const jsonPrenotazione = {
                     id: result.id,
