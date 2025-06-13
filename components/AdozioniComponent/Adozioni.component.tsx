@@ -78,7 +78,7 @@ export const AdozioniComponent = ({ }) => {
         updateState({ isLoading: true })
         try {
 
-            const sedeSelezionata = isWeb ? localStorage.getItem('sedeSelezionata') :  await AsyncStorage.getItem('sedeSelezionata')
+            const sedeSelezionata = isWeb ? localStorage.getItem('sedeSelezionata') : await AsyncStorage.getItem('sedeSelezionata')
 
             if (SEDI[0] === sedeSelezionata || SEDI[1] === sedeSelezionata) {
                 updateState({ sedeSelezionata: sedeSelezionata, nextButtonFirstStepEnabled: false, lockSede: true });

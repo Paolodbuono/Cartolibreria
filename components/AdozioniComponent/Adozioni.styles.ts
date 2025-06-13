@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     },
     sedeContainer: {
         width: '100%',
-        height: '100%',
+        height: '110%',
         borderRadius: 10,
         overflow: 'hidden',
         borderWidth: 4,
