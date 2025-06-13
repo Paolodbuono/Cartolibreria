@@ -1,6 +1,10 @@
 import { bg, md } from '@/constants/FontSize';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+
+const { width } = Dimensions.get('window');
+
+const isTablet = width > 768;
 
 export const gs = StyleSheet.create({
     spinner: {
@@ -27,7 +31,14 @@ export const gs = StyleSheet.create({
         alignContent: "space-between"
     },
     modalHeader: {
-        flex: 5,
+        ...(isTablet && {
+            flex: 5,
+        }),
+        ...(!isTablet && {
+            flex: 3,
+            paddingBottom: 60,
+        })
+
     },
     modalHeaderText: {
         textAlign: 'center',
@@ -60,9 +71,14 @@ export const gs = StyleSheet.create({
         elevation: 5,
     },
     modalActionButtons: {
-        flex: 10,
-        width: wp("50%"),
-        margin: "auto"
+        ...(isTablet && {
+            flex: 3
+        }),
+        ...(isTablet && {
+            flex: 10,
+            width: wp("50%"),
+            margin: "auto"
+        }),
     },
     modalActionBtnConfirm: {
         padding: 10,
@@ -78,7 +94,7 @@ export const gs = StyleSheet.create({
         fontSize: md,
         height: 35,
         textAlign: 'center',
-        textAlignVertical:"center",
+        textAlignVertical: "center",
         fontWeight: 'bold',
     }
 

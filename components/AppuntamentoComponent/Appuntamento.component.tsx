@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { View, Alert, Modal, Text, Button, ActivityIndicator as Spinner, TouchableOpacity } from 'react-native';
+import { View, Alert, Modal, Text, Button, ActivityIndicator as Spinner, TouchableOpacity, Dimensions } from 'react-native';
 
 import { gs } from '@/style/globalStyles';
 import { styles } from './Appuntamento.styles';
@@ -22,6 +22,10 @@ import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-nat
 import { Platform } from "react-native";
 
 const isWeb = Platform.OS === "web";
+
+const { width } = Dimensions.get('window');
+
+const isTablet = width > 768;
 
 const AppuntamentoComponent: React.FC<{}> = () => {
 
@@ -416,7 +420,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     }
 
     return (
-        <View style={{transform:"scale(0.9)"}}>
+        <View style={{ transform: "scale(0.9)" }}>
             <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
             <TextComponent style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</TextComponent>
 
@@ -483,7 +487,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 </View>
             </View>
 
-            <TouchableOpacity style={{...styles.button, maxWidth: 200, margin: "auto"}} onPress={checkDate}>
+            <TouchableOpacity style={{ ...styles.button, maxWidth: 200, margin: "auto" }} onPress={checkDate}>
                 <TextComponent style={{ color: 'white', fontSize: md }}>Cerca disponibilità orario</TextComponent>
             </TouchableOpacity>
 
@@ -500,7 +504,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                 </TextComponent>
                             </View>
 
-                            <View style={{ marginTop: 20, marginBottom: 200, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 20, ...(isTablet && { marginBottom: 200 }), flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10, padding: 20 }} onPress={toggleModalCheckDate}>
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>

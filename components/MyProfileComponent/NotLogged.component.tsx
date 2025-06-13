@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RadioGroup, { RadioButtonProps } from 'react-native-radio-buttons-group';
-import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner, Platform } from 'react-native';
+import { View, TouchableOpacity, TextInput, Text, Modal, ActivityIndicator as Spinner, Platform, Dimensions } from 'react-native';
 
 import { gs } from '@/style/globalStyles';
 import { styles } from './MyProfile.styles';
@@ -11,6 +11,10 @@ import TextComponent from '../Commons/Text.component';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const isWeb = Platform.OS === "web";
+
+const { width } = Dimensions.get('window');
+
+const isTablet = width > 768;
 
 export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     const router = useRouter();
@@ -149,7 +153,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     radioButtons={radioButtonsData}
                     onPress={setSelectedSede}
                     selectedId={selectedSede}
-                    containerStyle={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}
+                    containerStyle={{ display: "flex", flexDirection: "row", ...(isTablet ? { width: wp("80%"), justifyContent: "space-between" } : { justifyContent: "flex-start" }) }}
                 />
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
