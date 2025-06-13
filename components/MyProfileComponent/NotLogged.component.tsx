@@ -153,7 +153,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     radioButtons={radioButtonsData}
                     onPress={setSelectedSede}
                     selectedId={selectedSede}
-                    containerStyle={{ display: "flex", flexDirection: "row", ...(isTablet ? { width: wp("80%"), justifyContent: "space-between" } : { justifyContent: "flex-start" }) }}
+                    containerStyle={{ display: "flex", flexDirection: "row", ...(!isTablet ? { width: wp("80%"), justifyContent: "space-between" } : { justifyContent: "flex-start" }) }}
                 />
             </View>
             <TouchableOpacity style={styles.loginButton} onPress={onLoginPress}>
