@@ -80,13 +80,13 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
     return (
         <View style={styles.container}>
             {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
-            {isWeb && <TextComponent style={styles.title}>Benvenuto nell'area riservata di Cartolibreria Bonagura srl</TextComponent>}
-            {!isWeb && <>
+            {isTablet && <TextComponent style={styles.title}>Benvenuto nell'area riservata di Cartolibreria Bonagura srl</TextComponent>}
+            {!isTablet && <>
                 <TextComponent style={styles.title}>Benvenuto nell'area riservata di</TextComponent>
                 <TextComponent style={styles.title}>Cartolibreria Bonagura srl</TextComponent>
             </>}
             <TextComponent style={styles.subTitle}>Se sei già cliente accedi</TextComponent>
-            {isWeb && <View style={{ display: "flex", flexDirection: "row", width: "100%", alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
+            {isTablet && <View style={{ display: "flex", flexDirection: "row", width: "100%", alignSelf: "center", justifyContent: "center", alignItems: "center" }}>
                 <View style={{ ...styles.inputContainer, flexGrow: 1, maxWidth: 600 }}>
                     <TextInput
                         style={styles.input}
@@ -116,7 +116,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     </View>
                 </View>
             </View>}
-            {!isWeb && <>
+            {!isTablet && <>
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.input}
