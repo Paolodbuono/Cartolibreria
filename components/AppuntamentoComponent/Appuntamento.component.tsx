@@ -153,40 +153,72 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     const handleToggleModalInserInfo = () => { setModalInserInfoVisibile(!modalInserInfoVisibile); };
 
     const handleRemovePrenotazione = async () => {
-        Alert.alert("Cancella prenotazione", "Sei sicuro di voler cancellare la tua prenotazione?", [
-            {
-                text: "Annulla",
-                style: "cancel"
-            },
-            {
-                text: "Conferma",
-                onPress: async () => {
-                    try {
-                        const prenotazioneJson = isWeb ? localStorage.getItem('prenotazione') : await AsyncStorage.getItem('prenotazione');
-                        if (!prenotazioneJson) {
-                            throw new Error('Nessuna prenotazione trovata');
-                        }
-                        const prenotazione = JSON.parse(prenotazioneJson);
+        if (isWeb) {
 
-                        // Rimuovi la notifica utilizzando l'ID salvato
-                        await Notifications.cancelScheduledNotificationAsync(prenotazione.notificationId);
+            const conferma = window.confirm("Sei sicuro di voler cancellare la tua prenotazione?");
 
-                    } catch (errro: any) {
-                        console.log("eh", errro);
-                    } finally {
-                        if (isWeb) {
-                            localStorage.removeItem('prenotazione');
-                        } else {
-                            await AsyncStorage.removeItem('prenotazione');
-                        }
-
-                        // Aggiorna lo stato dell'app o esegui altre azioni necessarie
-                        setPrenotazionePresente(false);
+            if (conferma) {
+                try {
+                    const prenotazioneJson = localStorage.getItem('prenotazione');
+                    if (!prenotazioneJson) {
+                        throw new Error('Nessuna prenotazione trovata');
                     }
+
+                    const prenotazione = JSON.parse(prenotazioneJson);
+
+                    // Rimuovi la notifica (se usi un sistema di notifiche web come Service Workers)
+                    if (prenotazione.notificationId) {
+                        // Implementa la logica per annullare la notifica
+                        console.log("Notifica annullata:", prenotazione.notificationId);
+                    }
+
+                } catch (error) {
+                    console.error("Errore durante la cancellazione:", error);
+                } finally {
+                    localStorage.removeItem('prenotazione');
+
+                    // Aggiorna lo stato dell'app (se necessario)
+                    setPrenotazionePresente(false);
                 }
             }
-        ]
-        );
+        } else {
+
+            Alert.alert("Cancella prenotazione", "Sei sicuro di voler cancellare la tua prenotazione?", [
+                {
+                    text: "Annulla",
+                    style: "cancel"
+                },
+                {
+                    text: "Conferma",
+                    onPress: async () => {
+                        try {
+                            const prenotazioneJson = isWeb ? localStorage.getItem('prenotazione') : await AsyncStorage.getItem('prenotazione');
+                            if (!prenotazioneJson) {
+                                throw new Error('Nessuna prenotazione trovata');
+                            }
+                            const prenotazione = JSON.parse(prenotazioneJson);
+
+                            // Rimuovi la notifica utilizzando l'ID salvato
+                            await Notifications.cancelScheduledNotificationAsync(prenotazione.notificationId);
+
+                        } catch (errro: any) {
+                            console.log("eh", errro);
+                        } finally {
+                            if (isWeb) {
+                                localStorage.removeItem('prenotazione');
+                            } else {
+                                await AsyncStorage.removeItem('prenotazione');
+                            }
+
+                            // Aggiorna lo stato dell'app o esegui altre azioni necessarie
+                            setPrenotazionePresente(false);
+                        }
+                    }
+                }
+            ]
+            );
+        }
+
     };
 
     const checkDate = () => {
@@ -246,12 +278,14 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 console.log(currentHour < bookingHour ? 'Ora prenotazione successiva ad ora attuale' : 'Ora prenotazione uguale ad ora attuale e minuti attuali minori di minuti selezionati');
                 submitForm(ora);
             } else {
+                isWeb? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") : 
                 Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
             }
         } else if (currentDate < bookingDate) {
             submitForm(`${bookingHour}:${bookingMinute}:00`);
         } else {
-            Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
+            isWeb? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") : 
+                Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
         }
     };
 
@@ -304,7 +338,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 };
 
                 let notificationId = '';
-                if(!isWeb) {
+                if (!isWeb) {
                     notificationId = await Notifications.scheduleNotificationAsync(schedulingOptions);
                 }
 
