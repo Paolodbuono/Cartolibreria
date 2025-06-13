@@ -500,7 +500,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                 </TextComponent>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 20, marginBottom: 200,flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10, padding: 20 }} onPress={toggleModalCheckDate}>
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
