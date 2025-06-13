@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: md,
+    fontSize: bg,
     textAlign: 'center',
   },
 });

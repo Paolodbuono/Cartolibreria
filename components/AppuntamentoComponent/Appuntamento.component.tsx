@@ -403,7 +403,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
             <TextComponent style={styles.codicePrenotazione}>Numero prenotazione</TextComponent>
             <TextComponent style={styles.textRiepilogoNumeroPrenotazione}>{datiPrenotazionePresente?.id}</TextComponent>
             <View style={styles.containeButtonCancella}>
-                <Button title="Cancella Prenotazione" onPress={handleRemovePrenotazione} />
+                <Button title="Se sei impedito cancella la prenotazione e puoi riprenotare" onPress={handleRemovePrenotazione} />
             </View>
         </View >
     </>)
