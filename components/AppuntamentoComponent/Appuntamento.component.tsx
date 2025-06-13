@@ -278,13 +278,13 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 console.log(currentHour < bookingHour ? 'Ora prenotazione successiva ad ora attuale' : 'Ora prenotazione uguale ad ora attuale e minuti attuali minori di minuti selezionati');
                 submitForm(ora);
             } else {
-                isWeb? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") : 
-                Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
+                isWeb ? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") :
+                    Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
             }
         } else if (currentDate < bookingDate) {
             submitForm(`${bookingHour}:${bookingMinute}:00`);
         } else {
-            isWeb? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") : 
+            isWeb ? window.alert("L'orario selezionato non è valido, scegliere un orario che non è già passato") :
                 Alert.alert('Prenotazione non disponibile', "L'orario selezionato non è valido, scegliere un orario che non è già passato");
         }
     };
@@ -416,7 +416,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     }
 
     return (
-        <>
+        <View style={{transform:"scale(0.9)"}}>
             <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
             <TextComponent style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</TextComponent>
 
@@ -483,7 +483,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.button} onPress={checkDate}>
+            <TouchableOpacity style={{...styles.button, maxWidth: 200, margin: "auto"}} onPress={checkDate}>
                 <TextComponent style={{ color: 'white', fontSize: md }}>Cerca disponibilità orario</TextComponent>
             </TouchableOpacity>
 
@@ -500,7 +500,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                 </TextComponent>
                             </View>
 
-                            <View style={{ marginTop: 20, marginBottom: 200,flexDirection: 'row' }}>
+                            <View style={{ marginTop: 20, marginBottom: 200, flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10, padding: 20 }} onPress={toggleModalCheckDate}>
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
@@ -555,7 +555,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                     prenotazioneDate={prenotazioneDate}
                 />
             </Modal>
-        </>
+        </View>
     );
 };
 
