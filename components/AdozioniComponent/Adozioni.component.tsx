@@ -235,24 +235,6 @@ export const AdozioniComponent = ({ }) => {
                     >
                         <ScrollView contentContainerStyle={styles.scrollViewContent}>
                             <View style={styles.imagesContainer}>
-                                {/* Sede Poggiomarino */}
-                                <TouchableOpacity
-                                    onPress={() => selectSede(0)}
-                                    disabled={state.lockSede && state.sedeSelezionata === SEDI[1]}
-                                    style={styles.imageWrapper}
-                                >
-                                    <View style={[styles.sedeContainer, state.sedeSelezionata === SEDI[0] && styles.selectedSede]}>
-                                        <Image
-                                            style={[
-                                                styles.sedeImage,
-                                                state.lockSede && state.sedeSelezionata === SEDI[1] && styles.disabledImage,
-                                            ]}
-                                            source={require('@/assets/images/sedePoggiomarino.jpg')}
-                                            resizeMode="cover"
-                                        />
-                                    </View>
-                                </TouchableOpacity>
-
                                 {/* Sede Pompei */}
                                 <TouchableOpacity
                                     onPress={() => selectSede(1)}
@@ -266,6 +248,23 @@ export const AdozioniComponent = ({ }) => {
                                                 state.lockSede && state.sedeSelezionata === SEDI[0] && styles.disabledImage,
                                             ]}
                                             source={require('@/assets/images/sedePompei.jpg')}
+                                            resizeMode="cover"
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                                {/* Sede Poggiomarino */}
+                                <TouchableOpacity
+                                    onPress={() => selectSede(0)}
+                                    disabled={state.lockSede && state.sedeSelezionata === SEDI[1]}
+                                    style={styles.imageWrapper}
+                                >
+                                    <View style={[styles.sedeContainer, state.sedeSelezionata === SEDI[0] && styles.selectedSede]}>
+                                        <Image
+                                            style={[
+                                                styles.sedeImage,
+                                                state.lockSede && state.sedeSelezionata === SEDI[1] && styles.disabledImage,
+                                            ]}
+                                            source={require('@/assets/images/sedePoggiomarino.jpg')}
                                             resizeMode="cover"
                                         />
                                     </View>
