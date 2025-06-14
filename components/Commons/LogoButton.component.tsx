@@ -23,4 +23,4 @@ function LogoButtonComponent() {
 
 export default LogoButtonComponent;
 
-const styles = StyleSheet.create({ image: { width: isTablet ? 75 : 50, height: isTablet ? 75 : 50 } });
+const styles = StyleSheet.create({ image: { width: isTablet ? 75 : 35, height: isTablet ? 75 : 35 } });

@@ -105,7 +105,7 @@ export default function Layout() {
           headerRight: () => <BurgerButtonComponent onPress={getRoutes} />,
           headerShadowVisible: false,
           headerStyle: {
-            height: isTablet ? 100 : undefined,
+            height: isTablet ? 100 : 45,
             backgroundColor: isTablet ? "unset" : ""
           },
         }}
