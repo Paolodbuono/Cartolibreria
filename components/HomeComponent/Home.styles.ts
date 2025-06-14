@@ -81,16 +81,18 @@ export const styles = StyleSheet.create({
         zIndex: -1
     },
     imgFooterTablet: {
-        position: "absolute",
-        bottom: -700,
+        position: 'absolute',
+        bottom: 0,
         width: wp('100%'),
-        height: 1000,
-        zIndex: -1
-    },
-    welcome: {
-        color: '#4975be',
+        height: 485,
+        resizeMode: 'cover',
+        zIndex: -1,
+        opacity: 0.6,
+      },
+welcome: {
+    color: '#4975be',
         fontSize: md + 2,
-        fontWeight: 'bold',
-        marginBottom: isTablet ? 0 : -60
-    }
+            fontWeight: 'bold',
+                marginBottom: isTablet ? 0 : -60
+}
 });
