@@ -34,7 +34,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     const [prenotazionePresente, setPrenotazionePresente] = useState<boolean>(false);
     const [datiPrenotazionePresente, setDatiPrenotazionePresente] = useState<PrenotazioneData>();
     const [giornoPrenotazione, setGiornoPrenotazione] = useState<Date>(moment().toDate());
-    const [selectedOrario, setSelectedOrario] = useState<number>(9);
+    const [selectedOrario, setSelectedOrario] = useState<number>(8);
     const [selectedMinuti, setSelectedMinuti] = useState<number>(0);
     const [orariMattino, setOrariMattino] = useState<{ key: number; label: string }[]>([]);
     const [minutiMattino, setMinutiMattino] = useState<{ key: number; label: string }[]>([]);
@@ -420,7 +420,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     }
 
     return (
-        <View style={{height: "90%", overflow:"auto", paddingTop:"35px"}}>
+        <View style={{ height: "90%", overflow: "auto", paddingTop: "35px" }}>
             <TextComponent style={styles.title}>Prenota un'appuntamento... e salta la fila!</TextComponent>
             <TextComponent style={styles.subTitle}>Seleziona sede dove vuoi prenotarti</TextComponent>
 
@@ -504,15 +504,12 @@ const AppuntamentoComponent: React.FC<{}> = () => {
                                 </TextComponent>
                             </View>
 
-                            <View style={{ marginTop: 20, ...(isTablet && { marginBottom: 200 }), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 20, marginBottom: 200, flexDirection: 'row' }}>
                                 <TouchableOpacity style={{ backgroundColor: 'red', paddingVertical: 12, borderRadius: 8, marginRight: 10, padding: 20 }} onPress={toggleModalCheckDate}>
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Annulla</TextComponent>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ backgroundColor: 'blue', paddingVertical: 12, borderRadius: 8, marginLeft: 10, padding: 20 }}
-                                    onPress={() => {
-                                        setModalCheckDateVisibile(false);
-                                        setModalInserInfoVisibile(true);
-                                    }}
+                                    onPress={() => { setModalCheckDateVisibile(false); setModalInserInfoVisibile(true); }}
                                 >
                                     <TextComponent style={{ color: 'white', fontSize: bg, textAlign: 'center' }}>Conferma</TextComponent>
                                 </TouchableOpacity>
