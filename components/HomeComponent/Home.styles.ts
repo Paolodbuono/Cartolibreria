@@ -88,11 +88,15 @@ export const styles = StyleSheet.create({
         resizeMode: 'cover',
         zIndex: -1,
         opacity: 0.6,
-      },
-welcome: {
-    color: '#4975be',
+    },
+    welcome: {
+        color: '#4975be',
         fontSize: md + 2,
-            fontWeight: 'bold',
-                marginBottom: isTablet ? 0 : -60
-}
+        fontWeight: 'bold',
+        marginBottom: isTablet ? 0 : -60,
+        ...(!isTablet && {
+            position: "absolute",
+            top: -26
+        })
+    }
 });
