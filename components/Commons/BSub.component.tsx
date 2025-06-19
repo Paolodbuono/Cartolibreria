@@ -10,5 +10,5 @@ export const BSub: React.FC<{ title: string }> = ({ title }) => {
 }
 
 const styles = StyleSheet.create({
-    subTitleBOLD: { fontSize: md, textAlign: 'center', fontWeight: '800', color: '#4975be', top: -5 },
+    subTitleBOLD: { fontSize: md, textAlign: 'center', fontWeight: '800', color: '#4975be' },
 });
