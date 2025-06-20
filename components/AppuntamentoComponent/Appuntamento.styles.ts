@@ -40,15 +40,15 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   title: {
-    fontSize: bg,
+    fontSize: isTablet ? bg : sm + 3,
     textAlign: 'center',
     fontWeight: '800',
     color: '#EB5F19',
     top: -30,
-    width: wp('90%'),
+    width: isTablet ? wp('90%') : undefined, 
   },
   subTitle: {
-    fontSize: md,
+    fontSize: sm + 5,
     textAlign: 'center',
     fontWeight: '800',
     color: '#4975be',
