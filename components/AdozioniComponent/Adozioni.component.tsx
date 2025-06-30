@@ -365,7 +365,7 @@ export const AdozioniComponent = ({ }) => {
                                     ))}
                                 </View>
                             </>}
-                            {Platform.OS !== 'web' &&
+                            {(Platform.OS !== 'web' || (Platform.OS === 'web' && !isTablet)) &&
                                 <ScrollView>
                                     {state.books.map((book, idx) => (
                                         <View key={idx}>
