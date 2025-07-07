@@ -32,7 +32,6 @@ interface State {
     corsiPickerItem: string[];
     sezioniPickerItem: string[];
     classiPickerItem: string[];
-    availableSchoolsIds: number[];
     coursesName: string[];
     sectionsName: string[];
     classesName: string[];
@@ -59,7 +58,6 @@ const initialState: State = {
     corsiPickerItem: [],
     sezioniPickerItem: [],
     classiPickerItem: [],
-    availableSchoolsIds: [],
     coursesName: [],
     sectionsName: [],
     classesName: [],
@@ -137,7 +135,7 @@ export const AdozioniComponent = ({ }) => {
             updateState({ showLoadingBooks: true });
             console.log("state", state)
 
-            const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${state.sedeSelezionata}&school=${state.availableSchoolsIds[state.selectedIdxScuola ?? 0]}&type=${encodeURIComponent(state.coursesName[state.selectedIdxCorso])}&class=${state.classesName[state.selectedIdxClasse]}&section=${state.sectionsName[state.selectedIdxSezione]}`;
+            const url = `https://www.libreriabonagura.it/micro/getBooks.asp?libreria=${state.sedeSelezionata}&school=${state.selectedIdxScuola}&type=${encodeURIComponent(state.coursesName[state.selectedIdxCorso])}&class=${state.classesName[state.selectedIdxClasse]}&section=${state.sectionsName[state.selectedIdxSezione]}`;
             const response = await fetch(url);
             const booksData = await response.json();
 
@@ -170,10 +168,9 @@ export const AdozioniComponent = ({ }) => {
 
                 updateState({
                     nomiScuolePickerItem: tempSchoolsName.map(el => <Picker.Item key={el.id} label={el.nome} value={JSON.stringify(el)} />),
-                    availableSchoolsIds: tempSchoolsIds
                 });
 
-                await fetchOtherInfo(tempSchoolsIds[0]);
+                await fetchOtherInfo(tempSchoolsIds[0],tempSchoolsName[0].nome);
             }
         } catch (error) {
             console.error('Errore durante la richiesta delle scuole:', error);
@@ -182,7 +179,7 @@ export const AdozioniComponent = ({ }) => {
         }
     };
 
-    const fetchOtherInfo = async (id: number) => {
+    const fetchOtherInfo = async (id: number, itemValue: string) => {
         try {
             updateState({ isLoadingOtherInfo: true });
 
@@ -202,7 +199,12 @@ export const AdozioniComponent = ({ }) => {
                 corsiPickerItem: coursesName.data.map((el: { tipo: string | undefined; }) => <Picker.Item key={el.tipo} label={el.tipo} value={el.tipo} />),
                 sezioniPickerItem: sectoinsName.data.map((el: string | undefined) => <Picker.Item key={el} label={el} value={el} />),
                 classiPickerItem: classesName.data.map((el: { classe: string | undefined; }) => <Picker.Item key={el.classe} label={el.classe} value={el.classe} />),
-                isLoadingOtherInfo: false
+                isLoadingOtherInfo: false,
+                selectedIdxScuola: id,
+                selectedScuola: itemValue,
+                selectedIdxCorso: 0,
+                selectedIdxClasse: 0,
+                selectedIdxSezione: 0
             });
 
         } catch (error) {
@@ -309,8 +311,7 @@ export const AdozioniComponent = ({ }) => {
                                         selectedValue={state.selectedScuola}
                                         onValueChange={(itemValue) => {
                                             const item = JSON.parse(itemValue);
-                                            updateState({ selectedIdxScuola: item.id, selectedScuola: itemValue });
-                                            fetchOtherInfo(item.id);
+                                            fetchOtherInfo(item.id,itemValue);
                                         }}>
                                         {state.nomiScuolePickerItem}
                                     </Picker>
