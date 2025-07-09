@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'expo-router';
-import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, Image, Platform } from 'react-native';
+import { View, ActivityIndicator as Spinner, Text, TouchableOpacity, FlatList, Image, Platform, Dimensions } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
@@ -12,6 +12,7 @@ import TextComponent from '../Commons/Text.component';
 import { bg, md } from '@/constants/FontSize';
 
 const isWeb = Platform.OS === "web";
+
 
 const orderStatuses: OrderStatusType = {
     1: "ORDINATO NUOVO",
@@ -30,6 +31,10 @@ const MyOrdersComponent = ({ }) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isLogged, setIsLogged] = useState<boolean>(false);
     const [myOrders, setMyOrders] = useState<Array<OrderType>>([]);
+
+    const { width } = Dimensions.get('window');
+
+    const isTablet = width > 768;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -113,11 +118,11 @@ const MyOrdersComponent = ({ }) => {
                         style={{
                             width: '100%',
                             ...(isWeb && {
-                                maxHeight: "80vh",
+                                maxHeight: isTablet ? "80vh" : "70vh",
                                 maxWidth: "95vw",
                                 margin: "auto",
                                 overflowY: "scroll"
-                            })
+                            }),
                         }}
                         data={myOrders}
                         renderItem={(item) => <RenderMyOrders info={item} />}
