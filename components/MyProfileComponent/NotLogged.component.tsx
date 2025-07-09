@@ -91,7 +91,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     <TextInput
                         style={styles.input}
                         value={username}
-                        onChangeText={setUsername}
+                        onChangeText={(text) => setUsername(text.toLowerCase())}
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder="Email"
@@ -101,7 +101,7 @@ export const NotLoggedComponent: React.FC<{}> = ({ }) => {
                     <TextInput
                         style={{ ...styles.input, flex: 1 }}
                         value={password}
-                        onChangeText={setPassword}
+                        onChangeText={(text) => setPassword(text.toLowerCase())}
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder="Password"
