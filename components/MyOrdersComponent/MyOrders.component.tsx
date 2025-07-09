@@ -110,7 +110,15 @@ const MyOrdersComponent = ({ }) => {
                 {isLogged && <>
                     <Image style={{ maxWidth: wp('100%'), height: 120, marginTop: 10, resizeMode: 'contain' }} source={require('../../assets/images/ordini_images.png')} />
                     <FlatList
-                        style={{ width: '100%' }}
+                        style={{
+                            width: '100%',
+                            ...(isWeb && {
+                                maxHeight: "80vh",
+                                maxWidth: "95vw",
+                                margin: "auto",
+                                overflowY: "scroll"
+                            })
+                        }}
                         data={myOrders}
                         renderItem={(item) => <RenderMyOrders info={item} />}
                         keyExtractor={(item, index) => index.toString()}
