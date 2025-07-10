@@ -52,6 +52,10 @@ export const styles = StyleSheet.create({
         width: wp('80%'),
         height: 50,
     },
+    imageSemplice2: {
+        width: wp('80%'),
+        height: 70,
+    },
     imgBanner: {
         width: wp('100%'),
         height: 100,

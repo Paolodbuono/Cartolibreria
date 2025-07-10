@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Stack, useRouter } from 'expo-router';
-import { View, Image, TouchableOpacity, ActivityIndicator as Spinner } from 'react-native';
+import { View, Image, TouchableOpacity, ActivityIndicator as Spinner, Linking } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserType, emptyUser } from '@/types/UserType';
 import { gs } from '@/style/globalStyles';
@@ -15,6 +15,7 @@ const adozioniPath = "../../assets/images/listaScuole.png";
 const appuntamentoPath = "../../assets/images/calendar.png";
 const personalAreaPath = "../../assets/images/areaRiservata.png";
 const semplicePath = "../../assets/images/simple.png";
+const semplicePath2 = "../../assets/images/simple2.png";
 const ordersPath = "../../assets/images/ordini.png";
 
 
@@ -55,8 +56,11 @@ const HomeComponent: React.FC<{}> = () => {
                 {isLoading && <View style={gs.spinner} children={<Spinner size="large" />} />}
                 {!isLoading && <>
                     {stateUser?.nome && <TextComponent style={styles.welcome}> {`Ciao, ${stateUser.nome.toUpperCase()}`}</TextComponent>}
+                    <TouchableOpacity onPress={() => Linking.openURL('https://www.libreriabonagura.it')}>
+                        <Image style={styles.imageSemplice2} source={require(semplicePath)} />
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => router.push("/ComodamenteDaCasaView")}>
-                        <Image style={styles.imageSemplice} source={require(semplicePath)} />
+                        <Image style={styles.imageSemplice} source={require(semplicePath2)} />
                     </TouchableOpacity>
                     <View style={styles.buttonRow}>
                         <View style={styles.buttonContainer}>
