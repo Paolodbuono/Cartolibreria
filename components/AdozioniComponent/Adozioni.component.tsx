@@ -261,7 +261,7 @@ export const AdozioniComponent = ({ }) => {
                                                 styles.sedeImage,
                                                 state.lockSede && state.sedeSelezionata === SEDI[0] && styles.disabledImage,
                                             ]}
-                                            source={require('@/assets/images/sedePompei.jpg')}
+                                            source={require('@/assets/images/sedePompei.png')}
                                             resizeMode="cover"
                                         />
                                     </View>
