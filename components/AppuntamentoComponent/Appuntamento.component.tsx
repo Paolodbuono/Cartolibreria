@@ -394,7 +394,7 @@ const AppuntamentoComponent: React.FC<{}> = () => {
     if (isLoading) return <View style={gs.spinner} children={<Spinner size="large" />} />;
 
     if (prenotazionePresente) return (<>
-        <View >
+        <View style={{marginTop: 50}}>
             <TextComponent style={styles.title}>Grazie per la preferenza che ci hai accordato!</TextComponent>
             <TextComponent style={styles.textRiepilogoPrenotazione}>Presentati con questo ticket... e salti la fila! </TextComponent>
             <TextComponent style={styles.textRiepilogoPrenotazione}>Lo trovi nella sezione appuntamenti</TextComponent>
