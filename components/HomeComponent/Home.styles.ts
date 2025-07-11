@@ -21,6 +21,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         gap: 60,
+        minHeight: 125
     },
     buttonActionRow: {
         padding: 10,
@@ -71,5 +72,8 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: -20,
         marginTop: -10
+    },
+    scrollContent: {
+        paddingBottom: 20
     }
 });
