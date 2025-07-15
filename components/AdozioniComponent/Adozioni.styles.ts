@@ -96,7 +96,7 @@ export const styles = StyleSheet.create({
         height: hp("68%"),
         overflowY: "scroll",
         flexWrap: "wrap",
-    flexDirection: "row"
+        flexDirection: "row"
     },
     bookItem: {
         width: 200,
@@ -111,4 +111,11 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: "#007BFF",
     },
+    sezioneTitolo: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#800000',
+        marginTop: 20,
+        marginBottom: 10
+    }
 });

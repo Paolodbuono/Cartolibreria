@@ -35,10 +35,11 @@ interface State {
     coursesName: string[];
     sectionsName: string[];
     classesName: string[];
-    books: any[];
     lockSede: boolean;
     selectedCitta: string;
     selectedScuola: string
+    LibriDaAcquistare: any[];
+    LibriPosseduti: any[];
 }
 
 const initialState: State = {
@@ -61,7 +62,8 @@ const initialState: State = {
     coursesName: [],
     sectionsName: [],
     classesName: [],
-    books: [],
+    LibriDaAcquistare: [],
+    LibriPosseduti: [],
     lockSede: false,
     selectedCitta: '',
     selectedScuola: ''
@@ -139,7 +141,7 @@ export const AdozioniComponent = ({ }) => {
             const response = await fetch(url);
             const booksData = await response.json();
 
-            updateState({ books: booksData.data, showLoadingBooks: false });
+            updateState({ LibriDaAcquistare: booksData.LibriDaAcquistare, showLoadingBooks: false, LibriPosseduti: booksData.LibriPosseduti });
         } catch (error) {
             console.error('Errore durante la richiesta dei libri:', error);
         }
@@ -170,7 +172,7 @@ export const AdozioniComponent = ({ }) => {
                     nomiScuolePickerItem: tempSchoolsName.map(el => <Picker.Item key={el.id} label={el.nome} value={JSON.stringify(el)} />),
                 });
 
-                await fetchOtherInfo(tempSchoolsIds[0],tempSchoolsName[0].nome);
+                await fetchOtherInfo(tempSchoolsIds[0], tempSchoolsName[0].nome);
             }
         } catch (error) {
             console.error('Errore durante la richiesta delle scuole:', error);
@@ -311,7 +313,7 @@ export const AdozioniComponent = ({ }) => {
                                         selectedValue={state.selectedScuola}
                                         onValueChange={(itemValue) => {
                                             const item = JSON.parse(itemValue);
-                                            fetchOtherInfo(item.id,itemValue);
+                                            fetchOtherInfo(item.id, itemValue);
                                         }}>
                                         {state.nomiScuolePickerItem}
                                     </Picker>
@@ -355,7 +357,17 @@ export const AdozioniComponent = ({ }) => {
                         {!state.showLoadingBooks && <>
                             {Platform.OS === 'web' && isTablet && <>
                                 <View style={styles.listaLibri}>
-                                    {state.books.map((book, idx) => (
+                                    {state.LibriDaAcquistare.map((book, idx) => (
+                                        <View key={idx} style={styles.bookItem}>
+                                            <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
+                                            <Text style={styles.title}>{book.titolo}</Text>
+                                            <Text style={styles.author}>{book.autore}</Text>
+                                            <Text style={styles.price}>Nuovo: {book.prezzo.toFixed(2)}€</Text>
+                                            <Text style={styles.price}>Usato: {getPrezzoUsato(book.prezzo)}</Text>
+                                        </View>
+                                    ))}
+                                    {state.LibriPosseduti.length > 0 && <Text style={styles.sezioneTitolo}>Libri già Posseduti</Text>}
+                                    {state.LibriPosseduti.map((book, idx) => (
                                         <View key={idx} style={styles.bookItem}>
                                             <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
                                             <Text style={styles.title}>{book.titolo}</Text>
@@ -368,7 +380,19 @@ export const AdozioniComponent = ({ }) => {
                             </>}
                             {(Platform.OS !== 'web' || (Platform.OS === 'web' && !isTablet)) &&
                                 <ScrollView>
-                                    {state.books.map((book, idx) => (
+                                    {state.LibriDaAcquistare.map((book, idx) => (
+                                        <View key={idx}>
+                                            <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
+                                            <View>
+                                                <Text>{book.titolo}</Text>
+                                                <Text>{book.autore}</Text>
+                                                <Text>Nuovo: {book.prezzo.toFixed(2)}€</Text>
+                                                <Text>Usato: {getPrezzoUsato(book.prezzo)}</Text>
+                                            </View>
+                                        </View>
+                                    ))}
+                                    {state.LibriPosseduti.length > 0 && <Text style={styles.sezioneTitolo}>Libri già Posseduti</Text>}
+                                    {state.LibriPosseduti.map((book, idx) => (
                                         <View key={idx}>
                                             <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
                                             <View>
