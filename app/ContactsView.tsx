@@ -1,0 +1,14 @@
+import React from "react";
+import { Image, View } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
+
+export default function ContactsView() {
+
+  return (
+    <View style={{ flex: 1, backgroundColor: '#fff', height: hp('80%'),  overflowY: "scroll", overflowX: "hidden" }}>
+      <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+        <Image style={{ maxWidth: wp('100%'), height: hp('90%') }} resizeMode="contain" source={require('../assets/images/contatti.png')} />
+      </View>
+    </View>
+  );
+}

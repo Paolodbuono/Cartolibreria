@@ -8,6 +8,7 @@ export const routes = [
   { name: 'I miei ordini', root: "/MyOrdersView" },
   { name: 'Adozioni', root: "/AdozioniView" },
   { name: 'E\' semplice ordinare e acquistare!', root: "/ComodamenteDaCasaView" },
+  { name: 'Contatti', root: "/ContactsView" },
   { name: 'Area riservata', root: "/MyProfileView" },
 ] as const;
 

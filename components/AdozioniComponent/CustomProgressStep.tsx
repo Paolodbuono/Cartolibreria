@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
             marginRight: "100px",
             position:"absolute",
             bottom: 0,
-            right: 150
+            right: 70
         })
     },
     button: {
@@ -98,6 +98,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         fontSize: isTablet ? md : sm,
-        padding: isTablet ? 20 : 5,
+        padding: isTablet ? 20 : 5,        
     },
 });

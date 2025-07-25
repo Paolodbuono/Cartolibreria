@@ -366,7 +366,7 @@ export const AdozioniComponent = ({ }) => {
                                             <Text style={styles.price}>Usato: {getPrezzoUsato(book.prezzo)}</Text>
                                         </View>
                                     ))}
-                                    {state.LibriPosseduti.length > 0 && <Text style={{...styles.sezioneTitolo, width: "100%", alignSelf: "stretch"}}>Libri già Posseduti</Text>}
+                                    {state.LibriPosseduti.length > 0 && <Text style={{...styles.sezioneTitolo, width: "100%", alignSelf: "stretch"}}>LIBRI GIÀ IN POSSESSO</Text>}
                                     {state.LibriPosseduti.map((book, idx) => (
                                         <View key={idx} style={styles.bookItem}>
                                             <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
@@ -391,7 +391,7 @@ export const AdozioniComponent = ({ }) => {
                                             </View>
                                         </View>
                                     ))}
-                                    {state.LibriPosseduti.length > 0 && <Text style={styles.sezioneTitolo}>Libri già Posseduti</Text>}
+                                    {state.LibriPosseduti.length > 0 && <Text style={styles.sezioneTitolo}>LIBRI GIÀ IN POSSESSO</Text>}
                                     {state.LibriPosseduti.map((book, idx) => (
                                         <View key={idx}>
                                             <Image style={styles.bookImage} source={{ uri: `https://www.libreriabonagura.it/wbresize.aspx?f=${book.isbn}.jpg&c=100&w=150` }} />
