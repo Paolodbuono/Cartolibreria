@@ -20,6 +20,7 @@
     "@react-native-picker/picker": "^2.9.0",
     "axios": "^1.8.4",
     "expo": "^52.0.46",
+    "expo-build-properties": "^56.0.19",
     "expo-checkbox": "^4.0.1",
     "expo-constants": "^17.0.8",
     "expo-font": "^13.0.4",
