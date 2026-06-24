@@ -2,7 +2,7 @@
   "expo": {
     "name": "Cartolibreria Bonagura",
     "slug": "cartolibreria-app",
-    "version": "1.1.15",
+    "version": "1.1.16",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -33,10 +33,11 @@
       ],
       [
         "expo-build-properties",
-        {
-          "android": {
-            "targetSdkVersion": 35
-          }
+      {
+        "android": {
+          "compileSdkVersion": 35,
+          "targetSdkVersion": 35
+        }
         }
       ]
     ],
