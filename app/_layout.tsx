@@ -6,11 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
 import { md } from '@/constants/FontSize';
-import { loadFonts } from '@/constants/Fonts';
+import { loadFonts } from '@/constants/fonts';
 import TextComponent from '@/components/Commons/Text.component';
 import LogoButtonComponent from '@/components/Commons/LogoButton.component';
 import BurgerButtonComponent from '@/components/Commons/BurgerButton.component';
-import { routes, RoutesType, ValidRoutes } from '@/constants/Routes';
+import { routes, RoutesType, ValidRoutes } from '@/constants/routes';
 
 import { Platform } from "react-native";
 

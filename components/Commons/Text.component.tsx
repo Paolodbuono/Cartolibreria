@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-const TextComponent: React.FC<any> = ({ children, style }) => {
-  if (style?.fontWeight) return (<Text style={{ ...style, ...styles.fontAllanBold }} >{children}</Text>);
-  return (<Text style={{ ...style, ...styles.fontAllanRegular }} >{children}</Text>);
+const TextComponent: React.FC<any> = ({ children, style, ...rest }) => {
+  const flat = StyleSheet.flatten(style);
+  if (flat?.fontWeight) return (<Text style={{ ...flat, ...styles.fontAllanBold }} {...rest}>{children}</Text>);
+  return (<Text style={{ ...flat, ...styles.fontAllanRegular }} {...rest}>{children}</Text>);
 }
 
 export default TextComponent;

@@ -9,6 +9,7 @@ export const routes = [
   { name: 'Adozioni', root: "/AdozioniView" },
   { name: 'E\' semplice ordinare e acquistare!', root: "/ComodamenteDaCasaView" },
   { name: 'Contatti', root: "/ContactsView" },
+  { name: 'Consenso WhatsApp', root: "/consenso-wa" },
   { name: 'Area riservata', root: "/MyProfileView" },
 ] as const;
 
